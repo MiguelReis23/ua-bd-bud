@@ -31,11 +31,12 @@ CREATE TABLE BUD.picture (
 
 CREATE TABLE BUD.[user] (
     id int PRIMARY KEY,
-    name varchar(100) NOT NULL,
-    email varchar(50) NOT NULL UNIQUE,
-    lang varchar(15),
+    name varchar(255) NOT NULL,
+    email varchar(128) NOT NULL UNIQUE,
     picture int REFERENCES BUD.picture(id),
-    password varchar(256) NOT NULL,
+    password_hash varchar(255) NOT NULL,
+    salt varchar(255) NOT NULL
+    department int NOT NULL REFERENCES BUD.department(code)
 );
 
 CREATE TABLE BUD.roles(
