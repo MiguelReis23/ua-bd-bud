@@ -1,3 +1,7 @@
+-- File for creating stored procedures in the database.
+
+USE BUD
+
 IF OBJECT_ID('CreateUser', 'P') IS NOT NULL
     DROP PROC CreateUser
 GO
@@ -133,5 +137,3 @@ BEGIN
     END
 END
 GO
-
-

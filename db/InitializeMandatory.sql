@@ -1,4 +1,8 @@
+-- This file is responsible for initializing the database with some mandatory data. Must be the second file to be executed.
+-- Withouth this file, we cannot create users, set roles, etc. because, obviously, we don't have any data to work with.
+
 -- CREATE USER ROLES
+USE BUD
 
 INSERT INTO BUD.roles
     (id, [name])
@@ -15,6 +19,14 @@ VALUES
     (1, 'Open'),
     (2, 'In Progress'),
     (3, 'Closed')
+
+-- CREATE PRIORITY
+INSERT INTO BUD.priority
+	(id, [name])
+VALUES
+	(1, 'High'),
+	(2, 'Medium'),
+	(3, 'Low')
 
 -- CREATE DEPARTMENTS
 INSERT INTO BUD.department
@@ -45,27 +57,3 @@ VALUES
     (36, 'ECOMARE - Laboratório para a Inovação e Sustentabilidade dos Recursos Biológicos Marinhos da Universidade de Aveiro'),
     (37, 'CESAM – Centro de Estudos do Ambiente e do Mar'),
     (40, 'CCCI – Complexo das Ciências de Comunicação e Imagem')
-
-GO
-
--- CREATE USERS
-EXECUTE CreateUser 'João Almeida Santos', 'jas@ua.pt', NULL, 'jas123'
-EXECUTE CreateUser 'Maria João Silva', 'mjs@ua.pt', NULL, 'mjs123'
-EXECUTE CreateUser 'José Manuel', 'jm@ua.pt', NULL, 'jm123'
-EXECUTE CreateUser 'Carlos Guilherme Penedo', 'cgp@ua.pt', NULL, 'cgp123'
-GO
-
-
-EXECUTE AssociateUserToRole @email = 'jas@ua.pt', @role = 'Student', @nmec = 12345
-EXECUTE AssociateUserToRole @user_id = 2, @role = 'Teacher', @nmec = 54321
-EXECUTE AssociateUserToRole @email = 'jm@ua.pt', @role = 'Administator', @nmec = 67890
-EXECUTE AssociateUserToRole @user_id = 4, @role = 'Nao Existe', @nmec = 98765
-GO
-
-EXECUTE AssociateUserToRole @user_id = 4, @role = 'Staff', @nmec = 98765, @begin_date = '2021-01-01'
-GO
-
-
-
-
-DELETE FROM BUD.[user]

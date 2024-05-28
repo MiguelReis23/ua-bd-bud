@@ -1,6 +1,19 @@
--- Create SCHEMA
---CREATE SCHEMA BUD;
---GO
+-- This file is responsible for creating all tables needed. Must be the first file to be executed.
+
+-- Create database if it doesn't exist
+IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'BUD')
+BEGIN
+	CREATE DATABASE BUD;
+END
+GO
+
+USE BUD
+
+IF NOT EXISTS (SELECT name FROM sys.schemas WHERE name = 'BUD')
+BEGIN
+	EXEC ('CREATE SCHEMA BUD AUTHORIZATION dbo')
+END
+GO
 
 -- Drop tables if they already exist
 IF OBJECT_ID('BUD.attachment', 'U') IS NOT NULL DROP TABLE BUD.attachment;
@@ -12,6 +25,7 @@ IF OBJECT_ID('BUD.service', 'U') IS NOT NULL DROP TABLE BUD.service;
 IF OBJECT_ID('BUD.room', 'U') IS NOT NULL DROP TABLE BUD.room;
 IF OBJECT_ID('BUD.userdepartment', 'U') IS NOT NULL DROP TABLE BUD.userdepartment;
 IF OBJECT_ID('BUD.UserRoles', 'U') IS NOT NULL DROP TABLE BUD.UserRoles;
+IF OBJECT_ID('BUD.priority', 'U') IS NOT NULL DROP TABLE BUD.priority;
 IF OBJECT_ID('BUD.status', 'U') IS NOT NULL DROP TABLE BUD.status;
 IF OBJECT_ID('BUD.roles', 'U') IS NOT NULL DROP TABLE BUD.roles;
 IF OBJECT_ID('BUD.[user]', 'U') IS NOT NULL DROP TABLE BUD.[user];
@@ -19,7 +33,6 @@ IF OBJECT_ID('BUD.picture', 'U') IS NOT NULL DROP TABLE BUD.picture;
 IF OBJECT_ID('BUD.department', 'U') IS NOT NULL DROP TABLE BUD.department;
 
 -- Create tables
-
 CREATE TABLE BUD.department (
     code int PRIMARY KEY,
     name varchar(128) NOT NULL
@@ -48,6 +61,11 @@ CREATE TABLE BUD.roles(
 CREATE TABLE BUD.status(
     id int PRIMARY KEY,
     [name] varchar(25) NOT NULL
+)
+
+CREATE TABLE BUD.priority(
+	id int PRIMARY KEY,
+	[name] varchar(25) NOT NULL
 )
 
 CREATE TABLE BUD.UserRoles(
@@ -95,9 +113,9 @@ CREATE TABLE BUD.ticket (
     submit_date date NOT NULL,
     closed_date date,
     rating int CHECK (rating >= 0 AND rating <= 5),
-    [status] varchar(12) CHECK ([status] IN ('Open', 'In Progress', 'Closed')) NOT NULL DEFAULT 'Open',
+    [status] int REFERENCES BUD.status(id),
     description varchar(200) NOT NULL,
-    priority varchar(10) CHECK (priority IN ('Low', 'Medium', 'High')) NOT NULL,
+    priority int REFERENCES BUD.priority(id),
     category int NOT NULL REFERENCES BUD.category(id)
 );
 
