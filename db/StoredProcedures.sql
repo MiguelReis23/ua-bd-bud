@@ -10,7 +10,8 @@ CREATE PROC CreateUser
     @name VARCHAR(255),
     @email VARCHAR(128),
     @picture VARBINARY(MAX) = NULL,
-    @password VARCHAR(255)
+    @password VARCHAR(255),
+    @department INT = NULL
 AS
 BEGIN
     DECLARE @user_id INT
@@ -41,15 +42,15 @@ BEGIN
                 (@picture_id, @picture)
             
             INSERT INTO BUD.[user]
-                (id, full_name, email, picture, password_hash, salt)
+                (id, full_name, email, picture, password_hash, salt, department)
             VALUES
-				(@user_id, @name, @email, CASE WHEN @picture IS NOT NULL THEN @picture_id ELSE NULL END, @salted_password, @salt)
+				(@user_id, @name, @email, CASE WHEN @picture IS NOT NULL THEN @picture_id ELSE NULL END, @salted_password, @salt, @department)
             COMMIT TRAN T1
             PRINT 'SUCCESS: User created'
             RETURN 1
         END TRY
         BEGIN CATCH
-            PRINT @@ERROR
+            PRINT @@ERROR + ' ' + ERROR_MESSAGE()
             ROLLBACK TRANSACTION T1
             RETURN 0
         END CATCH;
@@ -62,12 +63,6 @@ BEGIN
 END
 GO
 
--- CREATE USERS
-EXECUTE CreateUser 'João Almeida Santos', 'jas@ua.pt', NULL, 'jas123'
-EXECUTE CreateUser 'Maria João Silva', 'mjs@ua.pt', NULL, 'mjs123'
-EXECUTE CreateUser 'José Manuel', 'jm@ua.pt', NULL, 'jm123'
-EXECUTE CreateUser 'Carlos Guilherme Penedo', 'cgp@ua.pt', NULL, 'cgp123'
-GO
 
 -- ASSOCIATE USERS TO ROLE
 CREATE PROC AssociateUserToRole
@@ -139,23 +134,4 @@ BEGIN
 END
 GO
 
--- CREATE USER ROLES
 
-INSERT INTO BUD.roles
-    (id, [name])
-VALUES
-    (1, 'Student'),
-    (2, 'Teacher'),
-    (3, 'Administator'),
-    (4, 'Staff')
-
-
-
-EXECUTE AssociateUserToRole @email = 'jas@ua.pt', @role = 'Student', @nmec = 12345
-EXECUTE AssociateUserToRole @user_id = 2, @role = 'Teacher', @nmec = 54321
-EXECUTE AssociateUserToRole @email = 'jm@ua.pt', @role = 'Administator', @nmec = 67890
-EXECUTE AssociateUserToRole @user_id = 4, @role = 'Nao Existe', @nmec = 98765
-GO
-
-EXECUTE AssociateUserToRole @user_id = 4, @role = 'Staff', @nmec = 98765, @begin_date = '2021-01-01'
-GO

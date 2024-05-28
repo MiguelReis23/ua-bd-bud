@@ -12,6 +12,7 @@ IF OBJECT_ID('BUD.service', 'U') IS NOT NULL DROP TABLE BUD.service;
 IF OBJECT_ID('BUD.room', 'U') IS NOT NULL DROP TABLE BUD.room;
 IF OBJECT_ID('BUD.userdepartment', 'U') IS NOT NULL DROP TABLE BUD.userdepartment;
 IF OBJECT_ID('BUD.UserRoles', 'U') IS NOT NULL DROP TABLE BUD.UserRoles;
+IF OBJECT_ID('BUD.status', 'U') IS NOT NULL DROP TABLE BUD.status;
 IF OBJECT_ID('BUD.roles', 'U') IS NOT NULL DROP TABLE BUD.roles;
 IF OBJECT_ID('BUD.[user]', 'U') IS NOT NULL DROP TABLE BUD.[user];
 IF OBJECT_ID('BUD.picture', 'U') IS NOT NULL DROP TABLE BUD.picture;
@@ -21,27 +22,32 @@ IF OBJECT_ID('BUD.department', 'U') IS NOT NULL DROP TABLE BUD.department;
 
 CREATE TABLE BUD.department (
     code int PRIMARY KEY,
-    name varchar(50) NOT NULL
+    name varchar(128) NOT NULL
 );
 
 CREATE TABLE BUD.picture (
     id int PRIMARY KEY,
-    [data] varbinary(max) NOT NULL
+    [data] varbinary(max)
 );
 
 CREATE TABLE BUD.[user] (
     id int PRIMARY KEY,
-    name varchar(255) NOT NULL,
+    full_name varchar(255) NOT NULL,
     email varchar(128) NOT NULL UNIQUE,
     picture int REFERENCES BUD.picture(id),
     password_hash varchar(255) NOT NULL,
-    salt varchar(255) NOT NULL
-    department int NOT NULL REFERENCES BUD.department(code)
+    salt varchar(255) NOT NULL,
+    department int REFERENCES BUD.department(code)
 );
 
 CREATE TABLE BUD.roles(
     id int PRIMARY KEY,
     [name] varchar(50) NOT NULL
+)
+
+CREATE TABLE BUD.status(
+    id int PRIMARY KEY,
+    [name] varchar(25) NOT NULL
 )
 
 CREATE TABLE BUD.UserRoles(
@@ -58,7 +64,7 @@ CREATE TABLE BUD.userdepartment (
     department int NOT NULL REFERENCES BUD.department(code),
     startdate date NOT NULL,
     enddate date,
-    PRIMARY KEY(nmec, department)
+    PRIMARY KEY([user_id], department)
 );
 
 CREATE TABLE BUD.room (
