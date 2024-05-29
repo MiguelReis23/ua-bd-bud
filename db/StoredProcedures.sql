@@ -8,6 +8,9 @@ GO
 IF OBJECT_ID('AssociateUserToRole', 'P') IS NOT NULL
     DROP PROC AssociateUserToRole
 GO
+IF OBJECT_ID('AuthenticateUser', 'P') IS NOT NULL
+    DROP PROC AuthenticateUser
+GO
 
 -- CREATE USER
 CREATE PROC CreateUser
@@ -133,6 +136,47 @@ BEGIN
     ELSE
     BEGIN
         PRINT 'ERROR: User already has the role'
+        RETURN 0
+    END
+END
+GO
+
+-- AUTHENTICATE USER
+CREATE PROC AuthenticateUser
+    @Email VARCHAR(128),
+    @Password VARCHAR(255)
+AS
+BEGIN
+    DECLARE @StoredPasswordHash VARCHAR(255)
+    DECLARE @StoredSalt UNIQUEIDENTIFIER
+    DECLARE @ProvidedPasswordHash VARCHAR(255)
+    DECLARE @UserId INT
+
+    SELECT 
+        @StoredPasswordHash = password_hash,
+        @StoredSalt = salt,
+        @UserId = id
+    FROM 
+        BUD.[user]
+    WHERE 
+        email = @Email
+
+    IF @StoredPasswordHash IS NULL OR @StoredSalt IS NULL
+    BEGIN
+        PRINT 'ERROR: Invalid email or password'
+        RETURN 0
+    END
+
+    SET @ProvidedPasswordHash = HASHBYTES('SHA2_256', @Password + CONVERT(VARCHAR(36), @StoredSalt))
+
+    IF @ProvidedPasswordHash = @StoredPasswordHash
+    BEGIN
+        PRINT 'SUCCESS: Authentication successful'
+        RETURN @UserId
+    END
+    ELSE
+    BEGIN
+        PRINT 'ERROR: Invalid email or password'
         RETURN 0
     END
 END
