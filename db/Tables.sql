@@ -49,7 +49,7 @@ CREATE TABLE BUD.[user] (
     id int PRIMARY KEY,
     full_name varchar(255) NOT NULL,
     email varchar(128) NOT NULL UNIQUE,
-    picture int REFERENCES BUD.picture(id),
+    picture int REFERENCES BUD.picture(id) ON DELETE SET NULL,
     password_hash varchar(255) NOT NULL,
     salt varchar(255) NOT NULL,
     department int REFERENCES BUD.department(code)
@@ -71,8 +71,8 @@ CREATE TABLE BUD.priority(
 )
 
 CREATE TABLE BUD.UserRoles(
-    [user_id] int NOT NULL REFERENCES BUD.[user](id),
-    role_id int NOT NULL REFERENCES BUD.roles(id),
+    [user_id] int NOT NULL REFERENCES BUD.[user](id) ON DELETE CASCADE,
+    role_id int NOT NULL REFERENCES BUD.roles(id) ON DELETE CASCADE,
     begin_date date NOT NULL,
     end_date date,
     nmec int NOT NULL UNIQUE,
@@ -80,15 +80,15 @@ CREATE TABLE BUD.UserRoles(
 )
 
 CREATE TABLE BUD.userdepartment (
-    [user_id] int NOT NULL REFERENCES BUD.[user](id),
-    department int NOT NULL REFERENCES BUD.department(code),
+    [user_id] int NOT NULL REFERENCES BUD.[user](id) ON DELETE CASCADE,
+    department int NOT NULL REFERENCES BUD.department(code) ON DELETE CASCADE,
     startdate date NOT NULL,
     enddate date,
     PRIMARY KEY([user_id], department)
 );
 
 CREATE TABLE BUD.room (
-    department_id int NOT NULL REFERENCES BUD.department(code),
+    department_id int NOT NULL REFERENCES BUD.department(code) ON DELETE CASCADE,
     [floor] int NOT NULL,
     [number] int NOT NULL,
     [name] varchar(50) NOT NULL,
@@ -105,8 +105,8 @@ CREATE TABLE BUD.category (
     id int PRIMARY KEY,
     [name] varchar(100) NOT NULL,
     [description] varchar(200) NOT NULL,
-    minimum_role int NOT NULL REFERENCES BUD.roles(id),
-    service_id int NOT NULL REFERENCES BUD.[service](id)
+    minimum_role int NOT NULL REFERENCES BUD.roles(id) ON DELETE CASCADE,
+    service_id int NOT NULL REFERENCES BUD.[service](id) ON DELETE CASCADE
 );
 
 CREATE TABLE BUD.field(
@@ -115,8 +115,8 @@ CREATE TABLE BUD.field(
 )
 
 CREATE TABLE BUD.category_field(
-    category_id int NOT NULL REFERENCES BUD.category(id),
-    field_id int NOT NULL REFERENCES BUD.field(id),
+    category_id int NOT NULL REFERENCES BUD.category(id) ON DELETE CASCADE,
+    field_id int NOT NULL REFERENCES BUD.field(id) ON DELETE CASCADE,
     PRIMARY KEY(category_id, field_id)
 )
 
@@ -147,7 +147,7 @@ CREATE TABLE BUD.article (
     author varchar(50) NOT NULL,
     content varchar(max) NOT NULL,
     [date] date NOT NULL,
-    [service_id] int NOT NULL REFERENCES BUD.[service](id)
+    [service_id] int NOT NULL REFERENCES BUD.[service](id) ON DELETE CASCADE
 );
 
 CREATE TABLE BUD.attachment (
