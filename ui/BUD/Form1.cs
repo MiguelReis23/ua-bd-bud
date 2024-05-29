@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace BUD
 {
@@ -33,15 +34,29 @@ namespace BUD
             {
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "SELECT * FROM BUD.[user]";
-                    connection.Open();
+                    command.CommandText = "AuthenticateUser";
+                    command.CommandType = CommandType.StoredProcedure;
 
-                    using (SqlDataReader reader = command.ExecuteReader())
+
+                    command.Parameters.Add(new SqlParameter("@Email", SqlDbType.VarChar, 128)).Value = username;
+                    command.Parameters.Add(new SqlParameter("@Password", SqlDbType.VarChar, 255)).Value = password;
+
+                    SqlParameter resultParam = new SqlParameter("@Result", SqlDbType.Int);
+                    resultParam.Direction = ParameterDirection.Output;
+                    command.Parameters.Add(resultParam);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    int result = (int)resultParam.Value;
+
+                    if (result > 0)
                     {
-                        while (reader.Read())
-                        {
-                            Console.WriteLine(reader["email"].ToString());
-                        }
+                        MessageBox.Show("Authentication successful.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid email or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }

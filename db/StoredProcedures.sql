@@ -144,7 +144,8 @@ GO
 -- AUTHENTICATE USER
 CREATE PROC AuthenticateUser
     @Email VARCHAR(128),
-    @Password VARCHAR(255)
+    @Password VARCHAR(255),
+	@Result INT OUTPUT
 AS
 BEGIN
     DECLARE @StoredPasswordHash VARCHAR(255)
@@ -164,20 +165,21 @@ BEGIN
     IF @StoredPasswordHash IS NULL OR @StoredSalt IS NULL
     BEGIN
         PRINT 'ERROR: Invalid email or password'
-        RETURN 0
+		SET @Result = 0
+        RETURN
     END
 
     SET @ProvidedPasswordHash = HASHBYTES('SHA2_256', @Password + CONVERT(VARCHAR(36), @StoredSalt))
 
     IF @ProvidedPasswordHash = @StoredPasswordHash
     BEGIN
-        PRINT 'SUCCESS: Authentication successful'
-        RETURN @UserId
+		PRINT 'SUCCESS: Authentication successful'
+        SET @Result = @UserId
     END
     ELSE
     BEGIN
-        PRINT 'ERROR: Invalid email or password'
-        RETURN 0
+		PRINT 'ERROR: Invalid email or password'
+        SET @Result = 0
     END
 END
 GO
