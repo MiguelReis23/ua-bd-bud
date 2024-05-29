@@ -14,4 +14,5 @@ EXECUTE AssociateUserToRole @email = 'jas@ua.pt', @role = 'Student', @nmec = 123
 EXECUTE AssociateUserToRole @user_id = 2, @role = 'Teacher', @nmec = 54321
 EXECUTE AssociateUserToRole @email = 'jm@ua.pt', @role = 'Administator', @nmec = 67890
 EXECUTE AssociateUserToRole @user_id = 4, @role = 'Staff', @nmec = 98765, @begin_date = '2021-01-01'
+EXECUTE AssociateUserToRole @user_id = 1, @role = 'Teacher', @nmec = 10345
 GO

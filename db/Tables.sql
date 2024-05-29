@@ -73,7 +73,7 @@ CREATE TABLE BUD.UserRoles(
     role_id int NOT NULL REFERENCES BUD.roles(id),
     begin_date date NOT NULL,
     end_date date,
-    nmec int NOT NULL,
+    nmec int NOT NULL UNIQUE,
     PRIMARY KEY(user_id, role_id)
 )
 
@@ -86,25 +86,25 @@ CREATE TABLE BUD.userdepartment (
 );
 
 CREATE TABLE BUD.room (
-    [number] int NOT NULL,
+    department_id int NOT NULL REFERENCES BUD.department(code),
     [floor] int NOT NULL,
+    [number] int NOT NULL,
     name varchar(50) NOT NULL,
-    department int NOT NULL REFERENCES BUD.department(code),
-    PRIMARY KEY([number], [floor])
+    PRIMARY KEY(department_id,[floor], [number])
 );
 
 CREATE TABLE BUD.[service] (
     id int PRIMARY KEY,
     name varchar(50) NOT NULL,
-    description varchar(100) NOT NULL
+    description varchar(200) NOT NULL
 );
 
 CREATE TABLE BUD.category (
     id int PRIMARY KEY,
-    name varchar(50) NOT NULL,
-    description varchar(100) NOT NULL,
+    name varchar(100) NOT NULL,
+    description varchar(200) NOT NULL,
     minimum_role int NOT NULL REFERENCES BUD.roles(id),
-    [service] int NOT NULL REFERENCES BUD.[service](id)
+    service_id int NOT NULL REFERENCES BUD.[service](id)
 );
 
 CREATE TABLE BUD.ticket (
@@ -130,11 +130,11 @@ CREATE TABLE BUD.message (
 
 CREATE TABLE BUD.article (
     id int PRIMARY KEY,
-    title varchar(50) NOT NULL,
-    description varchar(100) NOT NULL,
+    title varchar(100) NOT NULL,
+    author varchar(50) NOT NULL,
     content varchar(max) NOT NULL,
     [date] date NOT NULL,
-    [service] int NOT NULL REFERENCES BUD.[service](id)
+    [service_id] int NOT NULL REFERENCES BUD.[service](id)
 );
 
 CREATE TABLE BUD.attachment (
