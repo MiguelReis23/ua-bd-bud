@@ -1,6 +1,6 @@
 ﻿namespace BUD
 {
-    partial class Form1
+    partial class AuthenticationForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,13 +30,13 @@
         {
             this.baseLayout = new System.Windows.Forms.TableLayoutPanel();
             this.sctLogin = new System.Windows.Forms.GroupBox();
-            this.lblUsername = new System.Windows.Forms.Label();
-            this.lblPassword = new System.Windows.Forms.Label();
-            this.txtUsername = new System.Windows.Forms.TextBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.btnAuthenticate = new System.Windows.Forms.Button();
-            this.chckSavelogin = new System.Windows.Forms.CheckBox();
             this.btnLostPassword = new System.Windows.Forms.LinkLabel();
+            this.chckSavelogin = new System.Windows.Forms.CheckBox();
+            this.btnAuthenticate = new System.Windows.Forms.Button();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.txtUsername = new System.Windows.Forms.TextBox();
+            this.lblPassword = new System.Windows.Forms.Label();
+            this.lblUsername = new System.Windows.Forms.Label();
             this.baseLayout.SuspendLayout();
             this.sctLogin.SuspendLayout();
             this.SuspendLayout();
@@ -74,47 +74,15 @@
             this.sctLogin.TabIndex = 0;
             this.sctLogin.TabStop = false;
             // 
-            // lblUsername
+            // btnLostPassword
             // 
-            this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(28, 48);
-            this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(58, 13);
-            this.lblUsername.TabIndex = 0;
-            this.lblUsername.Text = "Username:";
-            // 
-            // lblPassword
-            // 
-            this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(28, 98);
-            this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(56, 13);
-            this.lblPassword.TabIndex = 1;
-            this.lblPassword.Text = "Password:";
-            // 
-            // txtUsername
-            // 
-            this.txtUsername.Location = new System.Drawing.Point(30, 66);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(342, 20);
-            this.txtUsername.TabIndex = 1;
-            // 
-            // txtPassword
-            // 
-            this.txtPassword.Location = new System.Drawing.Point(30, 116);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(342, 20);
-            this.txtPassword.TabIndex = 2;
-            // 
-            // btnAuthenticate
-            // 
-            this.btnAuthenticate.Location = new System.Drawing.Point(30, 193);
-            this.btnAuthenticate.Name = "btnAuthenticate";
-            this.btnAuthenticate.Size = new System.Drawing.Size(342, 33);
-            this.btnAuthenticate.TabIndex = 4;
-            this.btnAuthenticate.Text = "Authenticate";
-            this.btnAuthenticate.UseVisualStyleBackColor = true;
-            this.btnAuthenticate.Click += new System.EventHandler(this.btnAuthenticate_Click);
+            this.btnLostPassword.AutoSize = true;
+            this.btnLostPassword.Location = new System.Drawing.Point(28, 142);
+            this.btnLostPassword.Name = "btnLostPassword";
+            this.btnLostPassword.Size = new System.Drawing.Size(104, 13);
+            this.btnLostPassword.TabIndex = 5;
+            this.btnLostPassword.TabStop = true;
+            this.btnLostPassword.Text = "I forgot my password";
             // 
             // chckSavelogin
             // 
@@ -126,23 +94,60 @@
             this.chckSavelogin.Text = "Remember me";
             this.chckSavelogin.UseVisualStyleBackColor = true;
             // 
-            // btnLostPassword
+            // btnAuthenticate
             // 
-            this.btnLostPassword.AutoSize = true;
-            this.btnLostPassword.Location = new System.Drawing.Point(28, 142);
-            this.btnLostPassword.Name = "btnLostPassword";
-            this.btnLostPassword.Size = new System.Drawing.Size(104, 13);
-            this.btnLostPassword.TabIndex = 5;
-            this.btnLostPassword.TabStop = true;
-            this.btnLostPassword.Text = "I forgot my password";
+            this.btnAuthenticate.Location = new System.Drawing.Point(30, 193);
+            this.btnAuthenticate.Name = "btnAuthenticate";
+            this.btnAuthenticate.Size = new System.Drawing.Size(342, 33);
+            this.btnAuthenticate.TabIndex = 4;
+            this.btnAuthenticate.Text = "Authenticate";
+            this.btnAuthenticate.UseVisualStyleBackColor = true;
+            this.btnAuthenticate.Click += new System.EventHandler(this.btnAuthenticate_Click);
             // 
-            // Form1
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(30, 116);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.Size = new System.Drawing.Size(342, 20);
+            this.txtPassword.TabIndex = 2;
+            this.txtPassword.Text = "jas123";
+            this.txtPassword.UseSystemPasswordChar = true;
+            // 
+            // txtUsername
+            // 
+            this.txtUsername.Location = new System.Drawing.Point(30, 66);
+            this.txtUsername.MaxLength = 128;
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(342, 20);
+            this.txtUsername.TabIndex = 1;
+            this.txtUsername.Text = "jas@ua.pt";
+            // 
+            // lblPassword
+            // 
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.Location = new System.Drawing.Point(28, 98);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(56, 13);
+            this.lblPassword.TabIndex = 1;
+            this.lblPassword.Text = "Password:";
+            // 
+            // lblUsername
+            // 
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Location = new System.Drawing.Point(28, 48);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(58, 13);
+            this.lblUsername.TabIndex = 0;
+            this.lblUsername.Text = "Username:";
+            // 
+            // AuthenticationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 411);
             this.Controls.Add(this.baseLayout);
-            this.Name = "Form1";
+            this.Name = "AuthenticationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Balcão Único Digital da Universidade de Aveiro - Authentication";
             this.baseLayout.ResumeLayout(false);

@@ -12,7 +12,7 @@ namespace BUD
         private static Database databaseInstance = null;
         private static readonly object lockObject = new object();
 
-        private static string serverAddress = "DESKTOP-FIS6PJE";
+        private static string serverAddress = "GAPAPAIO-WIN";
         private static string databaseName = "BUD";
         private static readonly string connectionString = "data source=" + serverAddress + ";initial catalog=" + databaseName + ";integrated security=True";
 
