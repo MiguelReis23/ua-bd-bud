@@ -85,7 +85,7 @@ VALUES
     (7, 'Educast', 'Platform for the dissemination of audiovisual content.', 2, 3),
     (8, 'Create an area in the e-learning platform', 'Request the creation of a page for a project, event or course in the e-learning platform.', 2, 4),
     (9, 'Associate user with course in Moodle', 'Request the association of a user with a course in the e-learning platform.', 1, 4),
-    (10, 'Create / change physical connection to department network', 'Request the creation or change of a physical connection to the department network.', 1, 6)
+    (10, 'Create / change physical connection to network', 'Request the creation or change of a physical connection to a network socket.', 1, 6)
 
 --CREATE ROOMS
 INSERT INTO BUD.room
@@ -576,3 +576,57 @@ VALUES
     (28, 'Reportando problemas de desempenho', 'Diogo Correia', 'Problemas de desempenho podem afetar a produtividade e precisam ser relatados prontamente. Primeiro, identifique os sintomas do problema, como lentidão ou travamentos. Reúna informações sobre quando e onde o problema ocorre. Acesse o portal de suporte e preencha o formulário de relatório de desempenho, descrevendo o problema em detalhes. Anexe logs de desempenho, se disponíveis. Envie o relatório e a equipe de suporte entrará em contato para investigar e resolver o problema. Manter um registro dos problemas pode ajudar a identificar padrões e prevenir ocorrências futuras.', '2023-04-05', 9),
     (29, 'Procedimentos para incidentes de disponibilidade', 'Renata Costa', 'Incidentes de disponibilidade, como quedas de serviço, podem ser críticos. Para relatar um incidente, primeiro verifique se o problema não é local, como uma falha de conexão. Se for um problema generalizado, reúna informações sobre o impacto e a duração do incidente. Acesse o portal de incidentes e preencha o formulário específico, fornecendo todos os detalhes relevantes. Envie o relatório e a equipe responsável investigará a causa do incidente e trabalhará para restaurar a disponibilidade o mais rápido possível. Manter uma comunicação aberta com os usuários durante o incidente é essencial para reduzir a frustração e garantir que todos estejam informados sobre o status da resolução.', '2023-05-10', 9)
 
+-- CREATE FIELDS
+INSERT INTO BUD.field
+    (id, [name])
+VALUES
+    (1, 'Department'),
+    (2, 'Desired email account'),
+    (3, 'Project/Event/Institution name'),
+    (4, 'Responsible'),
+    (5, 'Project/Event email account'),
+    (6, 'List of UUs (Separated by;)'),
+    (7, 'Destination email account'),
+    (8, 'Mailling List ID'),
+    (9, 'Site address'),
+    (10, 'Link to the video'),
+    (11, 'Name of the area'),
+    (12, 'Brief description of the need'),
+    (13, 'Course Code'),
+    (14, 'Course Name'),
+    (15, 'User ID'),
+    (16, 'User Email'),
+    (17, 'Room'),
+    (18, 'Network socket(s) to be intervened')
+
+-- CREATE CATEGORY FIELDS
+INSERT INTO BUD.category_field
+    (category_id, field_id)
+VALUES
+    (1,1),
+    (1,2),
+    (1,3),
+    (1,4),
+    (2,1),
+    (2,5),
+    (2,6),
+    (3,16),
+    (3,7),
+    (4,1),
+    (4,8),
+    (5,5),
+    (5,12),
+    (6,9),
+    (6,12),
+    (7,11),
+    (7,10),
+    (8,1),
+    (8,11),
+    (8,12),
+    (9, 15),
+    (9,16),
+    (9,13),
+    (9,14),
+    (10,1),
+    (10,17),
+    (10,18)

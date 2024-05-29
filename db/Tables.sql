@@ -20,6 +20,8 @@ IF OBJECT_ID('BUD.attachment', 'U') IS NOT NULL DROP TABLE BUD.attachment;
 IF OBJECT_ID('BUD.article', 'U') IS NOT NULL DROP TABLE BUD.article;
 IF OBJECT_ID('BUD.message', 'U') IS NOT NULL DROP TABLE BUD.message;
 IF OBJECT_ID('BUD.ticket', 'U') IS NOT NULL DROP TABLE BUD.ticket;
+IF OBJECT_ID('BUD.category_field', 'U') IS NOT NULL DROP TABLE BUD.category_field;
+IF OBJECT_ID('BUD.field', 'U') IS NOT NULL DROP TABLE BUD.field;
 IF OBJECT_ID('BUD.category', 'U') IS NOT NULL DROP TABLE BUD.category;
 IF OBJECT_ID('BUD.service', 'U') IS NOT NULL DROP TABLE BUD.service;
 IF OBJECT_ID('BUD.room', 'U') IS NOT NULL DROP TABLE BUD.room;
@@ -89,32 +91,43 @@ CREATE TABLE BUD.room (
     department_id int NOT NULL REFERENCES BUD.department(code),
     [floor] int NOT NULL,
     [number] int NOT NULL,
-    name varchar(50) NOT NULL,
+    [name] varchar(50) NOT NULL,
     PRIMARY KEY(department_id,[floor], [number])
 );
 
 CREATE TABLE BUD.[service] (
     id int PRIMARY KEY,
-    name varchar(50) NOT NULL,
-    description varchar(200) NOT NULL
+    [name] varchar(50) NOT NULL,
+    [description] varchar(200) NOT NULL
 );
 
 CREATE TABLE BUD.category (
     id int PRIMARY KEY,
-    name varchar(100) NOT NULL,
-    description varchar(200) NOT NULL,
+    [name] varchar(100) NOT NULL,
+    [description] varchar(200) NOT NULL,
     minimum_role int NOT NULL REFERENCES BUD.roles(id),
     service_id int NOT NULL REFERENCES BUD.[service](id)
 );
 
+CREATE TABLE BUD.field(
+    id int NOT NULL PRIMARY KEY,
+    [name] varchar(50) NOT NULL,
+)
+
+CREATE TABLE BUD.category_field(
+    category_id int NOT NULL REFERENCES BUD.category(id),
+    field_id int NOT NULL REFERENCES BUD.field(id),
+    PRIMARY KEY(category_id, field_id)
+)
+
 CREATE TABLE BUD.ticket (
     id int PRIMARY KEY IDENTITY(1,1),
     requester int NOT NULL REFERENCES BUD.[user](id),
+	responsible int REFERENCES BUD.[user](id),
     submit_date date NOT NULL,
     closed_date date,
     rating int CHECK (rating >= 0 AND rating <= 5),
     [status] int REFERENCES BUD.status(id),
-    description varchar(200) NOT NULL,
     priority int REFERENCES BUD.priority(id),
     category int NOT NULL REFERENCES BUD.category(id)
 );
