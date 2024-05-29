@@ -103,7 +103,7 @@ CREATE TABLE BUD.category (
     id int PRIMARY KEY,
     name varchar(50) NOT NULL,
     description varchar(100) NOT NULL,
-    auth_level int NOT NULL,
+    minimum_role int NOT NULL REFERENCES BUD.roles(id),
     [service] int NOT NULL REFERENCES BUD.[service](id)
 );
 

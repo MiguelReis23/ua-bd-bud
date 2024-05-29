@@ -1,6 +1,8 @@
 -- This file will initialize the database with some sample data useful for showcasing. It's not mandatory, but it's useful to have some data to work with.
 -- If you dont execute this file, there will be no users and its associated roles, departments, tickets, etc. in the database.
 
+USE BUD
+
 -- CREATE USERS
 EXECUTE CreateUser 'João Almeida Santos', 'jas@ua.pt', NULL, 'jas123'
 EXECUTE CreateUser 'Maria João Silva', 'mjs@ua.pt', NULL, 'mjs123'
