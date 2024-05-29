@@ -8,6 +8,9 @@ GO
 IF OBJECT_ID('AssociateUserToRole', 'P') IS NOT NULL
     DROP PROC AssociateUserToRole
 GO
+IF OBJECT_ID('AddUserToDepartment', 'P') IS NOT NULL
+    DROP PROC AddUserToDepartment
+GO
 IF OBJECT_ID('AuthenticateUser', 'P') IS NOT NULL
     DROP PROC AuthenticateUser
 GO
@@ -22,45 +25,45 @@ CREATE PROC CreateUser
 AS
 BEGIN
     DECLARE @user_id INT
-    SET @user_id = (SELECT MAX(id) + 1 FROM BUD.[user])
+    SET @user_id = (SELECT ISNULL(MAX(id), 0) + 1 FROM BUD.[user])
 
     DECLARE @picture_id INT
-    SET @picture_id = (SELECT MAX(id) + 1 FROM BUD.picture)
+    SET @picture_id = (SELECT ISNULL(MAX(id), 0) + 1 FROM BUD.picture)
 
-	DECLARE @salt UNIQUEIDENTIFIER
+    DECLARE @salt UNIQUEIDENTIFIER
     DECLARE @salted_password VARBINARY(32)
 
     SET @salt = NEWID()
     SET @salted_password = HASHBYTES('SHA2_256', @password + CONVERT(VARCHAR(36), @salt))
 
-    IF @user_id IS NULL
-        SET @user_id = 1
-
-    IF @picture_id IS NULL
-        SET @picture_id = 1
-
     IF NOT EXISTS (SELECT * FROM BUD.[user] WHERE email = @email)
     BEGIN
-        BEGIN TRAN T1
+        BEGIN TRANSACTION T1
         BEGIN TRY
-            INSERT INTO BUD.picture
-                (id, [data])
-            VALUES
-                (@picture_id, @picture)
+            IF @picture IS NOT NULL
+            BEGIN
+                INSERT INTO BUD.picture (id, [data])
+                VALUES (@picture_id, @picture)
+            END
+
+            INSERT INTO BUD.[user] (id, full_name, email, picture, password_hash, salt)
+            VALUES (@user_id, @name, @email, CASE WHEN @picture IS NOT NULL THEN @picture_id ELSE NULL END, @salted_password, @salt)
             
-            INSERT INTO BUD.[user]
-                (id, full_name, email, picture, password_hash, salt, department)
-            VALUES
-				(@user_id, @name, @email, CASE WHEN @picture IS NOT NULL THEN @picture_id ELSE NULL END, @salted_password, @salt, @department)
-            COMMIT TRAN T1
+            IF @department IS NOT NULL
+            BEGIN
+                INSERT INTO BUD.userdepartment (user_id, department, startdate)
+                VALUES (@user_id, @department, GETDATE())
+            END
+
+            COMMIT TRANSACTION T1
             PRINT 'SUCCESS: User created'
             RETURN 1
         END TRY
         BEGIN CATCH
-            PRINT @@ERROR + ' ' + ERROR_MESSAGE()
+            PRINT ERROR_MESSAGE()
             ROLLBACK TRANSACTION T1
             RETURN 0
-        END CATCH;
+        END CATCH
     END
     ELSE
     BEGIN
@@ -138,6 +141,56 @@ BEGIN
         PRINT 'ERROR: User already has the role'
         RETURN 0
     END
+END
+GO
+
+-- ASSOCIATE USERS TO DEPARTMENT
+CREATE PROCEDURE AddUserToDepartment
+    @user_id INT,
+    @department_id INT,
+    @start_date DATE,
+    @end_date DATE = NULL
+AS
+BEGIN
+    BEGIN TRANSACTION
+    BEGIN TRY
+        -- Check if the user exists
+        IF NOT EXISTS (SELECT 1 FROM BUD.[user] WHERE id = @user_id)
+        BEGIN
+            PRINT 'ERROR: User does not exist'
+            ROLLBACK TRANSACTION
+            RETURN 0
+        END
+
+        -- Check if the department exists
+        IF NOT EXISTS (SELECT 1 FROM BUD.department WHERE code = @department_id)
+        BEGIN
+            PRINT 'ERROR: Department does not exist'
+            ROLLBACK TRANSACTION
+            RETURN 0
+        END
+
+        -- Check if the association already exists
+        IF EXISTS (SELECT 1 FROM BUD.userdepartment WHERE user_id = @user_id AND department = @department_id)
+        BEGIN
+            PRINT 'ERROR: User is already associated with this department'
+            ROLLBACK TRANSACTION
+            RETURN 0
+        END
+
+        -- Insert the association
+        INSERT INTO BUD.userdepartment (user_id, department, startdate, enddate)
+        VALUES (@user_id, @department_id, @start_date, @end_date)
+
+        COMMIT TRANSACTION
+        PRINT 'SUCCESS: User associated with department'
+        RETURN 1
+    END TRY
+    BEGIN CATCH
+        PRINT ERROR_MESSAGE()
+        ROLLBACK TRANSACTION
+        RETURN 0
+    END CATCH
 END
 GO
 

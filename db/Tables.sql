@@ -51,8 +51,7 @@ CREATE TABLE BUD.[user] (
     email varchar(128) NOT NULL UNIQUE,
     picture int REFERENCES BUD.picture(id) ON DELETE SET NULL,
     password_hash varchar(255) NOT NULL,
-    salt varchar(255) NOT NULL,
-    department int REFERENCES BUD.department(code)
+    salt varchar(255) NOT NULL
 );
 
 CREATE TABLE BUD.roles(
