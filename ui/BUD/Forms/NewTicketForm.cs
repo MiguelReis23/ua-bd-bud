@@ -50,6 +50,8 @@ namespace BUD
 
         private void ServiceCard_Click(object sender, EventArgs e)
         {
+            flowLayoutDetails.Controls.Clear();
+
             Control clickedControl = sender as Control;
             CustomCard card = null;
 
@@ -92,6 +94,8 @@ namespace BUD
             
         }
 
+        private CustomCard selectedCategoryCard = null;
+
         private void CategoryCard_Click(object sender, EventArgs e)
         {
             Control clickedControl = sender as Control;
@@ -117,7 +121,22 @@ namespace BUD
                     {
                         if (category.CategoryId == categoryId)
                         {
+                            this.catId = categoryId;
+
+                            foreach (Control control in flowLayoutCategory.Controls)
+                            {
+                                if (control is CustomCard)
+                                {
+                                    ((CustomCard)control).BorderStyle = BorderStyle.None;
+                                }
+                            }
+
+                            card.BorderStyle = BorderStyle.FixedSingle;
+                            selectedCategoryCard = card;
+
                             DrawFields(category);
+                            btnSubmit.Enabled = true;
+                            break;
                         }
                     }
                 }
@@ -125,25 +144,23 @@ namespace BUD
             }
         }
 
+        private Field requester = new Field(Entities.InputType.FREE_TEXT, 0, "Requester");
+        private Field priority = new Field(Entities.InputType.DROPDOWN, 0, "Priority", "SELECT name FROM BUD.priority");
+        private int? catId = null;
+
         private void DrawFields(Category category)
         {
-            flowLayoutCommonDetails.Controls.Clear();
+            flowLayoutDetails.Controls.Clear();
             
             string[] segmented_name = authenticatedUser.FullName.Split(' ');
             string first_name = segmented_name.GetValue(0).ToString();
             string last_name = segmented_name.GetValue(segmented_name.Length - 1).ToString();
 
-            Field requester = new Field(Entities.InputType.FREE_TEXT, 0, "Requester");
             requester.Value = first_name + " " + last_name + " - " + AuthenticatedUser.GetAuthenticatedUser().Email;
             requester.ReadOnly = true;
 
-            Field priority = new Field(Entities.InputType.DROPDOWN, 0, "Priority", "SELECT name FROM BUD.priority");
-
-
-            flowLayoutCommonDetails.Controls.Add(requester);
-            flowLayoutCommonDetails.Controls.Add(priority);
-
-            flowLayoutDetails.Controls.Clear();
+            flowLayoutDetails.Controls.Add(requester);
+            flowLayoutDetails.Controls.Add(priority);
 
             foreach (Field field in category.Fields)
             {
@@ -217,9 +234,104 @@ namespace BUD
             this.Close();
         }
 
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            flowLayoutDetails.Controls.Clear();
+            stepsTabs.SelectedIndex = 0;
+        }
+
+        private void stepsTabs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (stepsTabs.SelectedIndex == 0)
+            {
+                drawServices();
+                btnPrevious.Enabled = false;
+                btnSubmit.Enabled = false;
+            } else if (stepsTabs.SelectedIndex == 1)
+            {
+                btnPrevious.Enabled = true;
+            }
+        }
+
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            int? requesterId = authenticatedUser.UserId;
+            int? priorityId = 0;
+            int? categoryId = catId;
 
+            if (flowLayoutDetails.Controls.Count >= 2)
+            {
+                Control secondControl = flowLayoutDetails.Controls[1];
+                if (secondControl is Field secondField)
+                {
+                    priorityId = secondField.ValueIndex;
+                }
+            }
+
+            List<Field> fields = new List<Field>();
+
+            foreach (Control control in flowLayoutDetails.Controls.Cast<Control>().Skip(2))
+            {
+                if (control is Field field)
+                {
+                    fields.Add(field);
+                }
+            }
+
+            // Checks for invalid fields or empty fields
+            if (requesterId == null || priorityId < 0 || categoryId == null)
+            {
+                MessageBox.Show("Please fill in all fields.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            foreach (Field field in fields)
+            {
+                if (field.Value == null || field.Value == "")
+                {
+                    MessageBox.Show("Please fill in all fields.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            Console.WriteLine("Requester ID: " + requesterId);
+            Console.WriteLine("Priority ID: " + priorityId);
+            Console.WriteLine("Category ID: " + categoryId);
+            foreach (Field field in fields)
+            {
+                Console.WriteLine(field.FieldName + ": " + field.Value);
+            }
+
+            using (SqlConnection connection = Database.GetDatabase().GetConnection())
+            {
+                using (SqlCommand command = connection.CreateCommand()) {
+                    command.CommandText = "CreateTicket";
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@requester_id", requesterId);
+                    command.Parameters.AddWithValue("@priority_id", priorityId);
+                    command.Parameters.AddWithValue("@category_id", categoryId);
+
+                    DataTable fieldsTable = new DataTable();
+                    fieldsTable.Columns.Add("field_id", typeof(int));
+                    fieldsTable.Columns.Add("value", typeof(string));
+
+                    foreach (Field field in fields)
+                    {
+                        fieldsTable.Rows.Add(field.FieldId, field.Value);
+                    }
+
+                    SqlParameter tvpParam = command.Parameters.AddWithValue("@fields", fieldsTable);
+                    tvpParam.SqlDbType = SqlDbType.Structured;
+                    tvpParam.TypeName = "ticket_fieldtype";
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    MessageBox.Show("Ticket created successfully.", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+            }
         }
     }
 }

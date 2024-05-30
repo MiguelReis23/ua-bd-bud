@@ -90,6 +90,10 @@ namespace BUD.CustomControls
                 }
                 else if (_inputType == InputType.DROPDOWN)
                 {
+                    if (cmbSel.SelectedItem == null)
+                    {
+                        return null;
+                    }
                     return cmbSel.SelectedItem.ToString();
                 }
                 else
@@ -107,6 +111,18 @@ namespace BUD.CustomControls
                 {
                     cmbSel.SelectedItem = value;
                 }
+            }
+        }
+
+        public int ValueIndex
+        {
+            get
+            {
+                return cmbSel.SelectedIndex;
+            }
+            set
+            {
+                cmbSel.SelectedIndex = value;
             }
         }
 

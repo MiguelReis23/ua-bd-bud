@@ -28,24 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.background = new System.Windows.Forms.GroupBox();
             this.lblDescription = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
+            this.background.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // background
             // 
-            this.groupBox1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.groupBox1.Controls.Add(this.lblDescription);
-            this.groupBox1.Controls.Add(this.lblTitle);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(240, 113);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
+            this.background.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.background.Controls.Add(this.lblDescription);
+            this.background.Controls.Add(this.lblTitle);
+            this.background.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.background.Location = new System.Drawing.Point(0, 0);
+            this.background.Margin = new System.Windows.Forms.Padding(0);
+            this.background.Name = "background";
+            this.background.Size = new System.Drawing.Size(365, 90);
+            this.background.TabIndex = 0;
+            this.background.TabStop = false;
             // 
             // lblDescription
             // 
@@ -53,7 +53,7 @@
             this.lblDescription.Location = new System.Drawing.Point(3, 39);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Padding = new System.Windows.Forms.Padding(10, 5, 10, 10);
-            this.lblDescription.Size = new System.Drawing.Size(234, 71);
+            this.lblDescription.Size = new System.Drawing.Size(359, 48);
             this.lblDescription.TabIndex = 1;
             this.lblDescription.Text = "Lorem ipsum dolor sit ammet Lorem ipsum dolor sit ammet Lorem ipsum dolor sit amm" +
     "et Lorem ipsum dolor .";
@@ -66,7 +66,7 @@
             this.lblTitle.Location = new System.Drawing.Point(3, 16);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.lblTitle.Size = new System.Drawing.Size(234, 23);
+            this.lblTitle.Size = new System.Drawing.Size(359, 23);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Card Title";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -76,18 +76,18 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            this.Controls.Add(this.background);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "CustomCard";
-            this.Size = new System.Drawing.Size(240, 113);
-            this.groupBox1.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(365, 90);
+            this.background.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox background;
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.Label lblTitle;
     }
