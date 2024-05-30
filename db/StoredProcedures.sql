@@ -23,6 +23,9 @@ GO
 IF TYPE_ID('ticket_fieldtype') IS NOT NULL
     DROP TYPE ticket_fieldtype
 GO
+IF OBJECT_ID('SendMessage', 'P') IS NOT NULL
+    DROP PROC SendMessage
+GO
 
 -- CREATE USER
 CREATE PROC CreateUser
@@ -292,4 +295,39 @@ BEGIN
     END
 END
 GO
+
+-- SEND MESSAGE
+CREATE PROC SendMessage
+    @sender_id INT,
+    @ticket_id INT,
+    @content VARCHAR(max)
+AS
+BEGIN
+        DECLARE @message_id INT
+
+        DECLARE @time_stamp DATETIME
+        SET @time_stamp = GETDATE()
+
+        IF @content IS NULL
+        BEGIN
+            PRINT 'ERROR: Message content cannot be null'
+            RETURN 0
+        END
+    BEGIN TRANSACTION T4
+    BEGIN TRY
+        INSERT INTO BUD.message (sender_id, ticket_id, content, time_stamp)
+        VALUES (@sender_id, @ticket_id, @content, @time_stamp)
+
+        SET @message_id = (SELECT SCOPE_IDENTITY())
+
+        COMMIT TRANSACTION T4
+        PRINT 'SUCCESS: Message sent'
+        RETURN 1
+    END TRY
+    BEGIN CATCH
+        PRINT ERROR_MESSAGE()
+        ROLLBACK TRANSACTION T4
+        RETURN 0
+    END CATCH
+END
 

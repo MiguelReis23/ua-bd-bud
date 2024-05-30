@@ -140,12 +140,11 @@ CREATE TABLE BUD.ticket_field(
 )
 
 CREATE TABLE BUD.message (
-    sender int NOT NULL REFERENCES BUD.[user](id),
-    receiver int NOT NULL REFERENCES BUD.[user](id),
-    ticket int NOT NULL REFERENCES BUD.ticket(id),
-    content varchar(500) NOT NULL,
+    id int PRIMARY KEY IDENTITY(1,1),
+    sender_id int NOT NULL REFERENCES BUD.[user](id),
+    ticket_id int NOT NULL REFERENCES BUD.ticket(id),
+    content varchar(max),
     time_stamp datetime NOT NULL,
-    PRIMARY KEY(sender, receiver, time_stamp, ticket)
 );
 
 CREATE TABLE BUD.article (
@@ -163,7 +162,6 @@ CREATE TABLE BUD.attachment (
     [data] varbinary(max) NOT NULL,
     ticket int REFERENCES BUD.ticket(id),
     sender int NOT NULL REFERENCES BUD.[user](id),
-    receiver int NOT NULL REFERENCES BUD.[user](id),
     time_stamp datetime NOT NULL,
-    FOREIGN KEY (sender, receiver, time_stamp, ticket) REFERENCES BUD.message(sender, receiver, time_stamp, ticket)
+    message_id int REFERENCES BUD.message(id)
 );

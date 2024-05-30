@@ -33,3 +33,7 @@ VALUES
 
 EXECUTE CreateTicket @requester_id = 1,@priority_id = 1, @category_id = 1, @fields = @fields
 GO
+
+-- SEND A MESSAGE
+EXECUTE SendMessage @sender_id = 1, @ticket_id = 1, @content = 'Hello, I need an email account for GLUA'
+GO
