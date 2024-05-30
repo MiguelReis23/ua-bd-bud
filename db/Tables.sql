@@ -157,7 +157,7 @@ CREATE TABLE BUD.article (
 );
 
 CREATE TABLE BUD.attachment (
-    id int PRIMARY KEY,
+    id int PRIMARY KEY IDENTITY(1,1),
     file_name varchar(50) NOT NULL,
     [data] varbinary(max) NOT NULL,
     ticket int REFERENCES BUD.ticket(id),

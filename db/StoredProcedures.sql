@@ -26,6 +26,12 @@ GO
 IF OBJECT_ID('SendMessage', 'P') IS NOT NULL
     DROP PROC SendMessage
 GO
+IF OBJECT_ID('SendAttachmentMessage', 'P') IS NOT NULL
+    DROP PROC SendAttachmentMessage
+GO
+IF OBJECT_ID('SendAttachment', 'P') IS NOT NULL
+    DROP PROC SendAttachment
+GO
 
 -- CREATE USER
 CREATE PROC CreateUser
@@ -330,4 +336,68 @@ BEGIN
         RETURN 0
     END CATCH
 END
+GO
 
+-- SEND ATTACHMENT MESSAGE
+CREATE PROC SendAttachmentMessage
+    @sender_id INT,
+    @ticket_id INT,
+    @file_name VARCHAR(50),
+    @data VARBINARY(MAX)
+AS
+BEGIN
+    DECLARE @message_id INT
+    DECLARE @attachment_id INT
+
+    DECLARE @time_stamp DATETIME
+    SET @time_stamp = GETDATE()
+
+    BEGIN TRANSACTION T5
+    BEGIN TRY
+        INSERT INTO BUD.message (sender_id, ticket_id, content, time_stamp)
+        VALUES (@sender_id, @ticket_id, NULL, @time_stamp)
+    
+        SET @message_id = (SELECT SCOPE_IDENTITY())
+
+        INSERT INTO BUD.attachment ( file_name, [data], ticket, sender, time_stamp, message_id)
+        VALUES (@file_name, @data, @ticket_id, @sender_id, @time_stamp, @message_id)
+    
+        COMMIT TRANSACTION T5
+        PRINT 'SUCCESS: Attachment sent'
+        RETURN 1
+    END TRY
+    BEGIN CATCH
+        PRINT ERROR_MESSAGE()
+        ROLLBACK TRANSACTION T5
+        RETURN 0
+    END CATCH
+END
+GO
+
+-- SEND ATTACHMENT ONLY
+CREATE PROC SendAttachment
+    @sender_id INT,
+    @ticket_id INT,
+    @file_name VARCHAR(50),
+    @data VARBINARY(MAX)
+AS
+BEGIN
+    DECLARE @attachment_id INT
+    DECLARE @time_stamp DATETIME
+    SET @time_stamp = GETDATE()
+
+    BEGIN TRANSACTION T6
+    BEGIN TRY
+        INSERT INTO BUD.attachment (file_name, [data], ticket, sender, time_stamp)
+        VALUES (@file_name, @data, @ticket_id, @sender_id, @time_stamp)
+        
+        COMMIT TRANSACTION T6
+        PRINT 'SUCCESS: Attachment sent'
+        RETURN 1
+    END TRY
+    BEGIN CATCH
+        PRINT ERROR_MESSAGE()
+        ROLLBACK TRANSACTION T6
+        RETURN 0
+    END CATCH
+END
