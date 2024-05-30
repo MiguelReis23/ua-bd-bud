@@ -35,6 +35,9 @@ GO
 IF OBJECT_ID('UpdateTicket', 'P') IS NOT NULL
     DROP PROC UpdateTicket
 GO  
+IF OBJECT_ID('GetMessagesByTicket', 'P') IS NOT NULL
+    DROP PROC GetMessagesByTicket
+GO
 
 -- CREATE USER
 CREATE PROC CreateUser
