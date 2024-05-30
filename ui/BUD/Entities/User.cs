@@ -106,6 +106,19 @@ namespace BUD
             return _role_names.Contains(role_name);
         }
 
+        public int getHighestRole()
+        {
+            int highest_role = 0;
+            foreach (int role in _role_ids)
+            {
+                if (role > highest_role)
+                {
+                    highest_role = role;
+                }
+            }
+            return highest_role;
+        }
+
         public override string ToString()
         {
             return base.ToString();

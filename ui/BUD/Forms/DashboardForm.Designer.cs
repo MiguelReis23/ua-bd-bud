@@ -35,8 +35,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.sectionManageTickets = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
-            this.sectionNewTicket = new System.Windows.Forms.TabPage();
-            this.label3 = new System.Windows.Forms.Label();
             this.sectionArticles = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -44,23 +42,22 @@
             this.lblUserGreet = new System.Windows.Forms.Label();
             this.btnEditProfile = new System.Windows.Forms.LinkLabel();
             this.btnLogout = new System.Windows.Forms.LinkLabel();
-            this.pbProfilePicture = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnMyTickets = new System.Windows.Forms.Button();
             this.btnNewTicket = new System.Windows.Forms.Button();
             this.btnManageTickets = new System.Windows.Forms.Button();
             this.btnArticles = new System.Windows.Forms.Button();
+            this.pbProfilePicture = new System.Windows.Forms.PictureBox();
             this.baseLayout.SuspendLayout();
             this.sectionsTabs.SuspendLayout();
             this.sectionMyTickets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMyTickets)).BeginInit();
             this.sectionManageTickets.SuspendLayout();
-            this.sectionNewTicket.SuspendLayout();
             this.sectionArticles.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbProfilePicture)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbProfilePicture)).BeginInit();
             this.SuspendLayout();
             // 
             // baseLayout
@@ -84,7 +81,6 @@
             // 
             this.sectionsTabs.Controls.Add(this.sectionMyTickets);
             this.sectionsTabs.Controls.Add(this.sectionManageTickets);
-            this.sectionsTabs.Controls.Add(this.sectionNewTicket);
             this.sectionsTabs.Controls.Add(this.sectionArticles);
             this.sectionsTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sectionsTabs.Location = new System.Drawing.Point(3, 53);
@@ -146,28 +142,6 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Manage Tickets";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // sectionNewTicket
-            // 
-            this.sectionNewTicket.Controls.Add(this.label3);
-            this.sectionNewTicket.Location = new System.Drawing.Point(4, 22);
-            this.sectionNewTicket.Name = "sectionNewTicket";
-            this.sectionNewTicket.Padding = new System.Windows.Forms.Padding(3);
-            this.sectionNewTicket.Size = new System.Drawing.Size(786, 368);
-            this.sectionNewTicket.TabIndex = 2;
-            this.sectionNewTicket.Text = "New Ticket";
-            this.sectionNewTicket.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 3);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(780, 33);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "New Ticket";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // sectionArticles
             // 
@@ -262,21 +236,6 @@
             this.btnLogout.Text = "Logout";
             this.btnLogout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnLogout_LinkClicked);
             // 
-            // pbProfilePicture
-            // 
-            this.pbProfilePicture.BackColor = System.Drawing.Color.White;
-            this.pbProfilePicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbProfilePicture.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbProfilePicture.Image = global::BUD.Properties.Resources.default_profile_picture;
-            this.pbProfilePicture.InitialImage = null;
-            this.pbProfilePicture.Location = new System.Drawing.Point(596, 3);
-            this.pbProfilePicture.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            this.pbProfilePicture.Name = "pbProfilePicture";
-            this.pbProfilePicture.Size = new System.Drawing.Size(54, 50);
-            this.pbProfilePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbProfilePicture.TabIndex = 3;
-            this.pbProfilePicture.TabStop = false;
-            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnMyTickets);
@@ -329,6 +288,21 @@
             this.btnArticles.UseVisualStyleBackColor = true;
             this.btnArticles.Click += new System.EventHandler(this.btnArticles_Click);
             // 
+            // pbProfilePicture
+            // 
+            this.pbProfilePicture.BackColor = System.Drawing.Color.White;
+            this.pbProfilePicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbProfilePicture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbProfilePicture.Image = global::BUD.Properties.Resources.default_profile_picture;
+            this.pbProfilePicture.InitialImage = null;
+            this.pbProfilePicture.Location = new System.Drawing.Point(596, 3);
+            this.pbProfilePicture.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            this.pbProfilePicture.Name = "pbProfilePicture";
+            this.pbProfilePicture.Size = new System.Drawing.Size(54, 50);
+            this.pbProfilePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbProfilePicture.TabIndex = 3;
+            this.pbProfilePicture.TabStop = false;
+            // 
             // DashboardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -339,18 +313,16 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Balcão Único Digital da Universidade de Aveiro - Dashboard";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DashboardForm_FormClosed);
-            this.Load += new System.EventHandler(this.DashboardForm_Load);
             this.baseLayout.ResumeLayout(false);
             this.sectionsTabs.ResumeLayout(false);
             this.sectionMyTickets.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridMyTickets)).EndInit();
             this.sectionManageTickets.ResumeLayout(false);
-            this.sectionNewTicket.ResumeLayout(false);
             this.sectionArticles.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbProfilePicture)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbProfilePicture)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -367,11 +339,9 @@
         private HeadlessTabControl sectionsTabs;
         private System.Windows.Forms.TabPage sectionMyTickets;
         private System.Windows.Forms.TabPage sectionManageTickets;
-        private System.Windows.Forms.TabPage sectionNewTicket;
         private System.Windows.Forms.TabPage sectionArticles;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView gridMyTickets;
         private System.Windows.Forms.Button btnArticles;
