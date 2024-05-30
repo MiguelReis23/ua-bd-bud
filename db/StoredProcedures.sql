@@ -32,6 +32,9 @@ GO
 IF OBJECT_ID('SendAttachment', 'P') IS NOT NULL
     DROP PROC SendAttachment
 GO
+IF OBJECT_ID('SeeUserTickets', 'P') IS NOT NULL
+    DROP PROC SeeUserTickets
+GO
 
 -- CREATE USER
 CREATE PROC CreateUser
@@ -401,3 +404,27 @@ BEGIN
         RETURN 0
     END CATCH
 END
+GO
+
+-- SEE USER TICKETS
+CREATE PROC SeeUserTickets
+    @user_id INT
+AS
+BEGIN
+    SELECT
+        t.id AS ticket_id,
+        t.submit_date,
+        t.closed_date,
+        t.rating,
+        s.[name] AS status,
+        p.[name] AS priority,
+        c.[name] AS category
+    FROM
+        BUD.ticket t
+        JOIN BUD.status s ON t.status_id = s.id
+        JOIN BUD.priority p ON t.priority_id = p.id
+        JOIN BUD.category c ON t.category_id = c.id
+    WHERE
+        t.requester_id = @user_id
+END
+GO

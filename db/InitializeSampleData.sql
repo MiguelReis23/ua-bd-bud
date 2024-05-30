@@ -45,3 +45,6 @@ GO
 -- SEND AN ATTACHMENT
 EXECUTE SendAttachment @file_name = 'teste2.jpg', @data = 0x9876543210FEDCBA, @ticket_id = 1, @sender_id = 1
 GO
+
+-- SEE TICKETS FROM USER
+EXECUTE SeeUserTickets @user_id = 1
