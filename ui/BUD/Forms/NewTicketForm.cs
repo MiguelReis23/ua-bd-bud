@@ -11,6 +11,7 @@ namespace BUD
 {
     public partial class NewTicketForm : Form
     {
+        User authenticatedUser = AuthenticatedUser.GetAuthenticatedUser();
         private List<Service> services;
         public NewTicketForm()
         {
@@ -70,7 +71,6 @@ namespace BUD
                 {
                     if (service.ServiceId == serviceId)
                     {
-                        Console.WriteLine("Service: " + service.ServiceName);
                         DrawCategory(service);
                     }
                 }
@@ -127,6 +127,22 @@ namespace BUD
 
         private void DrawFields(Category category)
         {
+            flowLayoutCommonDetails.Controls.Clear();
+            
+            string[] segmented_name = authenticatedUser.FullName.Split(' ');
+            string first_name = segmented_name.GetValue(0).ToString();
+            string last_name = segmented_name.GetValue(segmented_name.Length - 1).ToString();
+
+            Field requester = new Field(Entities.InputType.FREE_TEXT, 0, "Requester");
+            requester.Value = first_name + " " + last_name + " - " + AuthenticatedUser.GetAuthenticatedUser().Email;
+            requester.ReadOnly = true;
+
+            Field priority = new Field(Entities.InputType.DROPDOWN, 0, "Priority", "SELECT name FROM BUD.priority");
+
+
+            flowLayoutCommonDetails.Controls.Add(requester);
+            flowLayoutCommonDetails.Controls.Add(priority);
+
             flowLayoutDetails.Controls.Clear();
 
             foreach (Field field in category.Fields)
@@ -194,6 +210,16 @@ namespace BUD
             }
 
             return services;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -38,7 +38,7 @@
             this.label.Dock = System.Windows.Forms.DockStyle.Top;
             this.label.Location = new System.Drawing.Point(0, 0);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(400, 18);
+            this.label.Size = new System.Drawing.Size(350, 18);
             this.label.TabIndex = 2;
             this.label.Text = "Label:";
             this.label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -48,7 +48,7 @@
             this.txtFree.Dock = System.Windows.Forms.DockStyle.Top;
             this.txtFree.Location = new System.Drawing.Point(0, 18);
             this.txtFree.Name = "txtFree";
-            this.txtFree.Size = new System.Drawing.Size(400, 20);
+            this.txtFree.Size = new System.Drawing.Size(350, 20);
             this.txtFree.TabIndex = 3;
             // 
             // cmbSel
@@ -57,7 +57,7 @@
             this.cmbSel.FormattingEnabled = true;
             this.cmbSel.Location = new System.Drawing.Point(0, 38);
             this.cmbSel.Name = "cmbSel";
-            this.cmbSel.Size = new System.Drawing.Size(400, 21);
+            this.cmbSel.Size = new System.Drawing.Size(350, 21);
             this.cmbSel.TabIndex = 4;
             // 
             // Field
@@ -67,9 +67,9 @@
             this.Controls.Add(this.cmbSel);
             this.Controls.Add(this.txtFree);
             this.Controls.Add(this.label);
-            this.Margin = new System.Windows.Forms.Padding(0);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Field";
-            this.Size = new System.Drawing.Size(400, 38);
+            this.Size = new System.Drawing.Size(350, 39);
             this.ResumeLayout(false);
             this.PerformLayout();
 

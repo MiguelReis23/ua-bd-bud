@@ -18,6 +18,7 @@ namespace BUD.CustomControls
         private InputType _inputType;
         private int _field_id;
         private string _field_name;
+        private Boolean _readonly;
 
         public Field(InputType inputType,int field_id, string name, string query = null)
         {
@@ -31,13 +32,22 @@ namespace BUD.CustomControls
 
             if (inputType == InputType.FREE_TEXT)
             {
+                cmbSel.Visible = false;
                 txtFree.Visible = true;
             }
             else if (inputType == InputType.DROPDOWN)
             {
                 fetchData(query);
+                txtFree.Visible = false;
                 cmbSel.Visible = true;
             }
+        }
+
+        public Field()
+        {
+            InitializeComponent();
+
+            this._inputType = InputType.FREE_TEXT;
         }
 
         public InputType InputType
@@ -58,30 +68,17 @@ namespace BUD.CustomControls
             set { _field_id = value; }
         }
 
-        private Service[] fetchData(string query)
+        public Boolean ReadOnly
         {
-            List<Service> services = new List<Service>();
-
-            //using (SqlConnection connection = Database.GetDatabase().GetConnection())
-            //{
-            //    using (SqlCommand command = connection.CreateCommand())
-            //    {
-            //        command.CommandText = query;
-
-            //        connection.Open();
-
-            //        using (SqlDataReader reader = command.ExecuteReader())
-            //        {
-            //            while (reader.Read())
-            //            {
-            //                cmbSel.Items.Add(reader[0].ToString());
-            //            }
-            //        }
-            //    }
-            //}
-
-            return services.ToArray();
+            get { return _readonly; }
+            set
+            {
+                _readonly = value;
+                txtFree.ReadOnly = value;
+                cmbSel.Enabled = !value;
+            }
         }
+
 
         public string Value
         {
@@ -100,6 +97,44 @@ namespace BUD.CustomControls
                     return null;
                 }
             }
+            set
+            {
+                if (_inputType == InputType.FREE_TEXT)
+                {
+                    txtFree.Text = value;
+                }
+                else if (_inputType == InputType.DROPDOWN)
+                {
+                    cmbSel.SelectedItem = value;
+                }
+            }
         }
+
+        private Service[] fetchData(string query)
+        {
+            List<Service> services = new List<Service>();
+
+            using (SqlConnection connection = Database.GetDatabase().GetConnection())
+            {
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = query;
+
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            cmbSel.Items.Add(reader[0].ToString());
+                        }
+                    }
+                }
+            }
+
+            return services.ToArray();
+        }
+
+        
     }
 }

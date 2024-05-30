@@ -55,7 +55,6 @@ namespace BUD
             set { _fields = value; }
         }
 
-        // Deliberates how to build the field object based on the input
         public void AddField(int field_id, string field_name)
         {
             switch (field_id)

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomCard));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblDescription = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
@@ -44,7 +43,7 @@
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(318, 137);
+            this.groupBox1.Size = new System.Drawing.Size(240, 113);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -54,9 +53,10 @@
             this.lblDescription.Location = new System.Drawing.Point(3, 39);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Padding = new System.Windows.Forms.Padding(10, 5, 10, 10);
-            this.lblDescription.Size = new System.Drawing.Size(312, 95);
+            this.lblDescription.Size = new System.Drawing.Size(234, 71);
             this.lblDescription.TabIndex = 1;
-            this.lblDescription.Text = resources.GetString("lblDescription.Text");
+            this.lblDescription.Text = "Lorem ipsum dolor sit ammet Lorem ipsum dolor sit ammet Lorem ipsum dolor sit amm" +
+    "et Lorem ipsum dolor .";
             this.lblDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblTitle
@@ -66,7 +66,7 @@
             this.lblTitle.Location = new System.Drawing.Point(3, 16);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.lblTitle.Size = new System.Drawing.Size(312, 23);
+            this.lblTitle.Size = new System.Drawing.Size(234, 23);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Card Title";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -77,9 +77,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(0);
+            this.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
             this.Name = "CustomCard";
-            this.Size = new System.Drawing.Size(318, 137);
+            this.Size = new System.Drawing.Size(240, 113);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
