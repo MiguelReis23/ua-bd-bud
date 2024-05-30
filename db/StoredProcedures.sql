@@ -14,6 +14,15 @@ GO
 IF OBJECT_ID('AuthenticateUser', 'P') IS NOT NULL
     DROP PROC AuthenticateUser
 GO
+IF OBJECT_ID('CreateTicket', 'P') IS NOT NULL
+    DROP PROC CreateTicket
+GO
+IF OBJECT_ID('InsertTicketField', 'P') IS NOT NULL
+    DROP PROC InsertTicketField
+GO
+IF TYPE_ID('ticket_fieldtype') IS NOT NULL
+    DROP TYPE ticket_fieldtype
+GO
 
 -- CREATE USER
 CREATE PROC CreateUser
@@ -236,3 +245,51 @@ BEGIN
     END
 END
 GO
+
+-- CREATE the TVP for ticket fields
+CREATE TYPE ticket_fieldtype AS TABLE
+(
+    field_id INT,
+    [value] VARCHAR(255)
+)
+GO
+
+-- CREATE TICKET
+CREATE PROCEDURE CreateTicket
+    @requester_id INT,
+    @priority_id INT,
+    @category_id INT,
+    @fields ticket_fieldtype READONLY
+AS
+BEGIN
+    DECLARE @ticket_id INT
+    DECLARE @status_id INT
+    SET @status_id = 1; -- Open
+
+    DECLARE @submit_date DATE
+    SET @submit_date = GETDATE()
+
+    BEGIN
+        BEGIN TRANSACTION T3
+        BEGIN TRY
+                INSERT INTO BUD.ticket (requester_id, submit_date, priority_id, status_id, category_id)
+                VALUES (@requester_id, @submit_date, @priority_id, @status_id, @category_id)
+
+                SET @ticket_id = (SELECT SCOPE_IDENTITY())
+
+                INSERT INTO BUD.ticket_field (ticket_id, field_id, [value])
+                SELECT @ticket_id, field_id, [value]
+                FROM @fields;
+            COMMIT TRANSACTION T3
+            PRINT 'SUCCESS: Ticket created'
+            RETURN 1
+        END TRY
+        BEGIN CATCH
+            PRINT ERROR_MESSAGE()
+            ROLLBACK TRANSACTION T3
+            RETURN 0
+        END CATCH
+    END
+END
+GO
+

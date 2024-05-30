@@ -19,6 +19,7 @@ GO
 IF OBJECT_ID('BUD.attachment', 'U') IS NOT NULL DROP TABLE BUD.attachment;
 IF OBJECT_ID('BUD.article', 'U') IS NOT NULL DROP TABLE BUD.article;
 IF OBJECT_ID('BUD.message', 'U') IS NOT NULL DROP TABLE BUD.message;
+IF OBJECT_ID('BUD.ticket_field', 'U') IS NOT NULL DROP TABLE BUD.ticket_field;
 IF OBJECT_ID('BUD.ticket', 'U') IS NOT NULL DROP TABLE BUD.ticket;
 IF OBJECT_ID('BUD.category_field', 'U') IS NOT NULL DROP TABLE BUD.category_field;
 IF OBJECT_ID('BUD.field', 'U') IS NOT NULL DROP TABLE BUD.field;
@@ -121,15 +122,22 @@ CREATE TABLE BUD.category_field(
 
 CREATE TABLE BUD.ticket (
     id int PRIMARY KEY IDENTITY(1,1),
-    requester int NOT NULL REFERENCES BUD.[user](id),
-	responsible int REFERENCES BUD.[user](id),
+    requester_id int NOT NULL REFERENCES BUD.[user](id),
+	responsible_id int REFERENCES BUD.[user](id),
     submit_date date NOT NULL,
     closed_date date,
     rating int CHECK (rating >= 0 AND rating <= 5),
-    [status] int REFERENCES BUD.status(id),
-    priority int REFERENCES BUD.priority(id),
-    category int NOT NULL REFERENCES BUD.category(id)
+    status_id int REFERENCES BUD.status(id),
+    priority_id int REFERENCES BUD.priority(id),
+    category_id int NOT NULL REFERENCES BUD.category(id)
 );
+
+CREATE TABLE BUD.ticket_field(
+    ticket_id int NOT NULL REFERENCES BUD.ticket(id) ON DELETE CASCADE,
+    field_id int NOT NULL REFERENCES BUD.field(id) ON DELETE CASCADE,
+    [value] varchar(255) NOT NULL,
+    PRIMARY KEY(ticket_id, field_id)
+)
 
 CREATE TABLE BUD.message (
     sender int NOT NULL REFERENCES BUD.[user](id),

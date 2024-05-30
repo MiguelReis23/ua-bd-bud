@@ -20,4 +20,16 @@ GO
 -- ASSOCIATE USERS TO DEPARTMENT
 EXEC AddUserToDepartment @user_id = 1, @department_id = 4, @start_date = '2024-05-29';
 EXEC AddUserToDepartment @user_id = 2, @department_id = 4, @start_date = '2024-05-29';
+GO
 
+-- CREATE TICKET AND ITS FIELDS
+DECLARE @fields ticket_fieldtype;
+INSERT INTO @fields (field_id, [value])
+VALUES
+    (1, 'DETI'),
+    (2, 'GLUA@ua.pt'),
+    (3, 'GLUA'),
+    (4, 'Miguel Vila')
+
+EXECUTE CreateTicket @requester_id = 1,@priority_id = 1, @category_id = 1, @fields = @fields
+GO
