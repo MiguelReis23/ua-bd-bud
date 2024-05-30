@@ -408,24 +408,17 @@ GO
 
 -- SEE USER TICKETS
 CREATE PROC SeeUserTickets
-    @user_id INT
+    @user_id INT = NULL
 AS
 BEGIN
-    SELECT
-        t.id AS ticket_id,
-        t.submit_date,
-        t.closed_date,
-        t.rating,
-        s.[name] AS status,
-        p.[name] AS priority,
-        c.[name] AS category
-    FROM
-        BUD.ticket t
-        JOIN BUD.status s ON t.status_id = s.id
-        JOIN BUD.priority p ON t.priority_id = p.id
-        JOIN BUD.category c ON t.category_id = c.id
-    WHERE
-        t.requester_id = @user_id
+    IF @user_id IS NULL
+    BEGIN
+        SELECT * FROM BUD.ticket
+    END
+    ELSE
+    BEGIN
+        SELECT * FROM BUD.ticket WHERE requester_id = @user_id
+    END
 END
 GO
 

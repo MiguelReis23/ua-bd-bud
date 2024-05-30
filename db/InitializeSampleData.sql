@@ -50,6 +50,10 @@ GO
 EXECUTE SeeUserTickets @user_id = 1
 GO
 
+-- SEE ALL TICKETS
+EXECUTE SeeUserTickets
+GO
+
 -- UPDATE TICKET
 EXECUTE UpdateTicket @ticket_id = 1, @priority_id = 2, @closed_date = '2024-05-30'
 GO
