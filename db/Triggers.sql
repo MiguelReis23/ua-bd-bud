@@ -1,5 +1,5 @@
 -- File for creating Triggers in the database.
-
+-- these are automatic triggers that maintain the integrity of the database.
 USE BUD
 GO
 
@@ -30,5 +30,24 @@ AS
 BEGIN
     DELETE FROM BUD.message WHERE id IN (SELECT id FROM deleted);
     DELETE FROM BUD.attachment WHERE id IN (SELECT id FROM deleted);
+END
+GO
+
+-- Delete all userdepartments when a user or department is deleted
+CREATE TRIGGER BUD.DeleteUserDepartmentofUser
+ON BUD.user
+AFTER DELETE
+AS
+BEGIN
+    DELETE FROM BUD.userdepartment WHERE user_id IN (SELECT id FROM deleted);
+END
+GO
+
+CREATE TRIGGER BUD.DeleteUserDepartmentofDepartment
+ON BUD.department
+AFTER DELETE
+AS
+BEGIN
+    DELETE FROM BUD.userdepartment WHERE department_id IN (SELECT id FROM deleted);
 END
 GO

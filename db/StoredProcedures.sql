@@ -17,9 +17,6 @@ GO
 IF OBJECT_ID('CreateTicket', 'P') IS NOT NULL
     DROP PROC CreateTicket
 GO
-IF OBJECT_ID('InsertTicketField', 'P') IS NOT NULL
-    DROP PROC InsertTicketField
-GO
 IF TYPE_ID('ticket_fieldtype') IS NOT NULL
     DROP TYPE ticket_fieldtype
 GO
@@ -432,7 +429,7 @@ BEGIN
 END
 GO
 
--- UPDATE TICKET STATUS 
+-- UPDATE TICKET 
 CREATE PROCEDURE UpdateTicket
     @ticket_id INT,
     @status_id INT = NULL,
