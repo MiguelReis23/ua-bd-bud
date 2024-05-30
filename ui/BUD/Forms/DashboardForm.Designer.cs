@@ -32,8 +32,15 @@
             this.sectionsTabs = new BUD.HeadlessTabControl();
             this.sectionMyTickets = new System.Windows.Forms.TabPage();
             this.gridMyTickets = new System.Windows.Forms.DataGridView();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnRefreshMyTickets = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.sectionManageTickets = new System.Windows.Forms.TabPage();
+            this.gridManageTickets = new System.Windows.Forms.DataGridView();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnRefreshManageTickets = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.sectionArticles = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
@@ -42,22 +49,27 @@
             this.lblUserGreet = new System.Windows.Forms.Label();
             this.btnEditProfile = new System.Windows.Forms.LinkLabel();
             this.btnLogout = new System.Windows.Forms.LinkLabel();
+            this.pbProfilePicture = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnMyTickets = new System.Windows.Forms.Button();
             this.btnNewTicket = new System.Windows.Forms.Button();
             this.btnManageTickets = new System.Windows.Forms.Button();
             this.btnArticles = new System.Windows.Forms.Button();
-            this.pbProfilePicture = new System.Windows.Forms.PictureBox();
             this.baseLayout.SuspendLayout();
             this.sectionsTabs.SuspendLayout();
             this.sectionMyTickets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMyTickets)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
             this.sectionManageTickets.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridManageTickets)).BeginInit();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
             this.sectionArticles.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbProfilePicture)).BeginInit();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // baseLayout
@@ -92,7 +104,7 @@
             // sectionMyTickets
             // 
             this.sectionMyTickets.Controls.Add(this.gridMyTickets);
-            this.sectionMyTickets.Controls.Add(this.label1);
+            this.sectionMyTickets.Controls.Add(this.tableLayoutPanel1);
             this.sectionMyTickets.Location = new System.Drawing.Point(4, 22);
             this.sectionMyTickets.Name = "sectionMyTickets";
             this.sectionMyTickets.Padding = new System.Windows.Forms.Padding(3);
@@ -103,27 +115,78 @@
             // 
             // gridMyTickets
             // 
+            this.gridMyTickets.AllowUserToAddRows = false;
+            this.gridMyTickets.AllowUserToDeleteRows = false;
+            this.gridMyTickets.AllowUserToOrderColumns = true;
+            this.gridMyTickets.AllowUserToResizeColumns = false;
+            this.gridMyTickets.AllowUserToResizeRows = false;
+            this.gridMyTickets.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridMyTickets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridMyTickets.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridMyTickets.Location = new System.Drawing.Point(3, 36);
+            this.gridMyTickets.Location = new System.Drawing.Point(3, 39);
+            this.gridMyTickets.MultiSelect = false;
             this.gridMyTickets.Name = "gridMyTickets";
-            this.gridMyTickets.Size = new System.Drawing.Size(780, 329);
-            this.gridMyTickets.TabIndex = 1;
+            this.gridMyTickets.ReadOnly = true;
+            this.gridMyTickets.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.gridMyTickets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridMyTickets.ShowCellErrors = false;
+            this.gridMyTickets.ShowCellToolTips = false;
+            this.gridMyTickets.ShowEditingIcon = false;
+            this.gridMyTickets.ShowRowErrors = false;
+            this.gridMyTickets.Size = new System.Drawing.Size(780, 326);
+            this.gridMyTickets.TabIndex = 3;
+            this.gridMyTickets.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMyTickets_CellClick);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.92308F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.07692F));
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(780, 36);
+            this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.btnRefreshMyTickets);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(603, 3);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(174, 30);
+            this.flowLayoutPanel2.TabIndex = 8;
+            // 
+            // btnRefreshMyTickets
+            // 
+            this.btnRefreshMyTickets.Location = new System.Drawing.Point(103, 3);
+            this.btnRefreshMyTickets.Name = "btnRefreshMyTickets";
+            this.btnRefreshMyTickets.Size = new System.Drawing.Size(68, 25);
+            this.btnRefreshMyTickets.TabIndex = 0;
+            this.btnRefreshMyTickets.Text = "Refresh";
+            this.btnRefreshMyTickets.UseVisualStyleBackColor = true;
+            this.btnRefreshMyTickets.Click += new System.EventHandler(this.btnRefreshMyTickets_Click);
             // 
             // label1
             // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 3);
+            this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(780, 33);
+            this.label1.Size = new System.Drawing.Size(594, 36);
             this.label1.TabIndex = 0;
             this.label1.Text = "My Tickets";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // sectionManageTickets
             // 
-            this.sectionManageTickets.Controls.Add(this.label2);
+            this.sectionManageTickets.Controls.Add(this.gridManageTickets);
+            this.sectionManageTickets.Controls.Add(this.tableLayoutPanel4);
             this.sectionManageTickets.Location = new System.Drawing.Point(4, 22);
             this.sectionManageTickets.Name = "sectionManageTickets";
             this.sectionManageTickets.Padding = new System.Windows.Forms.Padding(3);
@@ -132,16 +195,75 @@
             this.sectionManageTickets.Text = "Manage Tickets";
             this.sectionManageTickets.UseVisualStyleBackColor = true;
             // 
+            // gridManageTickets
+            // 
+            this.gridManageTickets.AllowUserToAddRows = false;
+            this.gridManageTickets.AllowUserToDeleteRows = false;
+            this.gridManageTickets.AllowUserToOrderColumns = true;
+            this.gridManageTickets.AllowUserToResizeColumns = false;
+            this.gridManageTickets.AllowUserToResizeRows = false;
+            this.gridManageTickets.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridManageTickets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridManageTickets.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridManageTickets.Location = new System.Drawing.Point(3, 39);
+            this.gridManageTickets.MultiSelect = false;
+            this.gridManageTickets.Name = "gridManageTickets";
+            this.gridManageTickets.ReadOnly = true;
+            this.gridManageTickets.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.gridManageTickets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridManageTickets.ShowCellErrors = false;
+            this.gridManageTickets.ShowCellToolTips = false;
+            this.gridManageTickets.ShowEditingIcon = false;
+            this.gridManageTickets.ShowRowErrors = false;
+            this.gridManageTickets.Size = new System.Drawing.Size(780, 326);
+            this.gridManageTickets.TabIndex = 4;
+            this.gridManageTickets.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridManageTickets_CellClick);
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.92308F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.07692F));
+            this.tableLayoutPanel4.Controls.Add(this.flowLayoutPanel3, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(780, 36);
+            this.tableLayoutPanel4.TabIndex = 3;
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Controls.Add(this.btnRefreshManageTickets);
+            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(603, 3);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(174, 30);
+            this.flowLayoutPanel3.TabIndex = 8;
+            // 
+            // btnRefreshManageTickets
+            // 
+            this.btnRefreshManageTickets.Location = new System.Drawing.Point(103, 3);
+            this.btnRefreshManageTickets.Name = "btnRefreshManageTickets";
+            this.btnRefreshManageTickets.Size = new System.Drawing.Size(68, 25);
+            this.btnRefreshManageTickets.TabIndex = 0;
+            this.btnRefreshManageTickets.Text = "Refresh";
+            this.btnRefreshManageTickets.UseVisualStyleBackColor = true;
+            this.btnRefreshManageTickets.Click += new System.EventHandler(this.btnRefreshManageTickets_Click);
+            // 
             // label2
             // 
-            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 3);
+            this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(780, 33);
-            this.label2.TabIndex = 1;
+            this.label2.Size = new System.Drawing.Size(594, 36);
+            this.label2.TabIndex = 0;
             this.label2.Text = "Manage Tickets";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // sectionArticles
             // 
@@ -236,6 +358,21 @@
             this.btnLogout.Text = "Logout";
             this.btnLogout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnLogout_LinkClicked);
             // 
+            // pbProfilePicture
+            // 
+            this.pbProfilePicture.BackColor = System.Drawing.Color.White;
+            this.pbProfilePicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbProfilePicture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbProfilePicture.Image = global::BUD.Properties.Resources.default_profile_picture;
+            this.pbProfilePicture.InitialImage = null;
+            this.pbProfilePicture.Location = new System.Drawing.Point(596, 3);
+            this.pbProfilePicture.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            this.pbProfilePicture.Name = "pbProfilePicture";
+            this.pbProfilePicture.Size = new System.Drawing.Size(54, 50);
+            this.pbProfilePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbProfilePicture.TabIndex = 3;
+            this.pbProfilePicture.TabStop = false;
+            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnMyTickets);
@@ -288,21 +425,6 @@
             this.btnArticles.UseVisualStyleBackColor = true;
             this.btnArticles.Click += new System.EventHandler(this.btnArticles_Click);
             // 
-            // pbProfilePicture
-            // 
-            this.pbProfilePicture.BackColor = System.Drawing.Color.White;
-            this.pbProfilePicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbProfilePicture.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbProfilePicture.Image = global::BUD.Properties.Resources.default_profile_picture;
-            this.pbProfilePicture.InitialImage = null;
-            this.pbProfilePicture.Location = new System.Drawing.Point(596, 3);
-            this.pbProfilePicture.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            this.pbProfilePicture.Name = "pbProfilePicture";
-            this.pbProfilePicture.Size = new System.Drawing.Size(54, 50);
-            this.pbProfilePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbProfilePicture.TabIndex = 3;
-            this.pbProfilePicture.TabStop = false;
-            // 
             // DashboardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,16 +435,22 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Balcão Único Digital da Universidade de Aveiro - Dashboard";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DashboardForm_FormClosed);
+            this.Load += new System.EventHandler(this.DashboardForm_Load);
             this.baseLayout.ResumeLayout(false);
             this.sectionsTabs.ResumeLayout(false);
             this.sectionMyTickets.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridMyTickets)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
             this.sectionManageTickets.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridManageTickets)).EndInit();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.flowLayoutPanel3.ResumeLayout(false);
             this.sectionArticles.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbProfilePicture)).EndInit();
+            this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -341,13 +469,20 @@
         private System.Windows.Forms.TabPage sectionManageTickets;
         private System.Windows.Forms.TabPage sectionArticles;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataGridView gridMyTickets;
         private System.Windows.Forms.Button btnArticles;
         private System.Windows.Forms.Button btnNewTicket;
         private System.Windows.Forms.Button btnManageTickets;
         private System.Windows.Forms.Button btnMyTickets;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.Button btnRefreshMyTickets;
+        private System.Windows.Forms.DataGridView gridMyTickets;
+        private System.Windows.Forms.DataGridView gridManageTickets;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.Button btnRefreshManageTickets;
+        private System.Windows.Forms.Label label2;
     }
 }

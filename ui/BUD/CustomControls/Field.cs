@@ -118,7 +118,7 @@ namespace BUD.CustomControls
         {
             get
             {
-                return cmbSel.SelectedIndex;
+                return cmbSel.SelectedIndex + 1;
             }
             set
             {

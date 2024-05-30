@@ -12,13 +12,15 @@ namespace BUD
     public partial class NewTicketForm : Form
     {
         User authenticatedUser = AuthenticatedUser.GetAuthenticatedUser();
+        DashboardForm dashboardFormRef;
         private List<Service> services;
-        public NewTicketForm()
+        public NewTicketForm(DashboardForm dashboardForm)
         {
             InitializeComponent();
             stepsTabs.SelectedIndex = 0;
 
             services = fetchServices(AuthenticatedUser.GetAuthenticatedUser().getHighestRole());
+            dashboardFormRef = dashboardForm;
 
             drawServices();
         }
@@ -329,6 +331,7 @@ namespace BUD
                     command.ExecuteNonQuery();
 
                     MessageBox.Show("Ticket created successfully.", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    dashboardFormRef.LoadUserTickets();
                     this.Close();
                 }
             }

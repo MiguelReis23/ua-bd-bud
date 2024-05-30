@@ -43,7 +43,7 @@
             this.background.Location = new System.Drawing.Point(0, 0);
             this.background.Margin = new System.Windows.Forms.Padding(0);
             this.background.Name = "background";
-            this.background.Size = new System.Drawing.Size(365, 90);
+            this.background.Size = new System.Drawing.Size(347, 90);
             this.background.TabIndex = 0;
             this.background.TabStop = false;
             // 
@@ -53,7 +53,7 @@
             this.lblDescription.Location = new System.Drawing.Point(3, 39);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Padding = new System.Windows.Forms.Padding(10, 5, 10, 10);
-            this.lblDescription.Size = new System.Drawing.Size(359, 48);
+            this.lblDescription.Size = new System.Drawing.Size(341, 48);
             this.lblDescription.TabIndex = 1;
             this.lblDescription.Text = "Lorem ipsum dolor sit ammet Lorem ipsum dolor sit ammet Lorem ipsum dolor sit amm" +
     "et Lorem ipsum dolor .";
@@ -66,7 +66,7 @@
             this.lblTitle.Location = new System.Drawing.Point(3, 16);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.lblTitle.Size = new System.Drawing.Size(359, 23);
+            this.lblTitle.Size = new System.Drawing.Size(341, 23);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Card Title";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -79,7 +79,7 @@
             this.Controls.Add(this.background);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "CustomCard";
-            this.Size = new System.Drawing.Size(365, 90);
+            this.Size = new System.Drawing.Size(347, 90);
             this.background.ResumeLayout(false);
             this.ResumeLayout(false);
 
