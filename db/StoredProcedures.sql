@@ -479,3 +479,22 @@ BEGIN
     END CATCH
 END
 GO
+
+-- GET MESSAGES BY TICKET
+CREATE PROCEDURE GetMessagesByTicket
+    @ticket_id INT
+AS
+BEGIN
+    SELECT
+        m.id AS message_id,
+        m.sender_id,
+        m.content,
+        m.time_stamp,
+        a.file_name,
+        a.[data]
+    FROM
+        BUD.message m
+        LEFT JOIN BUD.attachment a ON m.id = a.message_id
+    WHERE
+        m.ticket_id = @ticket_id
+END

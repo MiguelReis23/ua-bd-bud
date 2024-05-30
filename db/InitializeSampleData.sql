@@ -38,6 +38,9 @@ GO
 EXECUTE SendMessage @sender_id = 1, @ticket_id = 1, @content = 'Hello, I need an email account for GLUA'
 GO
 
+EXECUTE SendMessage @sender_id = 4, @ticket_id = 1, @content = 'Hello, I will take care of this'
+GO
+
 -- SEND AN ATTACHMENT MESSAGE
 EXECUTE SendAttachmentMessage @sender_id = 1, @ticket_id = 1, @file_name = 'teste.jpg', @data = 0x1234567890ABCDEF
 GO

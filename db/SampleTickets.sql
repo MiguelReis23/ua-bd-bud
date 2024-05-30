@@ -1,5 +1,8 @@
 -- This file is for inserting tickets into the database.
 
+USE BUD
+GO
+
 DECLARE @i INT = 1;
 DECLARE @fields ticket_fieldtype;
 DECLARE @requester_id INT, @priority_id INT;
