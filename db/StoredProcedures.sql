@@ -35,6 +35,9 @@ GO
 IF OBJECT_ID('SeeUserTickets', 'P') IS NOT NULL
     DROP PROC SeeUserTickets
 GO
+IF OBJECT_ID('UpdateTicket', 'P') IS NOT NULL
+    DROP PROC UpdateTicket
+GO  
 
 -- CREATE USER
 CREATE PROC CreateUser
@@ -426,5 +429,56 @@ BEGIN
         JOIN BUD.category c ON t.category_id = c.id
     WHERE
         t.requester_id = @user_id
+END
+GO
+
+-- UPDATE TICKET STATUS 
+CREATE PROCEDURE UpdateTicket
+    @ticket_id INT,
+    @status_id INT = NULL,
+    @priority_id INT = NULL,
+    @closed_date DATE = NULL,
+    @responsible_id INT = NULL
+AS
+BEGIN
+    BEGIN TRANSACTION T7
+    BEGIN TRY
+        IF @status_id IS NOT NULL
+        BEGIN
+            UPDATE BUD.ticket
+            SET status_id = @status_id
+            WHERE id = @ticket_id
+        END
+
+        IF @priority_id IS NOT NULL
+        BEGIN
+            UPDATE BUD.ticket
+            SET priority_id = @priority_id
+            WHERE id = @ticket_id
+        END
+
+        IF @closed_date IS NOT NULL
+        BEGIN
+            UPDATE BUD.ticket
+            SET closed_date = @closed_date
+            WHERE id = @ticket_id
+        END
+
+        IF @responsible_id IS NOT NULL
+        BEGIN
+            UPDATE BUD.ticket
+            SET responsible_id = @responsible_id
+            WHERE id = @ticket_id
+        END
+
+        COMMIT TRANSACTION T7
+        PRINT 'SUCCESS: Ticket updated'
+        RETURN 1
+    END TRY
+    BEGIN CATCH
+        PRINT ERROR_MESSAGE()
+        ROLLBACK TRANSACTION T7
+        RETURN 0
+    END CATCH
 END
 GO

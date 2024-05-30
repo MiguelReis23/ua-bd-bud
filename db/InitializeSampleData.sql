@@ -48,3 +48,8 @@ GO
 
 -- SEE TICKETS FROM USER
 EXECUTE SeeUserTickets @user_id = 1
+GO
+
+-- UPDATE TICKET
+EXECUTE UpdateTicket @ticket_id = 1, @priority_id = 2, @closed_date = '2024-05-30'
+GO
