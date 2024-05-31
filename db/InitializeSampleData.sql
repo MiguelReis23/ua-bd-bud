@@ -31,7 +31,7 @@ VALUES
     (3, 'GLUA'),
     (4, 'Miguel Vila')
 
-EXECUTE CreateTicket @requester_id = 1,@priority_id = 1, @category_id = 1, @fields = @fields
+EXECUTE CreateTicket @requester_id = 1,@priority_id = 3, @category_id = 1, @fields = @fields
 GO
 
 -- SEND A MESSAGE
@@ -58,5 +58,8 @@ EXECUTE SeeUserTickets
 GO
 
 -- UPDATE TICKET
-EXECUTE UpdateTicket @ticket_id = 1, @priority_id = 2, @closed_date = '2024-05-30'
+EXECUTE UpdateTicket @ticket_id = 1,  @priority_id = 2, @status_id = 3
+GO
+
+EXECUTE UpdateTicket @ticket_id = 1, @priority_id = 3
 GO

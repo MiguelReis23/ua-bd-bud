@@ -16,10 +16,28 @@ ON BUD.ticket
 AFTER UPDATE 
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM inserted WHERE status_id = 3)
+    -- Allow updates to close the ticket
+    IF EXISTS (
+        SELECT 1
+        FROM inserted i 
+        INNER JOIN deleted d ON i.id = d.id
+        WHERE d.status_id <> 3
+    )
     BEGIN
-        RAISERROR ('Cannot update a closed ticket.', 16, 1);
+        RETURN;
+    END
+
+    -- Prevent updates to tickets that are already closed
+    IF EXISTS (
+        SELECT 1
+        FROM inserted i 
+        INNER JOIN deleted d ON i.id = d.id
+        WHERE d.status_id = 3
+    )
+    BEGIN
+        RAISERROR('Cannot update a closed ticket.', 16, 1);
         ROLLBACK TRANSACTION;
+        RETURN;
     END
 END
 GO

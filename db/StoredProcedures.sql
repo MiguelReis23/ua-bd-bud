@@ -443,13 +443,6 @@ AS
 BEGIN
     BEGIN TRANSACTION T7
     BEGIN TRY
-        IF @status_id IS NOT NULL
-        BEGIN
-            UPDATE BUD.ticket
-            SET status_id = @status_id
-            WHERE id = @ticket_id
-        END
-
         IF @priority_id IS NOT NULL
         BEGIN
             UPDATE BUD.ticket
@@ -468,6 +461,13 @@ BEGIN
         BEGIN
             UPDATE BUD.ticket
             SET responsible_id = @responsible_id
+            WHERE id = @ticket_id
+        END
+
+        IF @status_id IS NOT NULL
+        BEGIN
+            UPDATE BUD.ticket
+            SET status_id = @status_id
             WHERE id = @ticket_id
         END
 
