@@ -95,6 +95,7 @@
             this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Visible = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // flowLayoutPanel1
@@ -150,6 +151,7 @@
             this.messagesLayout.Name = "messagesLayout";
             this.messagesLayout.Size = new System.Drawing.Size(393, 406);
             this.messagesLayout.TabIndex = 9;
+            this.messagesLayout.WrapContents = false;
             // 
             // TicketViewerForm
             // 
