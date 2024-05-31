@@ -301,7 +301,7 @@ namespace BUD.Forms
                             {
                                 Text = content,
                                 AutoSize = false,
-                                Width = 386,
+                                Width = 370,
                                 Height = 33,
                                 Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
                                 TextAlign = senderId == AuthenticatedUser.GetAuthenticatedUser().UserId ? System.Drawing.ContentAlignment.MiddleRight : System.Drawing.ContentAlignment.MiddleLeft
@@ -318,7 +318,6 @@ namespace BUD.Forms
                             Console.WriteLine();
                         }
 
-                        // Add all messages to the layout in order
                         foreach (var message in messages)
                         {
                             messagesLayout.Controls.Add(message);
@@ -331,6 +330,13 @@ namespace BUD.Forms
         private void btnSend_Click(object sender, EventArgs e)
         {
             string message = txtMessage.Text.Trim();
+
+            if (string.IsNullOrEmpty(message))
+            {
+                MessageBox.Show("Message cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             int senderId = AuthenticatedUser.GetAuthenticatedUser().UserId;
             int ticketId = this.ticketId;
             string connectionString = Database.GetDatabase().GetConnectionString();
@@ -356,11 +362,7 @@ namespace BUD.Forms
                         command.ExecuteNonQuery();
                         int result = (int)returnValue.Value;
 
-                        if (result == 1)
-                        {
-                            MessageBox.Show("Message sent successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
+                        if (result != 1)
                         {
                             MessageBox.Show("Failed to send message.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
