@@ -62,6 +62,9 @@ namespace BUD
                 case 1:
                     _fields.Add(new Field(InputType.DROPDOWN, field_id, field_name, "SELECT name FROM BUD.department"));
                     break;
+                case 17:
+                    _fields.Add(new Field(InputType.DROPDOWN, field_id, field_name, "SELECT name FROM BUD.room"));
+                    break;
                 default:
                     _fields.Add(new Field(InputType.FREE_TEXT, field_id, field_name));
                     break;

@@ -79,6 +79,18 @@ BEGIN
 END
 GO
 
+-- Query to get total tickets
+SELECT BUD.TotalTickets(NULL) AS TotalTickets;
+
+-- Queries to get total tickets by priority
+SELECT BUD.TotalTicketsWithPriority(1) AS LowPriorityTickets;
+SELECT BUD.TotalTicketsWithPriority(2) AS MediumPriorityTickets;
+SELECT BUD.TotalTicketsWithPriority(3) AS HighPriorityTickets;
+
+-- Queries to get total tickets by status
+SELECT BUD.TotalTicketsWithStatus(1) AS OpenTickets;
+SELECT BUD.TotalTicketsWithStatus(2) AS ClosedTickets;
+SELECT BUD.TotalTicketsWithStatus(3) AS TicketsInProgress;
 
 
 -- Test TotalTickets function

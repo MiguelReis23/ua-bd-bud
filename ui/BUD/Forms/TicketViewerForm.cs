@@ -4,6 +4,8 @@ using BUD.CustomControls;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using BUD.Entities;
+using System.Linq;
+using System.Data;
 
 namespace BUD.Forms
 {
@@ -25,7 +27,7 @@ namespace BUD.Forms
             InitializeComponent();
             this.ticketId = ticketId;
             FetchTicketFields(ticketId);
-            DrawCommonFields();
+            DrawCommonFields(readOnly);
             DrawFields(readOnly);
 
             if (readOnly)
@@ -123,6 +125,7 @@ namespace BUD.Forms
                             {
                                 fieldControl = new Field(InputType.FREE_TEXT, fieldId, fieldName);
                             }
+                            fieldControl.ReadOnly = true;
                             fieldControl.Value = fieldValue;
                             fields.Add(fieldControl);
                         }
@@ -131,7 +134,7 @@ namespace BUD.Forms
             }
         }
 
-        private void DrawCommonFields()
+        private void DrawCommonFields(Boolean readOnly = false)
         {
             Field requesterField = new Field(InputType.FREE_TEXT, 0, "Requester")
             {
@@ -161,17 +164,17 @@ namespace BUD.Forms
             };
             flowLayoutDetails.Controls.Add(closedDateField);
 
-            Field priorityField = new Field(InputType.FREE_TEXT, 0, "Priority")
+            Field priorityField = new Field(InputType.DROPDOWN, 0, "Priority", "SELECT name FROM BUD.priority")
             {
                 Value = priority,
-                ReadOnly = true
+                ReadOnly = readOnly
             };
             flowLayoutDetails.Controls.Add(priorityField);
 
-            Field statusField = new Field(InputType.FREE_TEXT, 0, "Status")
+            Field statusField = new Field(InputType.DROPDOWN, 0, "Status", "SELECT name FROM BUD.status")
             {
                 Value = status,
-                ReadOnly = true
+                ReadOnly = readOnly
             };
             flowLayoutDetails.Controls.Add(statusField);
 
@@ -194,7 +197,7 @@ namespace BUD.Forms
         {
             foreach (Field field in fields)
             {
-                field.ReadOnly = readOnly;
+                field.ReadOnly = true;
                 flowLayoutDetails.Controls.Add(field);
             }
         }
@@ -210,7 +213,60 @@ namespace BUD.Forms
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            // Update logic here
+            int? responsibleId = AuthenticatedUser.GetAuthenticatedUser().UserId;
+            int? priorityId = 0;
+            int? statusId = 0;
+            int ticketId = this.ticketId;
+
+            if (flowLayoutDetails.Controls.Count >= 7)
+            {
+                Control priorityControl = flowLayoutDetails.Controls[4];
+                if (priorityControl is Field fifthField)
+                {
+                    priorityId = fifthField.ValueIndex;
+                }
+
+                Control statusControl = flowLayoutDetails.Controls[5];
+                if (statusControl is Field sixthField)
+                {
+                    statusId = sixthField.ValueIndex;
+                }
+            }
+
+            using (SqlConnection conn = new SqlConnection(Database.GetDatabase().GetConnectionString()))
+            {
+                using (SqlCommand cmd = new SqlCommand("UpdateTicket", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ticket_id", ticketId);
+                    cmd.Parameters.AddWithValue("@status_id", (object)statusId ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@priority_id", (object)priorityId ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@closed_date", DBNull.Value); // Or set this to a valid date if required
+                    cmd.Parameters.AddWithValue("@responsible_id", (object)responsibleId ?? DBNull.Value);
+
+                    try
+                    {
+                        conn.Open();
+                        int result = cmd.ExecuteNonQuery();
+                        if (result > 0)
+                        {
+                            Console.WriteLine("Ticket updated successfully.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ticket update failed.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                    }
+                }
+            }
+
+            Console.WriteLine("Responsible ID: " + responsibleId);
+            Console.WriteLine("Priority ID: " + priorityId);
+            Console.WriteLine("Status ID: " + statusId);
         }
     }
 }

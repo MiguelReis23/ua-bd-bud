@@ -31,6 +31,7 @@ namespace BUD
 
             lblUserGreet.Text = "Hello, " + first_name + " " + last_name + "!";
             btnManageTickets.Visible = authenticatedUser.UserIdentifiesAs("Staff");
+            btnStatistics.Visible = authenticatedUser.UserIdentifiesAs("Staff");
 
             pbProfilePicture.Image = authenticatedUser.Picture == null ? Properties.Resources.default_profile_picture : Properties.Resources.default_profile_picture;
         }
@@ -93,7 +94,6 @@ namespace BUD
             {
                 using (SqlCommand command = connection.CreateCommand())
                 {
-
                     command.CommandText = "SeeUserTickets";
                     command.CommandType = CommandType.StoredProcedure;
                     if (userId != null)
@@ -109,7 +109,12 @@ namespace BUD
                 }
             }
 
-            return dataTable;
+            // Reverse the order of the rows in the DataTable
+            DataView dataView = dataTable.DefaultView;
+            dataView.Sort = string.Join(" DESC, ", dataTable.Columns.Cast<DataColumn>().Select(c => c.ColumnName)) + " DESC";
+            DataTable reversedDataTable = dataView.ToTable();
+
+            return reversedDataTable;
         }
 
         private void btnRefreshMyTickets_Click(object sender, EventArgs e)
@@ -147,6 +152,63 @@ namespace BUD
                 TicketViewerForm ticketDetailsForm = new TicketViewerForm(ticketId, false);
                 ticketDetailsForm.ShowDialog();
             }
+        }
+
+        private void LoadStatistics()
+        {
+            string connectionString = Database.GetDatabase().GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Total Tickets
+                using (SqlCommand cmd = new SqlCommand("SELECT BUD.TotalTickets(NULL) AS TotalTickets", connection))
+                {
+                    lblTotalTickets.Text = "Total Tickets: " + cmd.ExecuteScalar().ToString();
+                }
+
+                // Low Priority Tickets
+                using (SqlCommand cmd = new SqlCommand("SELECT BUD.TotalTicketsWithPriority(1) AS LowPriorityTickets", connection))
+                {
+                    lblLowPriorityTickets.Text = "Low Priority Tickets: " + cmd.ExecuteScalar().ToString();
+                }
+
+                // Medium Priority Tickets
+                using (SqlCommand cmd = new SqlCommand("SELECT BUD.TotalTicketsWithPriority(2) AS MediumPriorityTickets", connection))
+                {
+                    lblMediumPriorityTickets.Text = "Medium Priority Tickets: " + cmd.ExecuteScalar().ToString();
+                }
+
+                // High Priority Tickets
+                using (SqlCommand cmd = new SqlCommand("SELECT BUD.TotalTicketsWithPriority(3) AS HighPriorityTickets", connection))
+                {
+                    lblHighPriorityTickets.Text = "High Priority Tickets: " + cmd.ExecuteScalar().ToString();
+                }
+
+                // Open Tickets
+                using (SqlCommand cmd = new SqlCommand("SELECT BUD.TotalTicketsWithStatus(1) AS OpenTickets", connection))
+                {
+                    lblOpenTickets.Text = "Open Tickets: " + cmd.ExecuteScalar().ToString();
+                }
+
+                // Closed Tickets
+                using (SqlCommand cmd = new SqlCommand("SELECT BUD.TotalTicketsWithStatus(2) AS ClosedTickets", connection))
+                {
+                    lblClosedTickets.Text = "Closed Tickets: " + cmd.ExecuteScalar().ToString();
+                }
+
+                // Tickets In Progress
+                using (SqlCommand cmd = new SqlCommand("SELECT BUD.TotalTicketsWithStatus(3) AS TicketsInProgress", connection))
+                {
+                    lblTicketsInProgress.Text = "Tickets In Progress: " + cmd.ExecuteScalar().ToString();
+                }
+            }
+        }
+
+        private void btnStatistics_Click(object sender, EventArgs e)
+        {
+            sectionsTabs.SelectTab(3);
+            LoadStatistics();
         }
     }
 }

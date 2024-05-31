@@ -44,6 +44,19 @@
             this.label2 = new System.Windows.Forms.Label();
             this.sectionArticles = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
+            this.sectionStatistics = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblHighPriorityTickets = new System.Windows.Forms.Label();
+            this.lblTotalTickets = new System.Windows.Forms.Label();
+            this.lblOpenTickets = new System.Windows.Forms.Label();
+            this.lblLowPriorityTickets = new System.Windows.Forms.Label();
+            this.lblTicketsInProgress = new System.Windows.Forms.Label();
+            this.lblMediumPriorityTickets = new System.Windows.Forms.Label();
+            this.lblClosedTickets = new System.Windows.Forms.Label();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnRefreshStatistics = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.lblUserGreet = new System.Windows.Forms.Label();
@@ -54,6 +67,7 @@
             this.btnMyTickets = new System.Windows.Forms.Button();
             this.btnNewTicket = new System.Windows.Forms.Button();
             this.btnManageTickets = new System.Windows.Forms.Button();
+            this.btnStatistics = new System.Windows.Forms.Button();
             this.btnArticles = new System.Windows.Forms.Button();
             this.baseLayout.SuspendLayout();
             this.sectionsTabs.SuspendLayout();
@@ -66,6 +80,10 @@
             this.tableLayoutPanel4.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.sectionArticles.SuspendLayout();
+            this.sectionStatistics.SuspendLayout();
+            this.flowLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
+            this.flowLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbProfilePicture)).BeginInit();
@@ -94,6 +112,7 @@
             this.sectionsTabs.Controls.Add(this.sectionMyTickets);
             this.sectionsTabs.Controls.Add(this.sectionManageTickets);
             this.sectionsTabs.Controls.Add(this.sectionArticles);
+            this.sectionsTabs.Controls.Add(this.sectionStatistics);
             this.sectionsTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sectionsTabs.Location = new System.Drawing.Point(3, 53);
             this.sectionsTabs.Name = "sectionsTabs";
@@ -127,6 +146,7 @@
             this.gridMyTickets.MultiSelect = false;
             this.gridMyTickets.Name = "gridMyTickets";
             this.gridMyTickets.ReadOnly = true;
+            this.gridMyTickets.RowHeadersVisible = false;
             this.gridMyTickets.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.gridMyTickets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridMyTickets.ShowCellErrors = false;
@@ -209,6 +229,7 @@
             this.gridManageTickets.MultiSelect = false;
             this.gridManageTickets.Name = "gridManageTickets";
             this.gridManageTickets.ReadOnly = true;
+            this.gridManageTickets.RowHeadersVisible = false;
             this.gridManageTickets.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.gridManageTickets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridManageTickets.ShowCellErrors = false;
@@ -286,6 +307,148 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Help Articles";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // sectionStatistics
+            // 
+            this.sectionStatistics.Controls.Add(this.flowLayoutPanel5);
+            this.sectionStatistics.Controls.Add(this.tableLayoutPanel5);
+            this.sectionStatistics.Location = new System.Drawing.Point(4, 22);
+            this.sectionStatistics.Name = "sectionStatistics";
+            this.sectionStatistics.Padding = new System.Windows.Forms.Padding(3);
+            this.sectionStatistics.Size = new System.Drawing.Size(786, 368);
+            this.sectionStatistics.TabIndex = 4;
+            this.sectionStatistics.Text = "Statistics";
+            this.sectionStatistics.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanel5
+            // 
+            this.flowLayoutPanel5.Controls.Add(this.lblTotalTickets);
+            this.flowLayoutPanel5.Controls.Add(this.lblLowPriorityTickets);
+            this.flowLayoutPanel5.Controls.Add(this.lblMediumPriorityTickets);
+            this.flowLayoutPanel5.Controls.Add(this.lblHighPriorityTickets);
+            this.flowLayoutPanel5.Controls.Add(this.lblOpenTickets);
+            this.flowLayoutPanel5.Controls.Add(this.lblTicketsInProgress);
+            this.flowLayoutPanel5.Controls.Add(this.lblClosedTickets);
+            this.flowLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 39);
+            this.flowLayoutPanel5.Name = "flowLayoutPanel5";
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(780, 326);
+            this.flowLayoutPanel5.TabIndex = 4;
+            // 
+            // lblHighPriorityTickets
+            // 
+            this.lblHighPriorityTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblHighPriorityTickets.Location = new System.Drawing.Point(3, 30);
+            this.lblHighPriorityTickets.Name = "lblHighPriorityTickets";
+            this.lblHighPriorityTickets.Size = new System.Drawing.Size(254, 30);
+            this.lblHighPriorityTickets.TabIndex = 1;
+            this.lblHighPriorityTickets.Text = "High Priority Tickets:";
+            this.lblHighPriorityTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblTotalTickets
+            // 
+            this.lblTotalTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblTotalTickets.Location = new System.Drawing.Point(3, 0);
+            this.lblTotalTickets.Name = "lblTotalTickets";
+            this.lblTotalTickets.Size = new System.Drawing.Size(254, 30);
+            this.lblTotalTickets.TabIndex = 0;
+            this.lblTotalTickets.Text = "Total Tickets:";
+            this.lblTotalTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblOpenTickets
+            // 
+            this.lblOpenTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblOpenTickets.Location = new System.Drawing.Point(263, 30);
+            this.lblOpenTickets.Name = "lblOpenTickets";
+            this.lblOpenTickets.Size = new System.Drawing.Size(254, 30);
+            this.lblOpenTickets.TabIndex = 1;
+            this.lblOpenTickets.Text = "Open Tickets:";
+            this.lblOpenTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblLowPriorityTickets
+            // 
+            this.lblLowPriorityTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblLowPriorityTickets.Location = new System.Drawing.Point(263, 0);
+            this.lblLowPriorityTickets.Name = "lblLowPriorityTickets";
+            this.lblLowPriorityTickets.Size = new System.Drawing.Size(254, 30);
+            this.lblLowPriorityTickets.TabIndex = 0;
+            this.lblLowPriorityTickets.Text = "Low Priority Tickets:";
+            this.lblLowPriorityTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblTicketsInProgress
+            // 
+            this.lblTicketsInProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblTicketsInProgress.Location = new System.Drawing.Point(523, 30);
+            this.lblTicketsInProgress.Name = "lblTicketsInProgress";
+            this.lblTicketsInProgress.Size = new System.Drawing.Size(254, 30);
+            this.lblTicketsInProgress.TabIndex = 1;
+            this.lblTicketsInProgress.Text = "Tickets In Progress:";
+            this.lblTicketsInProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblMediumPriorityTickets
+            // 
+            this.lblMediumPriorityTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblMediumPriorityTickets.Location = new System.Drawing.Point(523, 0);
+            this.lblMediumPriorityTickets.Name = "lblMediumPriorityTickets";
+            this.lblMediumPriorityTickets.Size = new System.Drawing.Size(254, 30);
+            this.lblMediumPriorityTickets.TabIndex = 0;
+            this.lblMediumPriorityTickets.Text = "Medium Priority Tickets:";
+            this.lblMediumPriorityTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblClosedTickets
+            // 
+            this.lblClosedTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblClosedTickets.Location = new System.Drawing.Point(3, 60);
+            this.lblClosedTickets.Name = "lblClosedTickets";
+            this.lblClosedTickets.Size = new System.Drawing.Size(254, 30);
+            this.lblClosedTickets.TabIndex = 0;
+            this.lblClosedTickets.Text = "Tickets Closed:";
+            this.lblClosedTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.92308F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.07692F));
+            this.tableLayoutPanel5.Controls.Add(this.flowLayoutPanel4, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(780, 36);
+            this.tableLayoutPanel5.TabIndex = 3;
+            // 
+            // flowLayoutPanel4
+            // 
+            this.flowLayoutPanel4.Controls.Add(this.btnRefreshStatistics);
+            this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(603, 3);
+            this.flowLayoutPanel4.Name = "flowLayoutPanel4";
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(174, 30);
+            this.flowLayoutPanel4.TabIndex = 8;
+            // 
+            // btnRefreshStatistics
+            // 
+            this.btnRefreshStatistics.Location = new System.Drawing.Point(103, 3);
+            this.btnRefreshStatistics.Name = "btnRefreshStatistics";
+            this.btnRefreshStatistics.Size = new System.Drawing.Size(68, 25);
+            this.btnRefreshStatistics.TabIndex = 0;
+            this.btnRefreshStatistics.Text = "Refresh";
+            this.btnRefreshStatistics.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(3, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(594, 36);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Statistics";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tableLayoutPanel2
             // 
@@ -378,6 +541,7 @@
             this.flowLayoutPanel1.Controls.Add(this.btnMyTickets);
             this.flowLayoutPanel1.Controls.Add(this.btnNewTicket);
             this.flowLayoutPanel1.Controls.Add(this.btnManageTickets);
+            this.flowLayoutPanel1.Controls.Add(this.btnStatistics);
             this.flowLayoutPanel1.Controls.Add(this.btnArticles);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
@@ -415,9 +579,20 @@
             this.btnManageTickets.UseVisualStyleBackColor = true;
             this.btnManageTickets.Click += new System.EventHandler(this.btnManageTickets_Click);
             // 
+            // btnStatistics
+            // 
+            this.btnStatistics.Location = new System.Drawing.Point(303, 3);
+            this.btnStatistics.Name = "btnStatistics";
+            this.btnStatistics.Size = new System.Drawing.Size(94, 41);
+            this.btnStatistics.TabIndex = 5;
+            this.btnStatistics.Text = "Statistics";
+            this.btnStatistics.UseVisualStyleBackColor = true;
+            this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
+            // 
             // btnArticles
             // 
-            this.btnArticles.Location = new System.Drawing.Point(303, 3);
+            this.btnArticles.Enabled = false;
+            this.btnArticles.Location = new System.Drawing.Point(403, 3);
             this.btnArticles.Name = "btnArticles";
             this.btnArticles.Size = new System.Drawing.Size(94, 41);
             this.btnArticles.TabIndex = 4;
@@ -447,6 +622,10 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel3.ResumeLayout(false);
             this.sectionArticles.ResumeLayout(false);
+            this.sectionStatistics.ResumeLayout(false);
+            this.flowLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.flowLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbProfilePicture)).EndInit();
@@ -484,5 +663,19 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Button btnRefreshManageTickets;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TabPage sectionStatistics;
+        private System.Windows.Forms.Button btnStatistics;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
+        private System.Windows.Forms.Button btnRefreshStatistics;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
+        private System.Windows.Forms.Label lblHighPriorityTickets;
+        private System.Windows.Forms.Label lblTotalTickets;
+        private System.Windows.Forms.Label lblOpenTickets;
+        private System.Windows.Forms.Label lblLowPriorityTickets;
+        private System.Windows.Forms.Label lblTicketsInProgress;
+        private System.Windows.Forms.Label lblMediumPriorityTickets;
+        private System.Windows.Forms.Label lblClosedTickets;
     }
 }

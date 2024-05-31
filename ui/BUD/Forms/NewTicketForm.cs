@@ -336,5 +336,10 @@ namespace BUD
                 }
             }
         }
+
+        private void NewTicketForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
