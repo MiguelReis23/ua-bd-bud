@@ -440,6 +440,7 @@ CREATE PROCEDURE UpdateTicket
     @responsible_id INT = NULL
 AS
 BEGIN
+    DECLARE @closed_date DATETIME
     BEGIN TRANSACTION T7
     BEGIN TRY
         IF @priority_id IS NOT NULL
@@ -457,19 +458,13 @@ BEGIN
         END
 
         IF @status_id IS NOT NULL
-            IF @status_id = 3
-            BEGIN
-                UPDATE BUD.ticket
-                SET closed_date = GETDATE()
-                WHERE id = @ticket_id
-            END
-            ELSE
-            BEGIN
-                UPDATE BUD.ticket
-                SET status_id = @status_id
-                WHERE id = @ticket_id
-            END
-            
+        BEGIN
+            UPDATE BUD.ticket
+            SET status_id = @status_id,
+                closed_date = CASE WHEN @status_id = 3 THEN GETDATE() ELSE closed_date END
+            WHERE id = @ticket_id
+        END
+
         COMMIT TRANSACTION T7
         PRINT 'SUCCESS: Ticket updated'
         RETURN 1

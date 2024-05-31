@@ -58,8 +58,8 @@ EXECUTE SeeUserTickets
 GO
 
 -- UPDATE TICKET
-EXECUTE UpdateTicket @ticket_id = 1,  @priority_id = 2, @status_id = 3
+EXECUTE UpdateTicket @ticket_id = 3,  @priority_id = 2, @status_id = 3
 GO
 
-EXECUTE UpdateTicket @ticket_id = 1, @priority_id = 3
+EXECUTE UpdateTicket @ticket_id = 3, @priority_id = 2
 GO
