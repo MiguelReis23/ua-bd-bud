@@ -101,6 +101,12 @@
       <DependentUpon>NewTicketForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Entities\Program.cs" />
+    <Compile Include="Forms\RatingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RatingForm.Designer.cs">
+      <DependentUpon>RatingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TicketViewerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewTicketForm.resx">
       <DependentUpon>NewTicketForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RatingForm.resx">
+      <DependentUpon>RatingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TicketViewerForm.resx">
       <DependentUpon>TicketViewerForm.cs</DependentUpon>

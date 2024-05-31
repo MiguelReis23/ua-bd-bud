@@ -22,11 +22,16 @@ namespace BUD.Forms
         private string category;
         private int? rating;
 
+        private bool readOnlyref;
+
         DashboardForm dashboardFormRef;
 
         public TicketViewerForm(DashboardForm dashboardForm, int ticketId, bool readOnly = true)
         {
             InitializeComponent();
+
+            this.readOnlyref = readOnly;
+
             this.ticketId = ticketId;
             FetchTicketFields(ticketId);
             DrawCommonFields(readOnly);
@@ -136,6 +141,22 @@ namespace BUD.Forms
                             fields.Add(fieldControl);
                         }
                     }
+                }
+            }
+
+            if (this.readOnlyref) CheckAskForRate();
+        }
+
+        private void CheckAskForRate()
+        {
+            if (status == "Closed" && !rating.HasValue)
+            {
+                DialogResult result = MessageBox.Show("Would you like to rate this ticket?", "Rate Ticket", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    RatingForm ratingForm = new RatingForm(ticketId);
+                    ratingForm.ShowDialog();
+                    this.rating = ratingForm.rated;
                 }
             }
         }
@@ -269,9 +290,7 @@ namespace BUD.Forms
                 }
             }
 
-            Console.WriteLine("Responsible ID: " + responsibleId);
-            Console.WriteLine("Priority ID: " + priorityId);
-            Console.WriteLine("Status ID: " + statusId);
+            dashboardFormRef.LoadAllTickets();
         }
 
         private void DrawMessages()

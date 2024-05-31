@@ -38,6 +38,9 @@ GO
 IF OBJECT_ID('GetMessagesByTicket', 'P') IS NOT NULL
     DROP PROC GetMessagesByTicket
 GO
+IF OBJECT_ID('SetTicketRating', 'P') IS NOT NULL
+    DROP PROC SetTicketRating
+GO
 
 -- CREATE USER
 CREATE PROC CreateUser
@@ -495,3 +498,41 @@ BEGIN
     WHERE
         m.ticket_id = @ticket_id
 END
+GO
+
+-- SET TICKET RATING
+CREATE PROCEDURE SetTicketRating
+    @ticket_id INT,
+    @rating INT
+AS
+BEGIN
+    IF @rating < 0 OR @rating > 5
+    BEGIN
+        PRINT 'ERROR: Rating must be between 0 and 5'
+        RETURN 0
+    END
+
+    BEGIN TRANSACTION
+    BEGIN TRY
+        UPDATE BUD.ticket
+        SET rating = @rating
+        WHERE id = @ticket_id
+
+        IF @@ROWCOUNT = 0
+        BEGIN
+            PRINT 'ERROR: Ticket ID not found'
+            ROLLBACK TRANSACTION
+            RETURN 0
+        END
+
+        COMMIT TRANSACTION
+        PRINT 'SUCCESS: Rating updated'
+        RETURN 1
+    END TRY
+    BEGIN CATCH
+        PRINT ERROR_MESSAGE()
+        ROLLBACK TRANSACTION
+        RETURN 0
+    END CATCH
+END
+GO

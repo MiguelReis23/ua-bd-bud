@@ -10,29 +10,44 @@ IF OBJECT_ID('BUD.DeleteUserDepartmentofDepartment', 'TR') IS NOT NULL DROP TRIG
 GO
 
 
--- Prevent update of a closed ticket
+-- Prevent update of a closed ticket, but allow the update of rating for a closed ticket
 CREATE TRIGGER BUD.PreventUpdateClosedTicket
 ON BUD.ticket
 AFTER UPDATE 
 AS
 BEGIN
-    -- Allow updates to close the ticket
+    -- Allow updates to the rating of a closed ticket
     IF EXISTS (
         SELECT 1
         FROM inserted i 
         INNER JOIN deleted d ON i.id = d.id
-        WHERE d.status_id <> 3
+        WHERE d.status_id = 3 
+        AND i.rating <> d.rating
     )
     BEGIN
         RETURN;
     END
 
-    -- Prevent updates to tickets that are already closed
+    -- Prevent updates to tickets that are already closed except for rating
     IF EXISTS (
         SELECT 1
         FROM inserted i 
         INNER JOIN deleted d ON i.id = d.id
-        WHERE d.status_id = 3
+        WHERE d.status_id = 3 
+        AND (
+            UPDATE(status_id) OR
+            UPDATE(priority_id) OR
+            (
+                i.rating = d.rating
+                AND (
+                    UPDATE(requester_id) OR
+                    UPDATE(responsible_id) OR
+                    UPDATE(submit_date) OR
+                    UPDATE(closed_date) OR
+                    UPDATE(category_id)
+                )
+            )
+        )
     )
     BEGIN
         RAISERROR('Cannot update a closed ticket.', 16, 1);
@@ -41,6 +56,7 @@ BEGIN
     END
 END
 GO
+
 
 -- Delete all messages and attachments when a ticket is deleted
 CREATE TRIGGER BUD.DeleteMessagesAndAttachments
