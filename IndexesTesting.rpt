@@ -1,20 +1,20 @@
 ﻿
-(1746 rows affected)
-Time without index: 76ms
+(6651 rows affected)
+Time without index: 183ms
 
-(1644 rows affected)
-Time without index: 127ms
+(6756 rows affected)
+Time without index: 244ms
 
-(5001 rows affected)
-Time without index: 87ms
+(20001 rows affected)
+Time without index: 316ms
 
-(1746 rows affected)
-Time with index: 30ms
+(6651 rows affected)
+Time with index: 110ms
 
-(1644 rows affected)
-Time with index: 33ms
+(6756 rows affected)
+Time with index: 87ms
 
-(5001 rows affected)
-Time with index: 47ms
+(20001 rows affected)
+Time with index: 270ms
 
-Completion time: 2024-05-30T19:36:00.0990940+01:00
+Completion time: 2024-05-31T03:30:13.3315840+01:00

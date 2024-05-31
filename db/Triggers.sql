@@ -5,6 +5,8 @@ GO
 
 IF OBJECT_ID('BUD.PreventUpdateClosedTicket', 'TR') IS NOT NULL DROP TRIGGER BUD.PreventUpdateClosedTicket;
 IF OBJECT_ID('BUD.DeleteMessagesAndAttachments', 'TR') IS NOT NULL DROP TRIGGER BUD.DeleteMessagesAndAttachments;
+IF OBJECT_ID('BUD.DeleteUserDepartmentofUser', 'TR') IS NOT NULL DROP TRIGGER BUD.DeleteUserDepartmentofUser;
+IF OBJECT_ID('BUD.DeleteUserDepartmentofDepartment', 'TR') IS NOT NULL DROP TRIGGER BUD.DeleteUserDepartmentofDepartment;
 GO
 
 

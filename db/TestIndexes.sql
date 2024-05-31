@@ -3,10 +3,19 @@
 USE BUD
 GO
 
-IF OBJECT_ID('BUD.IX_ticket_requester_id', 'U') IS NOT NULL DROP INDEX BUD.IX_ticket_requester_id;
-IF OBJECT_ID('BUD.IX_ticket_priority_id', 'U') IS NOT NULL DROP INDEX BUD.IX_ticket_priority_id;
-IF OBJECT_ID('BUD.IX_ticket_status_id', 'U') IS NOT NULL DROP INDEX BUD.IX_ticket_status_id;
+USE BUD
 GO
+
+IF EXISTS (SELECT name FROM sys.indexes WHERE name = 'IX_ticket_requester_id' AND object_id = OBJECT_ID('BUD.ticket'))
+    DROP INDEX IX_ticket_requester_id ON BUD.ticket;
+
+IF EXISTS (SELECT name FROM sys.indexes WHERE name = 'IX_ticket_priority_id' AND object_id = OBJECT_ID('BUD.ticket'))
+    DROP INDEX IX_ticket_priority_id ON BUD.ticket;
+
+IF EXISTS (SELECT name FROM sys.indexes WHERE name = 'IX_ticket_status_id' AND object_id = OBJECT_ID('BUD.ticket'))
+    DROP INDEX IX_ticket_status_id ON BUD.ticket;
+
+
 
 
 DECLARE @start DATETIME, @end DATETIME;
@@ -25,7 +34,6 @@ SELECT @start = GETDATE();
 SELECT * FROM BUD.ticket WHERE status_id = 1;
 SELECT @end = GETDATE();
 PRINT 'Time without index: ' + CAST(DATEDIFF(MILLISECOND, @start, @end) AS VARCHAR) + 'ms';
-
 
 CREATE INDEX IX_ticket_requester_id ON BUD.ticket(requester_id);
 
@@ -52,5 +60,4 @@ PRINT 'Time with index: ' + CAST(DATEDIFF(MILLISECOND, @start, @end) AS VARCHAR)
 DROP INDEX BUD.ticket.IX_ticket_requester_id;
 DROP INDEX BUD.ticket.IX_ticket_priority_id;
 DROP INDEX BUD.ticket.IX_ticket_status_id;
-
 
