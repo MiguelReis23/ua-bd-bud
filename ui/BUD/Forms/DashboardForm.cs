@@ -138,7 +138,7 @@ namespace BUD
             {
                 int ticketId = Convert.ToInt32(gridMyTickets.Rows[e.RowIndex].Cells["ticket_id"].Value);
 
-                TicketViewerForm ticketDetailsForm = new TicketViewerForm(ticketId, true);
+                TicketViewerForm ticketDetailsForm = new TicketViewerForm(this, ticketId, true);
                 ticketDetailsForm.ShowDialog();
             }
         }
@@ -149,7 +149,7 @@ namespace BUD
             {
                 int ticketId = Convert.ToInt32(gridManageTickets.Rows[e.RowIndex].Cells["ticket_id"].Value);
 
-                TicketViewerForm ticketDetailsForm = new TicketViewerForm(ticketId, false);
+                TicketViewerForm ticketDetailsForm = new TicketViewerForm(this, ticketId, false);
                 ticketDetailsForm.ShowDialog();
             }
         }

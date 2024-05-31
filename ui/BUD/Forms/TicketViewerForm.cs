@@ -22,13 +22,17 @@ namespace BUD.Forms
         private string category;
         private int? rating;
 
-        public TicketViewerForm(int ticketId, bool readOnly = true)
+        DashboardForm dashboardFormRef;
+
+        public TicketViewerForm(DashboardForm dashboardForm, int ticketId, bool readOnly = true)
         {
             InitializeComponent();
             this.ticketId = ticketId;
             FetchTicketFields(ticketId);
             DrawCommonFields(readOnly);
             DrawFields(readOnly);
+
+            dashboardFormRef = dashboardForm;
 
             if (readOnly)
             {
@@ -243,7 +247,6 @@ namespace BUD.Forms
                     cmd.Parameters.AddWithValue("@ticket_id", ticketId);
                     cmd.Parameters.AddWithValue("@status_id", (object)statusId ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@priority_id", (object)priorityId ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@closed_date", DBNull.Value); // Or set this to a valid date if required
                     cmd.Parameters.AddWithValue("@responsible_id", (object)responsibleId ?? DBNull.Value);
 
                     try
@@ -376,6 +379,12 @@ namespace BUD.Forms
 
             DrawMessages();
             txtMessage.Clear();
+        }
+
+        private void TicketViewerForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            dashboardFormRef.LoadAllTickets();
+            dashboardFormRef.LoadUserTickets();
         }
     }
 }

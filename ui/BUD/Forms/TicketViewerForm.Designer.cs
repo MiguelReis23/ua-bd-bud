@@ -163,6 +163,7 @@
             this.MaximizeBox = false;
             this.Name = "TicketViewerForm";
             this.Text = "Balcão Único Digital da Universidade de Aveiro - Form Viewer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TicketViewerForm_FormClosing);
             this.Load += new System.EventHandler(this.TicketViewerForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
