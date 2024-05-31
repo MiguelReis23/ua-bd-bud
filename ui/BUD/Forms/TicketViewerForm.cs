@@ -42,6 +42,8 @@ namespace BUD.Forms
                 btnUpdate.Visible = true;
                 btnUpdate.Enabled = true;
             }
+
+            DrawMessages();
         }
 
         private void FetchTicketFields(int ticketId)
@@ -267,6 +269,111 @@ namespace BUD.Forms
             Console.WriteLine("Responsible ID: " + responsibleId);
             Console.WriteLine("Priority ID: " + priorityId);
             Console.WriteLine("Status ID: " + statusId);
+        }
+
+        private void DrawMessages()
+        {
+            messagesLayout.Controls.Clear();
+
+            using (SqlConnection connection = new SqlConnection(Database.GetDatabase().GetConnectionString()))
+            {
+                using (SqlCommand command = new SqlCommand("GetMessagesByTicket", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new SqlParameter("@ticket_id", ticketId));
+
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<Control> messages = new List<Control>();
+
+                        while (reader.Read())
+                        {
+                            int messageId = reader.GetInt32(reader.GetOrdinal("message_id"));
+                            int senderId = reader.GetInt32(reader.GetOrdinal("sender_id"));
+                            string content = reader.GetString(reader.GetOrdinal("content"));
+                            DateTime timeStamp = reader.GetDateTime(reader.GetOrdinal("time_stamp"));
+
+                            string fileName = reader.IsDBNull(reader.GetOrdinal("file_name")) ? null : reader.GetString(reader.GetOrdinal("file_name"));
+                            byte[] data = reader.IsDBNull(reader.GetOrdinal("data")) ? null : (byte[])reader["data"];
+
+                            Label message = new Label
+                            {
+                                Text = content,
+                                AutoSize = false,
+                                Width = 386,
+                                Height = 33,
+                                Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                                TextAlign = senderId == AuthenticatedUser.GetAuthenticatedUser().UserId ? System.Drawing.ContentAlignment.MiddleRight : System.Drawing.ContentAlignment.MiddleLeft
+                            };
+
+                            messages.Add(message);
+
+                            if (fileName != null)
+                            {
+                                Console.WriteLine($"Attachment File Name: {fileName}");
+                                Console.WriteLine($"Attachment Data: {BitConverter.ToString(data)}");
+                            }
+
+                            Console.WriteLine();
+                        }
+
+                        // Add all messages to the layout in order
+                        foreach (var message in messages)
+                        {
+                            messagesLayout.Controls.Add(message);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            string message = txtMessage.Text.Trim();
+            int senderId = AuthenticatedUser.GetAuthenticatedUser().UserId;
+            int ticketId = this.ticketId;
+            string connectionString = Database.GetDatabase().GetConnectionString();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("SendMessage", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add parameters
+                    command.Parameters.Add(new SqlParameter("@sender_id", senderId));
+                    command.Parameters.Add(new SqlParameter("@ticket_id", ticketId));
+                    command.Parameters.Add(new SqlParameter("@content", message));
+
+                    SqlParameter returnValue = new SqlParameter();
+                    returnValue.Direction = ParameterDirection.ReturnValue;
+                    command.Parameters.Add(returnValue);
+
+                    try
+                    {
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        int result = (int)returnValue.Value;
+
+                        if (result == 1)
+                        {
+                            MessageBox.Show("Message sent successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to send message.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+
+            DrawMessages();
+            txtMessage.Clear();
         }
     }
 }

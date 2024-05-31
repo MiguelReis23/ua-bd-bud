@@ -46,12 +46,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.sectionStatistics = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblHighPriorityTickets = new System.Windows.Forms.Label();
             this.lblTotalTickets = new System.Windows.Forms.Label();
-            this.lblOpenTickets = new System.Windows.Forms.Label();
             this.lblLowPriorityTickets = new System.Windows.Forms.Label();
-            this.lblTicketsInProgress = new System.Windows.Forms.Label();
             this.lblMediumPriorityTickets = new System.Windows.Forms.Label();
+            this.lblHighPriorityTickets = new System.Windows.Forms.Label();
+            this.lblOpenTickets = new System.Windows.Forms.Label();
+            this.lblTicketsInProgress = new System.Windows.Forms.Label();
             this.lblClosedTickets = new System.Windows.Forms.Label();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
@@ -335,70 +335,84 @@
             this.flowLayoutPanel5.Size = new System.Drawing.Size(780, 326);
             this.flowLayoutPanel5.TabIndex = 4;
             // 
-            // lblHighPriorityTickets
-            // 
-            this.lblHighPriorityTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblHighPriorityTickets.Location = new System.Drawing.Point(3, 30);
-            this.lblHighPriorityTickets.Name = "lblHighPriorityTickets";
-            this.lblHighPriorityTickets.Size = new System.Drawing.Size(254, 30);
-            this.lblHighPriorityTickets.TabIndex = 1;
-            this.lblHighPriorityTickets.Text = "High Priority Tickets:";
-            this.lblHighPriorityTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // lblTotalTickets
             // 
+            this.lblTotalTickets.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblTotalTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblTotalTickets.Location = new System.Drawing.Point(3, 0);
+            this.lblTotalTickets.Location = new System.Drawing.Point(3, 5);
+            this.lblTotalTickets.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.lblTotalTickets.Name = "lblTotalTickets";
             this.lblTotalTickets.Size = new System.Drawing.Size(254, 30);
             this.lblTotalTickets.TabIndex = 0;
             this.lblTotalTickets.Text = "Total Tickets:";
             this.lblTotalTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblOpenTickets
-            // 
-            this.lblOpenTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblOpenTickets.Location = new System.Drawing.Point(263, 30);
-            this.lblOpenTickets.Name = "lblOpenTickets";
-            this.lblOpenTickets.Size = new System.Drawing.Size(254, 30);
-            this.lblOpenTickets.TabIndex = 1;
-            this.lblOpenTickets.Text = "Open Tickets:";
-            this.lblOpenTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // lblLowPriorityTickets
             // 
+            this.lblLowPriorityTickets.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblLowPriorityTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblLowPriorityTickets.Location = new System.Drawing.Point(263, 0);
+            this.lblLowPriorityTickets.Location = new System.Drawing.Point(263, 5);
+            this.lblLowPriorityTickets.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.lblLowPriorityTickets.Name = "lblLowPriorityTickets";
             this.lblLowPriorityTickets.Size = new System.Drawing.Size(254, 30);
             this.lblLowPriorityTickets.TabIndex = 0;
             this.lblLowPriorityTickets.Text = "Low Priority Tickets:";
             this.lblLowPriorityTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblTicketsInProgress
-            // 
-            this.lblTicketsInProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblTicketsInProgress.Location = new System.Drawing.Point(523, 30);
-            this.lblTicketsInProgress.Name = "lblTicketsInProgress";
-            this.lblTicketsInProgress.Size = new System.Drawing.Size(254, 30);
-            this.lblTicketsInProgress.TabIndex = 1;
-            this.lblTicketsInProgress.Text = "Tickets In Progress:";
-            this.lblTicketsInProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // lblMediumPriorityTickets
             // 
+            this.lblMediumPriorityTickets.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblMediumPriorityTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblMediumPriorityTickets.Location = new System.Drawing.Point(523, 0);
+            this.lblMediumPriorityTickets.Location = new System.Drawing.Point(523, 5);
+            this.lblMediumPriorityTickets.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.lblMediumPriorityTickets.Name = "lblMediumPriorityTickets";
             this.lblMediumPriorityTickets.Size = new System.Drawing.Size(254, 30);
             this.lblMediumPriorityTickets.TabIndex = 0;
             this.lblMediumPriorityTickets.Text = "Medium Priority Tickets:";
             this.lblMediumPriorityTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // lblHighPriorityTickets
+            // 
+            this.lblHighPriorityTickets.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblHighPriorityTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblHighPriorityTickets.Location = new System.Drawing.Point(3, 45);
+            this.lblHighPriorityTickets.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.lblHighPriorityTickets.Name = "lblHighPriorityTickets";
+            this.lblHighPriorityTickets.Size = new System.Drawing.Size(254, 30);
+            this.lblHighPriorityTickets.TabIndex = 1;
+            this.lblHighPriorityTickets.Text = "High Priority Tickets:";
+            this.lblHighPriorityTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblOpenTickets
+            // 
+            this.lblOpenTickets.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblOpenTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblOpenTickets.Location = new System.Drawing.Point(263, 45);
+            this.lblOpenTickets.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.lblOpenTickets.Name = "lblOpenTickets";
+            this.lblOpenTickets.Size = new System.Drawing.Size(254, 30);
+            this.lblOpenTickets.TabIndex = 1;
+            this.lblOpenTickets.Text = "Open Tickets:";
+            this.lblOpenTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblTicketsInProgress
+            // 
+            this.lblTicketsInProgress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblTicketsInProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblTicketsInProgress.Location = new System.Drawing.Point(523, 45);
+            this.lblTicketsInProgress.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.lblTicketsInProgress.Name = "lblTicketsInProgress";
+            this.lblTicketsInProgress.Size = new System.Drawing.Size(254, 30);
+            this.lblTicketsInProgress.TabIndex = 1;
+            this.lblTicketsInProgress.Text = "Tickets In Progress:";
+            this.lblTicketsInProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // lblClosedTickets
             // 
+            this.lblClosedTickets.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblClosedTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblClosedTickets.Location = new System.Drawing.Point(3, 60);
+            this.lblClosedTickets.Location = new System.Drawing.Point(3, 85);
+            this.lblClosedTickets.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.lblClosedTickets.Name = "lblClosedTickets";
             this.lblClosedTickets.Size = new System.Drawing.Size(254, 30);
             this.lblClosedTickets.TabIndex = 0;

@@ -36,6 +36,7 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.flowLayoutDetails = new System.Windows.Forms.FlowLayoutPanel();
+            this.messagesLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -50,6 +51,7 @@
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutDetails, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.messagesLayout, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -110,21 +112,21 @@
             // btnSend
             // 
             this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSend.Enabled = false;
             this.btnSend.Location = new System.Drawing.Point(308, 3);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(88, 29);
             this.btnSend.TabIndex = 6;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // txtMessage
             // 
             this.txtMessage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMessage.Location = new System.Drawing.Point(96, 43);
+            this.txtMessage.Location = new System.Drawing.Point(10, 8);
             this.txtMessage.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(300, 20);
+            this.txtMessage.Size = new System.Drawing.Size(292, 20);
             this.txtMessage.TabIndex = 7;
             // 
             // flowLayoutDetails
@@ -138,6 +140,16 @@
             this.flowLayoutDetails.Size = new System.Drawing.Size(377, 406);
             this.flowLayoutDetails.TabIndex = 4;
             this.flowLayoutDetails.WrapContents = false;
+            // 
+            // messagesLayout
+            // 
+            this.messagesLayout.AutoScroll = true;
+            this.messagesLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.messagesLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.messagesLayout.Location = new System.Drawing.Point(403, 4);
+            this.messagesLayout.Name = "messagesLayout";
+            this.messagesLayout.Size = new System.Drawing.Size(393, 406);
+            this.messagesLayout.TabIndex = 9;
             // 
             // TicketViewerForm
             // 
@@ -168,5 +180,6 @@
         private System.Windows.Forms.TextBox txtMessage;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutDetails;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.FlowLayoutPanel messagesLayout;
     }
 }

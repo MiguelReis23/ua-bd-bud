@@ -192,13 +192,13 @@ namespace BUD
                 }
 
                 // Closed Tickets
-                using (SqlCommand cmd = new SqlCommand("SELECT BUD.TotalTicketsWithStatus(2) AS ClosedTickets", connection))
+                using (SqlCommand cmd = new SqlCommand("SELECT BUD.TotalTicketsWithStatus(3) AS ClosedTickets", connection))
                 {
                     lblClosedTickets.Text = "Closed Tickets: " + cmd.ExecuteScalar().ToString();
                 }
 
                 // Tickets In Progress
-                using (SqlCommand cmd = new SqlCommand("SELECT BUD.TotalTicketsWithStatus(3) AS TicketsInProgress", connection))
+                using (SqlCommand cmd = new SqlCommand("SELECT BUD.TotalTicketsWithStatus(2) AS TicketsInProgress", connection))
                 {
                     lblTicketsInProgress.Text = "Tickets In Progress: " + cmd.ExecuteScalar().ToString();
                 }
