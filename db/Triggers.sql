@@ -28,34 +28,19 @@ BEGIN
         RETURN;
     END
 
--- Prevent updates to tickets that are already closed except for rating
-    IF EXISTS (
-        SELECT 1
-        FROM inserted i 
-        INNER JOIN deleted d ON i.id = d.id
-        WHERE d.status_id = 3 
-        AND (
-            (UPDATE(status_id) AND i.status_id <> 1) OR
-            UPDATE(priority_id) OR
-            (
-                i.rating = d.rating
-                AND (
-                    UPDATE(requester_id) OR
-                    UPDATE(responsible_id) OR
-                    UPDATE(submit_date) OR
-                    UPDATE(closed_date) OR
-                    UPDATE(category_id)
-                )
-            )
-        )
-    )
-    BEGIN
-        RAISERROR('Cannot update a closed ticket.', 16, 1);
-        ROLLBACK TRANSACTION;
-    END
+-- When Ticket is reopened clear the closed date and rating
+CREATE TRIGGER BUD.TicketReopened
+ON BUD.ticket
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE BUD.ticket
+    SET closed_date = NULL, rating = NULL
+    FROM BUD.ticket t
+    INNER JOIN inserted i ON t.id = i.id
+    WHERE i.status_id = 1 AND t.status_id = 3;
 END
 GO
-
 
 -- Delete all messages and attachments when a ticket is deleted
 CREATE TRIGGER BUD.DeleteMessagesAndAttachments
