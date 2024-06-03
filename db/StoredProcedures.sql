@@ -416,7 +416,11 @@ GO
 
 -- SEE USER TICKETS
 CREATE PROC SeeUserTickets
-    @user_id INT = NULL
+    @user_id INT = NULL,
+    @service_id INT = NULL,
+    @category_id INT = NULL,
+    @status_id INT = NULL,
+    @priority_id INT = NULL
 AS
 BEGIN
     SELECT
@@ -426,14 +430,20 @@ BEGIN
         t.rating,
         s.[name] AS status,
         p.[name] AS priority,
-        c.[name] AS category
+        c.[name] AS category,
+        [service].[name] AS service
     FROM
         BUD.ticket t
         JOIN BUD.status s ON t.status_id = s.id
         JOIN BUD.priority p ON t.priority_id = p.id
         JOIN BUD.category c ON t.category_id = c.id
+        JOIN BUD.service [service] ON c.service_id = [service].id
     WHERE
         (@user_id IS NULL OR t.requester_id = @user_id)
+        AND (@service_id IS NULL OR c.service_id = @service_id)
+        AND (@category_id IS NULL OR t.category_id = @category_id)
+        AND (@status_id IS NULL OR t.status_id = @status_id)
+        AND (@priority_id IS NULL OR t.priority_id = @priority_id)
 END
 GO
 
