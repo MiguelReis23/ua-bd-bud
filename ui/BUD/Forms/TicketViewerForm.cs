@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using BUD.Entities;
 using System.Linq;
 using System.Data;
+using System.IO;
 
 namespace BUD.Forms
 {
@@ -295,58 +296,95 @@ namespace BUD.Forms
 
         private void DrawMessages()
         {
-            messagesLayout.Controls.Clear();
-
-            using (SqlConnection connection = new SqlConnection(Database.GetDatabase().GetConnectionString()))
+            try
             {
-                using (SqlCommand command = new SqlCommand("GetMessagesByTicket", connection))
+                messagesLayout.Controls.Clear();
+
+                using (SqlConnection connection = new SqlConnection(Database.GetDatabase().GetConnectionString()))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add(new SqlParameter("@ticket_id", ticketId));
-
-                    connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (SqlCommand command = new SqlCommand("GetMessagesByTicket", connection))
                     {
-                        List<Control> messages = new List<Control>();
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@ticket_id", ticketId));
 
-                        while (reader.Read())
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            int messageId = reader.GetInt32(reader.GetOrdinal("message_id"));
-                            int senderId = reader.GetInt32(reader.GetOrdinal("sender_id"));
-                            string content = reader.GetString(reader.GetOrdinal("content"));
-                            DateTime timeStamp = reader.GetDateTime(reader.GetOrdinal("time_stamp"));
+                            List<Control> messages = new List<Control>();
 
-                            string fileName = reader.IsDBNull(reader.GetOrdinal("file_name")) ? null : reader.GetString(reader.GetOrdinal("file_name"));
-                            byte[] data = reader.IsDBNull(reader.GetOrdinal("data")) ? null : (byte[])reader["data"];
-
-                            Label message = new Label
+                            while (reader.Read())
                             {
-                                Text = content,
-                                AutoSize = false,
-                                Width = 370,
-                                Height = 33,
-                                Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
-                                TextAlign = senderId == AuthenticatedUser.GetAuthenticatedUser().UserId ? System.Drawing.ContentAlignment.MiddleRight : System.Drawing.ContentAlignment.MiddleLeft
-                            };
+                                int messageId = reader.GetInt32(reader.GetOrdinal("message_id"));
+                                int senderId = reader.GetInt32(reader.GetOrdinal("sender_id"));
+                                string content = reader.GetString(reader.GetOrdinal("content"));
+                                DateTime timeStamp = reader.GetDateTime(reader.GetOrdinal("time_stamp"));
 
-                            messages.Add(message);
+                                string fileName = reader.IsDBNull(reader.GetOrdinal("file_name")) ? null : reader.GetString(reader.GetOrdinal("file_name"));
+                                byte[] data = reader.IsDBNull(reader.GetOrdinal("data")) ? null : (byte[])reader["data"];
 
-                            if (fileName != null)
-                            {
-                                Console.WriteLine($"Attachment File Name: {fileName}");
-                                Console.WriteLine($"Attachment Data: {BitConverter.ToString(data)}");
+                                Console.WriteLine($"Message ID: {messageId}");
+                                Console.WriteLine($"Sender ID: {senderId}");
+                                Console.WriteLine($"Content: {content}");
+                                Console.WriteLine($"Time Stamp: {timeStamp}");
+                                Console.WriteLine($"File Name: {fileName}");
+
+                                Label message = new Label
+                                {
+                                    Text = content,
+                                    AutoSize = false,
+                                    Width = 370,
+                                    Height = 30,
+                                    Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                                    TextAlign = senderId == AuthenticatedUser.GetAuthenticatedUser().UserId ? System.Drawing.ContentAlignment.MiddleRight : System.Drawing.ContentAlignment.MiddleLeft
+                                };
+
+                                messages.Add(message);
+
+                                if (fileName != null)
+                                {
+                                    LinkLabel attachmessage = new LinkLabel
+                                    {
+                                        Text = fileName,
+                                        AutoSize = false,
+                                        Width = 370,
+                                        Height = 20,
+                                        Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                                        TextAlign = senderId == AuthenticatedUser.GetAuthenticatedUser().UserId ? System.Drawing.ContentAlignment.MiddleRight : System.Drawing.ContentAlignment.MiddleLeft
+                                    };
+
+                                    attachmessage.Click += (s, e) =>
+                                    {
+                                        using (SaveFileDialog dlg = new SaveFileDialog())
+                                        {
+                                            dlg.Title = "Save attachment";
+                                            dlg.FileName = fileName;
+
+                                            if (dlg.ShowDialog() == DialogResult.OK)
+                                            {
+                                                File.WriteAllBytes(dlg.FileName, data);
+
+                                                System.Diagnostics.Process.Start(dlg.FileName);
+                                            }
+                                        }
+                                    };
+
+                                    messages.Add(attachmessage);
+                                }
                             }
 
-                            Console.WriteLine();
-                        }
-
-                        foreach (var message in messages)
-                        {
-                            messagesLayout.Controls.Add(message);
+                            foreach (var message in messages)
+                            {
+                                messagesLayout.Controls.Add(message);
+                            }
                         }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+
         }
 
         private void btnSend_Click(object sender, EventArgs e)
@@ -404,6 +442,65 @@ namespace BUD.Forms
         {
             dashboardFormRef.LoadAllTickets();
             dashboardFormRef.LoadUserTickets();
+        }
+
+        private void btnAddAttachment_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.Title = "Choose a file to attach";
+                dlg.Filter = "All files|*.*";
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = dlg.FileName;
+                    byte[] data = File.ReadAllBytes(fileName);
+                    int senderId = AuthenticatedUser.GetAuthenticatedUser().UserId;
+                    int ticketId = this.ticketId;
+
+                    bool result = SendAttachmentMessage(senderId, ticketId, Path.GetFileName(fileName), data);
+
+                    if (result)
+                    {
+                        MessageBox.Show("Attachment sent successfully.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to send attachment.");
+                    }
+                }
+            }
+        }
+
+        private bool SendAttachmentMessage(int senderId, int ticketId, string fileName, byte[] data)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(Database.GetDatabase().GetConnectionString()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SendAttachmentMessage", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@sender_id", SqlDbType.Int)).Value = senderId;
+                        cmd.Parameters.Add(new SqlParameter("@ticket_id", SqlDbType.Int)).Value = ticketId;
+                        cmd.Parameters.Add(new SqlParameter("@content", SqlDbType.VarChar, 255)).Value = "Attachment: ";
+                        cmd.Parameters.Add(new SqlParameter("@file_name", SqlDbType.VarChar, 50)).Value = fileName;
+                        cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.VarBinary)).Value = data;
+
+                        conn.Open();
+                        int result = cmd.ExecuteNonQuery();
+                        conn.Close();
+
+                        return result == 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                return false;
+            }
         }
     }
 }

@@ -34,6 +34,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnSend = new System.Windows.Forms.Button();
+            this.btnAddAttachment = new System.Windows.Forms.Button();
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.flowLayoutDetails = new System.Windows.Forms.FlowLayoutPanel();
             this.messagesLayout = new System.Windows.Forms.FlowLayoutPanel();
@@ -101,6 +102,7 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnSend);
+            this.flowLayoutPanel1.Controls.Add(this.btnAddAttachment);
             this.flowLayoutPanel1.Controls.Add(this.txtMessage);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
@@ -121,13 +123,24 @@
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
+            // btnAddAttachment
+            // 
+            this.btnAddAttachment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddAttachment.Location = new System.Drawing.Point(256, 3);
+            this.btnAddAttachment.Name = "btnAddAttachment";
+            this.btnAddAttachment.Size = new System.Drawing.Size(46, 29);
+            this.btnAddAttachment.TabIndex = 8;
+            this.btnAddAttachment.Text = "+ File";
+            this.btnAddAttachment.UseVisualStyleBackColor = true;
+            this.btnAddAttachment.Click += new System.EventHandler(this.btnAddAttachment_Click);
+            // 
             // txtMessage
             // 
             this.txtMessage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMessage.Location = new System.Drawing.Point(10, 8);
+            this.txtMessage.Location = new System.Drawing.Point(7, 8);
             this.txtMessage.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(292, 20);
+            this.txtMessage.Size = new System.Drawing.Size(243, 20);
             this.txtMessage.TabIndex = 7;
             // 
             // flowLayoutDetails
@@ -162,6 +175,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "TicketViewerForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Balcão Único Digital da Universidade de Aveiro - Form Viewer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TicketViewerForm_FormClosing);
             this.Load += new System.EventHandler(this.TicketViewerForm_Load);
@@ -184,5 +198,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutDetails;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.FlowLayoutPanel messagesLayout;
+        private System.Windows.Forms.Button btnAddAttachment;
     }
 }

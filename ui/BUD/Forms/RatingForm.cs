@@ -92,5 +92,15 @@ namespace BUD.Forms
                 }
             }
         }
+
+        private void RatingForm_Load(object sender, EventArgs e)
+        {
+            rd0.Checked = false;
+            rd1.Checked = false;
+            rd2.Checked = false;
+            rd3.Checked = false;
+            rd4.Checked = false;
+            rd5.Checked = false;
+        }
     }
 }

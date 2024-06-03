@@ -108,11 +108,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label1.Location = new System.Drawing.Point(76, 19);
+            this.label1.Location = new System.Drawing.Point(55, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(123, 20);
+            this.label1.Size = new System.Drawing.Size(165, 20);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Rate This Ticket";
+            this.label1.Text = "Rate your Experience:";
             // 
             // btnSubmit
             // 
@@ -142,6 +142,7 @@
             this.Name = "RatingForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Rate This Ticket";
+            this.Load += new System.EventHandler(this.RatingForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
