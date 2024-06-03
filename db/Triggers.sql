@@ -28,14 +28,14 @@ BEGIN
         RETURN;
     END
 
-    -- Prevent updates to tickets that are already closed except for rating
+-- Prevent updates to tickets that are already closed except for rating
     IF EXISTS (
         SELECT 1
         FROM inserted i 
         INNER JOIN deleted d ON i.id = d.id
         WHERE d.status_id = 3 
         AND (
-            UPDATE(status_id) OR
+            (UPDATE(status_id) AND i.status_id <> 1) OR
             UPDATE(priority_id) OR
             (
                 i.rating = d.rating
@@ -52,7 +52,6 @@ BEGIN
     BEGIN
         RAISERROR('Cannot update a closed ticket.', 16, 1);
         ROLLBACK TRANSACTION;
-        RETURN;
     END
 END
 GO
