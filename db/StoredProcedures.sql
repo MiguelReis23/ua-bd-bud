@@ -353,6 +353,7 @@ GO
 CREATE PROC SendAttachmentMessage
     @sender_id INT,
     @ticket_id INT,
+    @content VARCHAR(max),
     @file_name VARCHAR(50),
     @data VARBINARY(MAX)
 AS
@@ -366,7 +367,7 @@ BEGIN
     BEGIN TRANSACTION T5
     BEGIN TRY
         INSERT INTO BUD.message (sender_id, ticket_id, content, time_stamp)
-        VALUES (@sender_id, @ticket_id, NULL, @time_stamp)
+        VALUES (@sender_id, @ticket_id, @content, @time_stamp)
     
         SET @message_id = (SELECT SCOPE_IDENTITY())
 
