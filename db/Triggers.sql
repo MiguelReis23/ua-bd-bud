@@ -9,25 +9,6 @@ IF OBJECT_ID('BUD.DeleteUserDepartmentofUser', 'TR') IS NOT NULL DROP TRIGGER BU
 IF OBJECT_ID('BUD.DeleteUserDepartmentofDepartment', 'TR') IS NOT NULL DROP TRIGGER BUD.DeleteUserDepartmentofDepartment;
 GO
 
-
--- Prevent update of a closed ticket, but allow the update of rating for a closed ticket
-CREATE TRIGGER BUD.PreventUpdateClosedTicket
-ON BUD.ticket
-AFTER UPDATE 
-AS
-BEGIN
-    -- Allow updates to the rating of a closed ticket
-    IF EXISTS (
-        SELECT 1
-        FROM inserted i 
-        INNER JOIN deleted d ON i.id = d.id
-        WHERE d.status_id = 3 
-        AND (i.rating <> d.rating OR i.status_id = 1 OR i.status_id = 2) AND i.priority_id = d.priority_id 
-    )
-    BEGIN
-        RETURN;
-    END
-
 -- When Ticket is reopened clear the closed date and rating
 CREATE TRIGGER BUD.TicketReopened
 ON BUD.ticket
