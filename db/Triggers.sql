@@ -22,7 +22,7 @@ BEGIN
         FROM inserted i 
         INNER JOIN deleted d ON i.id = d.id
         WHERE d.status_id = 3 
-        AND i.rating <> d.rating OR i.status_id = 1 OR i.status_id = 2 AND i.priority_id = d.priority_id
+        AND (i.rating <> d.rating OR i.status_id = 1 OR i.status_id = 2) AND i.priority_id = d.priority_id 
     )
     BEGIN
         RETURN;
