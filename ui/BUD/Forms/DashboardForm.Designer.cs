@@ -35,12 +35,15 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnRefreshMyTickets = new System.Windows.Forms.Button();
+            this.btnFilterTicketUser = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.sectionManageTickets = new System.Windows.Forms.TabPage();
             this.gridManageTickets = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnRefreshManageTickets = new System.Windows.Forms.Button();
+            this.btnDeleteSelected = new System.Windows.Forms.Button();
+            this.btnSetFilters = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.sectionArticles = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
@@ -175,6 +178,7 @@
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.btnRefreshMyTickets);
+            this.flowLayoutPanel2.Controls.Add(this.btnFilterTicketUser);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(603, 3);
@@ -184,13 +188,23 @@
             // 
             // btnRefreshMyTickets
             // 
-            this.btnRefreshMyTickets.Location = new System.Drawing.Point(103, 3);
+            this.btnRefreshMyTickets.Location = new System.Drawing.Point(93, 3);
             this.btnRefreshMyTickets.Name = "btnRefreshMyTickets";
-            this.btnRefreshMyTickets.Size = new System.Drawing.Size(68, 25);
+            this.btnRefreshMyTickets.Size = new System.Drawing.Size(78, 25);
             this.btnRefreshMyTickets.TabIndex = 0;
             this.btnRefreshMyTickets.Text = "Refresh";
             this.btnRefreshMyTickets.UseVisualStyleBackColor = true;
             this.btnRefreshMyTickets.Click += new System.EventHandler(this.btnRefreshMyTickets_Click);
+            // 
+            // btnFilterTicketUser
+            // 
+            this.btnFilterTicketUser.Location = new System.Drawing.Point(4, 3);
+            this.btnFilterTicketUser.Name = "btnFilterTicketUser";
+            this.btnFilterTicketUser.Size = new System.Drawing.Size(83, 25);
+            this.btnFilterTicketUser.TabIndex = 3;
+            this.btnFilterTicketUser.Text = "Set Filters";
+            this.btnFilterTicketUser.UseVisualStyleBackColor = true;
+            this.btnFilterTicketUser.Click += new System.EventHandler(this.btnFilterTicketUser_Click);
             // 
             // label1
             // 
@@ -238,13 +252,13 @@
             this.gridManageTickets.ShowRowErrors = false;
             this.gridManageTickets.Size = new System.Drawing.Size(780, 326);
             this.gridManageTickets.TabIndex = 4;
-            this.gridManageTickets.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridManageTickets_CellClick);
+            this.gridManageTickets.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridManageTickets_CellDoubleClick);
             // 
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.92308F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.07692F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel4.Controls.Add(this.flowLayoutPanel3, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
@@ -258,22 +272,44 @@
             // flowLayoutPanel3
             // 
             this.flowLayoutPanel3.Controls.Add(this.btnRefreshManageTickets);
+            this.flowLayoutPanel3.Controls.Add(this.btnDeleteSelected);
+            this.flowLayoutPanel3.Controls.Add(this.btnSetFilters);
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(603, 3);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(510, 3);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(174, 30);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(267, 30);
             this.flowLayoutPanel3.TabIndex = 8;
             // 
             // btnRefreshManageTickets
             // 
-            this.btnRefreshManageTickets.Location = new System.Drawing.Point(103, 3);
+            this.btnRefreshManageTickets.Location = new System.Drawing.Point(181, 3);
             this.btnRefreshManageTickets.Name = "btnRefreshManageTickets";
-            this.btnRefreshManageTickets.Size = new System.Drawing.Size(68, 25);
+            this.btnRefreshManageTickets.Size = new System.Drawing.Size(83, 25);
             this.btnRefreshManageTickets.TabIndex = 0;
             this.btnRefreshManageTickets.Text = "Refresh";
             this.btnRefreshManageTickets.UseVisualStyleBackColor = true;
             this.btnRefreshManageTickets.Click += new System.EventHandler(this.btnRefreshManageTickets_Click);
+            // 
+            // btnDeleteSelected
+            // 
+            this.btnDeleteSelected.Location = new System.Drawing.Point(92, 3);
+            this.btnDeleteSelected.Name = "btnDeleteSelected";
+            this.btnDeleteSelected.Size = new System.Drawing.Size(83, 25);
+            this.btnDeleteSelected.TabIndex = 1;
+            this.btnDeleteSelected.Text = "Delete Selected";
+            this.btnDeleteSelected.UseVisualStyleBackColor = true;
+            this.btnDeleteSelected.Click += new System.EventHandler(this.btnDeleteSelected_Click);
+            // 
+            // btnSetFilters
+            // 
+            this.btnSetFilters.Location = new System.Drawing.Point(3, 3);
+            this.btnSetFilters.Name = "btnSetFilters";
+            this.btnSetFilters.Size = new System.Drawing.Size(83, 25);
+            this.btnSetFilters.TabIndex = 2;
+            this.btnSetFilters.Text = "Set Filters";
+            this.btnSetFilters.UseVisualStyleBackColor = true;
+            this.btnSetFilters.Click += new System.EventHandler(this.btnSetFilters_Click);
             // 
             // label2
             // 
@@ -281,7 +317,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(594, 36);
+            this.label2.Size = new System.Drawing.Size(501, 36);
             this.label2.TabIndex = 0;
             this.label2.Text = "Manage Tickets";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -691,5 +727,8 @@
         private System.Windows.Forms.Label lblTicketsInProgress;
         private System.Windows.Forms.Label lblMediumPriorityTickets;
         private System.Windows.Forms.Label lblClosedTickets;
+        private System.Windows.Forms.Button btnDeleteSelected;
+        private System.Windows.Forms.Button btnSetFilters;
+        private System.Windows.Forms.Button btnFilterTicketUser;
     }
 }

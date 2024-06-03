@@ -12,8 +12,14 @@ using System.Windows.Forms;
 
 namespace BUD
 {
+
     public partial class DashboardForm : Form
     {
+        private int selectedServiceId = -1;
+        private int selectedCategoryId = -1;
+        private int selectedStatusId = -1;
+        private int selectedPriorityId = -1;
+
         User authenticatedUser = AuthenticatedUser.GetAuthenticatedUser();
         AuthenticationForm authenticationForm;
         private bool isLoggingOut = false;
@@ -47,12 +53,24 @@ namespace BUD
         private void btnMyTickets_Click(object sender, EventArgs e)
         {
             sectionsTabs.SelectTab(0);
+
+            selectedServiceId = -1;
+            selectedCategoryId = -1;
+            selectedStatusId = -1;
+            selectedPriorityId = -1;
+
             LoadUserTickets();
         }
 
         private void btnManageTickets_Click(object sender, EventArgs e)
         {
             sectionsTabs.SelectTab(1);
+
+            selectedServiceId = -1;
+            selectedCategoryId = -1;
+            selectedStatusId = -1;
+            selectedPriorityId = -1;
+
             LoadAllTickets();
         }
 
@@ -101,6 +119,30 @@ namespace BUD
                         command.Parameters.AddWithValue("@user_id", userId);
                     }
 
+                    if (selectedServiceId != -1)
+                    {
+                        Console.WriteLine("Added filter for service_id: " + selectedServiceId);
+                        command.Parameters.AddWithValue("@service_id", selectedServiceId);
+                    }
+
+                    if (selectedCategoryId != -1)
+                    {
+                        Console.WriteLine("Added filter for category_id: " + selectedCategoryId);
+                        command.Parameters.AddWithValue("@category_id", selectedCategoryId);
+                    }
+
+                    if (selectedStatusId != -1)
+                    {
+                        Console.WriteLine("Added filter for status_id: " + selectedStatusId);
+                        command.Parameters.AddWithValue("@status_id", selectedStatusId);
+                    }
+
+                    if (selectedPriorityId != -1)
+                    {
+                        Console.WriteLine("Added filter for priority_id: " + selectedPriorityId);
+                        command.Parameters.AddWithValue("@priority_id", selectedPriorityId);
+                    }
+
                     connection.Open();
                     command.ExecuteNonQuery();
 
@@ -109,7 +151,6 @@ namespace BUD
                 }
             }
 
-            // Reverse the order of the rows in the DataTable
             DataView dataView = dataTable.DefaultView;
             dataView.Sort = string.Join(" DESC, ", dataTable.Columns.Cast<DataColumn>().Select(c => c.ColumnName)) + " DESC";
             DataTable reversedDataTable = dataView.ToTable();
@@ -139,17 +180,6 @@ namespace BUD
                 int ticketId = Convert.ToInt32(gridMyTickets.Rows[e.RowIndex].Cells["ticket_id"].Value);
 
                 TicketViewerForm ticketDetailsForm = new TicketViewerForm(this, ticketId, true);
-                ticketDetailsForm.ShowDialog();
-            }
-        }
-
-        private void gridManageTickets_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.RowIndex < gridManageTickets.Rows.Count)
-            {
-                int ticketId = Convert.ToInt32(gridManageTickets.Rows[e.RowIndex].Cells["ticket_id"].Value);
-
-                TicketViewerForm ticketDetailsForm = new TicketViewerForm(this, ticketId, false);
                 ticketDetailsForm.ShowDialog();
             }
         }
@@ -209,6 +239,63 @@ namespace BUD
         {
             sectionsTabs.SelectTab(3);
             LoadStatistics();
+        }
+
+        private void btnDeleteSelected_Click(object sender, EventArgs e)
+        {
+            gridManageTickets.SelectedRows.Cast<DataGridViewRow>().ToList().ForEach(row =>
+            {
+                int ticketId = Convert.ToInt32(row.Cells["ticket_id"].Value);
+                using (SqlConnection connection = Database.GetDatabase().GetConnection())
+                {
+                    using (SqlCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = "DeleteTicket";
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@ticket_id", ticketId);
+
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                    }
+                }
+            });
+        }
+
+        private void gridManageTickets_CellDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.RowIndex < gridManageTickets.Rows.Count)
+            {
+                int ticketId = Convert.ToInt32(gridManageTickets.Rows[e.RowIndex].Cells["ticket_id"].Value);
+
+                TicketViewerForm ticketDetailsForm = new TicketViewerForm(this, ticketId, false);
+                ticketDetailsForm.ShowDialog();
+            }
+        }
+
+        private void btnSetFilters_Click(object sender, EventArgs e)
+        {
+            FilterForm filterForm = new FilterForm();
+            filterForm.ShowDialog();
+
+            selectedServiceId = filterForm.SelectedServiceId;
+            selectedCategoryId = filterForm.SelectedCategoryId;
+            selectedStatusId = filterForm.SelectedStatusId;
+            selectedPriorityId = filterForm.SelectedPriorityId;
+
+            LoadAllTickets();
+        }
+
+        private void btnFilterTicketUser_Click(object sender, EventArgs e)
+        {
+            FilterForm filterForm = new FilterForm();
+            filterForm.ShowDialog();
+
+            selectedServiceId = filterForm.SelectedServiceId;
+            selectedCategoryId = filterForm.SelectedCategoryId;
+            selectedStatusId = filterForm.SelectedStatusId;
+            selectedPriorityId = filterForm.SelectedPriorityId;
+
+            LoadUserTickets();
         }
     }
 }
