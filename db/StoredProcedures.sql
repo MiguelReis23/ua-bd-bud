@@ -41,7 +41,9 @@ GO
 IF OBJECT_ID('SetTicketRating', 'P') IS NOT NULL
     DROP PROC SetTicketRating
 GO
-
+IF OBJECT_ID('DeleteTicket', 'P') IS NOT NULL
+    DROP PROC DeleteTicket
+GO
 -- CREATE USER
 CREATE PROC CreateUser
     @name VARCHAR(255),
@@ -536,3 +538,31 @@ BEGIN
     END CATCH
 END
 GO
+
+-- DELETE TICKET
+CREATE PROCEDURE DeleteTicket
+    @ticket_id INT
+AS
+BEGIN
+    BEGIN TRANSACTION
+    BEGIN TRY
+        DELETE FROM BUD.ticket
+        WHERE id = @ticket_id
+
+        IF @@ROWCOUNT = 0
+        BEGIN
+            PRINT 'ERROR: Ticket ID not found'
+            ROLLBACK TRANSACTION
+            RETURN 0
+        END
+
+        COMMIT TRANSACTION
+        PRINT 'SUCCESS: Ticket deleted'
+        RETURN 1
+    END TRY
+    BEGIN CATCH
+        PRINT ERROR_MESSAGE()
+        ROLLBACK TRANSACTION
+        RETURN 0
+    END CATCH
+END
