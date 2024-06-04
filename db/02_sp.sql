@@ -44,6 +44,14 @@ GO
 IF OBJECT_ID('DeleteTicket', 'P') IS NOT NULL
     DROP PROC DeleteTicket
 GO
+IF OBJECT_ID('SetUserPicture', 'P') IS NOT NULL
+    DROP PROC SetUserPicture
+GO
+IF OBJECT_ID('GetUserPicture', 'P') IS NOT NULL
+    DROP PROC GetUserPicture
+GO
+
+
 -- CREATE USER
 CREATE PROC CreateUser
     @name VARCHAR(255),
@@ -421,9 +429,19 @@ CREATE PROC SeeUserTickets
     @service_id INT = NULL,
     @category_id INT = NULL,
     @status_id INT = NULL,
-    @priority_id INT = NULL
+    @priority_id INT = NULL,
+    @page_number INT = 1,
+    @page_size INT = 10
 AS
 BEGIN
+    -- Ensure valid page number and page size
+    SET @page_number = IIF(@page_number < 1, 1, @page_number)
+    SET @page_size = IIF(@page_size < 1, 10, @page_size)
+
+    -- Calculate the number of rows to skip
+    DECLARE @offset INT
+    SET @offset = (@page_number - 1) * @page_size
+
     SELECT
         t.id AS ticket_id,
         t.submit_date,
@@ -445,6 +463,10 @@ BEGIN
         AND (@category_id IS NULL OR t.category_id = @category_id)
         AND (@status_id IS NULL OR t.status_id = @status_id)
         AND (@priority_id IS NULL OR t.priority_id = @priority_id)
+    ORDER BY
+        t.submit_date DESC
+    OFFSET @offset ROWS
+    FETCH NEXT @page_size ROWS ONLY
 END
 GO
 
@@ -577,3 +599,55 @@ BEGIN
         RETURN 0
     END CATCH
 END
+GO
+
+CREATE PROCEDURE SetUserPicture
+    @UserId INT,
+    @PictureData VARBINARY(MAX)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @PictureId INT;
+
+    -- Check if the user already has a picture
+    SELECT @PictureId = picture
+    FROM BUD.[user]
+    WHERE id = @UserId;
+
+    IF @PictureId IS NOT NULL
+    BEGIN
+        -- Update existing picture
+        UPDATE BUD.picture
+        SET [data] = @PictureData
+        WHERE id = @PictureId;
+    END
+    ELSE
+    BEGIN
+        -- Insert new picture
+        INSERT INTO BUD.picture ([data])
+        VALUES (@PictureData);
+
+        -- Get the new picture id
+        SET @PictureId = SCOPE_IDENTITY();
+
+        -- Update user table with new picture id
+        UPDATE BUD.[user]
+        SET picture = @PictureId
+        WHERE id = @UserId;
+    END
+END
+GO
+
+CREATE PROCEDURE GetUserPicture
+    @UserId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT p.[data]
+    FROM BUD.picture p
+    INNER JOIN BUD.[user] u ON u.picture = p.id
+    WHERE u.id = @UserId;
+END
+GO

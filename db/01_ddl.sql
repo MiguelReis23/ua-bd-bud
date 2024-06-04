@@ -1,5 +1,6 @@
 -- This file is responsible for creating all tables needed. Must be the first file to be executed.
 
+-- Create database if it doesn't exist
 IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'BUD')
 BEGIN
 	CREATE DATABASE BUD;
@@ -41,8 +42,8 @@ CREATE TABLE BUD.department (
 );
 
 CREATE TABLE BUD.picture (
-    id int PRIMARY KEY,
-    [data] varbinary(max)
+    id INT PRIMARY KEY IDENTITY(1,1),
+    [data] VARBINARY(MAX)
 );
 
 CREATE TABLE BUD.[user] (
