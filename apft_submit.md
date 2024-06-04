@@ -3,13 +3,13 @@
 **Grupo**: P10G7
 
 - Miguel Vila, MEC: 107276
-- Miguel REIS, MEC: 108545
+- Miguel Reis, MEC: 108545
 
 ## Introdução
 
-O nosso trabalho é baseado num _ticketing system_ da Universidade de Aveiro para comunicação com os STIC (Serviçoes de Tecnologia Informação e Comunicação). Este sistema é utilizado para requisição operações sobre os serviços dados da responsabilidade dos STIC, reportar problemas nesses mesmos serviços e, dessa forma, permitir uma melhor comunicação entre a comunidade académica e os STIC.
+O nosso trabalho é baseado num _ticketing system_ da Universidade de Aveiro para comunicação com os STIC (Serviços de Tecnologia Informação e Comunicação). Este sistema é utilizado para requisição de operações sobre os serviços da responsabilidade dos STIC, reportar problemas nesses mesmos serviços e, dessa forma, permitir uma melhor comunicação entre a comunidade académica e os STIC.
 
-O sistema permite a criação de tickets, a visualização de detalhes dos tickets, a atualização do estado dos tickets, o acesso aos tickets do utilizador, a troca de mensagens com ou sem anexos entre utilizadores e a gestão de todos os tickets criados por parte dos utilizadores dos STIC. É possível também ver estatísticas sobre os tickets e ver o próprio perfil de utilizador para trocar a foto de perfil e ver artigos de ajuda sobre os serviços.
+O sistema permite a criação de tickets, a visualização de detalhes dos tickets, a atualização do estado dos tickets, o acesso aos tickets do utilizador, a troca de mensagens com ou sem anexos entre utilizadores e a gestão de todos os tickets criados por parte dos utilizadores dos STIC. É possível também ver estatísticas sobre os tickets, ver artigos de ajuda sobre os serviços e ver o próprio perfil de utilizador para trocar a foto de perfil.
 
 ## ​Análise de Requisitos
 
@@ -94,7 +94,7 @@ Para mostrar os tickets to utilizador, faz uso do SP SeeUserTickets passando o i
 
 ![Manage Tickets](screenshots/admin_dashboard_manage_tickets.png "Manage Tickets")
 
-Para mostrar os tickets, faz uso do SP SeeUserTickets não um id de utilizador mas sim um valor nulo e, se definidos, os filtros de categoria, serviço, prioridade e estado.
+Para mostrar os tickets, faz uso do SP SeeUserTickets não com um id de utilizador mas sim um valor nulo e, se definidos, os filtros de categoria, serviço, prioridade e estado.
 
 Faz também uso de um sistema de paginação para mostrar 20 tickets por cada página já que o número de tickets pode ser muito grande.
 
@@ -199,9 +199,9 @@ WHERE
 
 ![New Ticket Form](screenshots/new_ticket_category.png "New Ticket Form")
 
-Este formulário é um wizard responsável pela criação de tickets. Desenha de forma dinâmica na UI os serviços, as suas categorias e os campos associados, isto é, para acrscentar um serviço, categoria ou field basta adicionar um registo na base de dados que a UI irá desenhar o formulário automaticamente.
+Este formulário é um wizard responsável pela criação de tickets. Desenha de forma dinâmica na UI os serviços, as suas categorias e os campos associados, isto é, para acrescentar um serviço, categoria ou field basta adicionar um registo na base de dados que a UI irá desenhar o formulário automaticamente.
 
-Faz uso da seguinte querie SQL para obter os serviços, categorias e fields:
+Faz uso da seguinte query SQL para obter os serviços, categorias e fields:
 
 ```sql
  SELECT
@@ -265,7 +265,7 @@ Neste formulário é possível também trocar mensagens com ou sem anexos. Para 
 
 De forma a reduzir a duplicação de dados e reduzir o espaço ocupado, a normalização foi feita até à 3ª forma normal. A normalização foi feita de forma a garantir que cada tabela tem uma chave primária definida, garantindo que cada registo é único. Usamos chaves estrangeiras para permitir referenciar outras tabelas sem duplicar dados. Separámos dados em tabelas diferentes para que dados repetidos não sejam armazenados em várias tabelas.
 
-Consideramos que a normalização até à 3ª forma normal é suficiente para garantir a integridade dos dados e prevenir erros de inserção de dados., pois há uma clara separação das entidades e atributos, as dependências são definidas através de chaves estrangeiras e as tabelas não têm dependências transitivas.
+Consideramos que a normalização até à 3ª forma normal é suficiente para garantir a integridade dos dados e prevenir erros de inserção de dados, pois há uma clara separação das entidades e atributos, as dependências são definidas através de chaves estrangeiras e as tabelas não têm dependências transitivas.
 
 ## Índices
 
