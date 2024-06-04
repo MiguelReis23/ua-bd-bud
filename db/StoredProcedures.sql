@@ -430,15 +430,12 @@ CREATE PROC SeeUserTickets
     @category_id INT = NULL,
     @status_id INT = NULL,
     @priority_id INT = NULL,
-    @page_number INT = 1,
+    @page_number INT = -1, -- Default value indicating no pagination
     @page_size INT = 10
 AS
 BEGIN
-    -- Ensure valid page number and page size
-    SET @page_number = IIF(@page_number < 1, 1, @page_number)
     SET @page_size = IIF(@page_size < 1, 10, @page_size)
 
-    -- Calculate the number of rows to skip
     DECLARE @offset INT
     SET @offset = (@page_number - 1) * @page_size
 
@@ -465,10 +462,11 @@ BEGIN
         AND (@priority_id IS NULL OR t.priority_id = @priority_id)
     ORDER BY
         t.submit_date DESC
-    OFFSET @offset ROWS
-    FETCH NEXT @page_size ROWS ONLY
+    OFFSET IIF(@page_number = -1, 0, @offset) ROWS
+    FETCH NEXT IIF(@page_number = -1, 1000000, @page_size) ROWS ONLY
 END
 GO
+
 
 -- UPDATE TICKET 
 CREATE PROCEDURE UpdateTicket
