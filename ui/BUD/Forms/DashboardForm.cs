@@ -1,24 +1,24 @@
-﻿using BUD.Forms;
+﻿using BUD.CustomControls;
+using BUD.Forms;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BUD
 {
-
     public partial class DashboardForm : Form
     {
         private int selectedServiceId = -1;
         private int selectedCategoryId = -1;
         private int selectedStatusId = -1;
         private int selectedPriorityId = -1;
+
+        private int currentPageNumber = 1;
+        private int pageSize = 20;
 
         User authenticatedUser = AuthenticatedUser.GetAuthenticatedUser();
         AuthenticationForm authenticationForm;
@@ -39,7 +39,18 @@ namespace BUD
             btnManageTickets.Visible = authenticatedUser.UserIdentifiesAs("Staff");
             btnStatistics.Visible = authenticatedUser.UserIdentifiesAs("Staff");
 
-            pbProfilePicture.Image = authenticatedUser.Picture == null ? Properties.Resources.default_profile_picture : Properties.Resources.default_profile_picture;
+            RefreshProfilePic();
+            
+
+            txtMngrPage.Text = currentPageNumber.ToString();
+        }
+
+        public void RefreshProfilePic()
+        {
+            if (authenticatedUser.Picture != null)
+            {
+                RetrieveAndDisplayPicture(authenticatedUser.Picture);
+            }
         }
 
         private void DashboardForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -59,6 +70,7 @@ namespace BUD
             selectedStatusId = -1;
             selectedPriorityId = -1;
 
+            currentPageNumber = 1;
             LoadUserTickets();
         }
 
@@ -71,6 +83,7 @@ namespace BUD
             selectedStatusId = -1;
             selectedPriorityId = -1;
 
+            currentPageNumber = 1;
             LoadAllTickets();
         }
 
@@ -79,9 +92,81 @@ namespace BUD
             new NewTicketForm(this).ShowDialog();
         }
 
+        private void ApplyEventRecursive(Control parent_control, EventHandler eventHandler)
+        {
+            foreach (Control control in parent_control.Controls)
+            {
+                control.Tag = parent_control;
+                control.Click += eventHandler;
+                //ApplyEventRecursive(control, eventHandler);
+            }
+
+            parent_control.Click += eventHandler;
+        }
         private void btnArticles_Click(object sender, EventArgs e)
         {
             sectionsTabs.SelectTab(2);
+
+            using (SqlConnection connection = Database.GetDatabase().GetConnection())
+            {
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"
+                SELECT 
+                    a.id, 
+                    a.title, 
+                    a.author, 
+                    a.content, 
+                    a.[date], 
+                    a.service_id,
+                    s.[name] AS service_name
+                FROM 
+                    BUD.article a
+                JOIN 
+                    BUD.service s ON a.service_id = s.id";
+
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        articlesGrid.Controls.Clear(); // Clear previous controls
+
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32(0);
+                            string title = reader.GetString(1);
+                            string author = reader.GetString(2);
+                            string content = reader.GetString(3);
+                            DateTime date = reader.GetDateTime(4);
+                            int serviceId = reader.GetInt32(5);
+                            string serviceName = reader.GetString(6);
+
+                            ArticleCard articleCard = new ArticleCard(id, title, content, author, date, serviceName)
+                            {
+                                Width = articlesGrid.Width / 2 - 15
+                            };
+
+                            ApplyEventRecursive(articleCard, (s, ev) =>
+                            {
+                                Control control = (Control)s;
+                                ArticleCard articleCard1;
+
+                                if (control is  ArticleCard)
+                                {
+                                    articleCard1 = (ArticleCard)control;
+                                } else
+                                {
+                                    articleCard = (ArticleCard)control.Parent;
+                                }
+
+                                ArticleRendererForm articleRendererForm = new ArticleRendererForm(articleCard.ArticleId);
+                                articleRendererForm.ShowDialog();
+                            });
+
+                            articlesGrid.Controls.Add(articleCard);
+                        }
+                    }
+                }
+            }
         }
 
         private void btnLogout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -96,6 +181,14 @@ namespace BUD
         {
             DataTable dataTable = GetUserTickets(null);
             gridManageTickets.DataSource = dataTable;
+
+            if (gridManageTickets.Rows.Count < pageSize)
+            {
+                btnMngrNextPage.Enabled = false;
+            } else
+            {
+                btnMngrNextPage.Enabled = true;
+            }
         }
 
         public void LoadUserTickets()
@@ -114,6 +207,7 @@ namespace BUD
                 {
                     command.CommandText = "SeeUserTickets";
                     command.CommandType = CommandType.StoredProcedure;
+
                     if (userId != null)
                     {
                         command.Parameters.AddWithValue("@user_id", userId);
@@ -143,6 +237,9 @@ namespace BUD
                         command.Parameters.AddWithValue("@priority_id", selectedPriorityId);
                     }
 
+                    command.Parameters.AddWithValue("@page_number", currentPageNumber);
+                    command.Parameters.AddWithValue("@page_size", pageSize);
+
                     connection.Open();
                     command.ExecuteNonQuery();
 
@@ -151,11 +248,7 @@ namespace BUD
                 }
             }
 
-            DataView dataView = dataTable.DefaultView;
-            dataView.Sort = string.Join(" DESC, ", dataTable.Columns.Cast<DataColumn>().Select(c => c.ColumnName)) + " DESC";
-            DataTable reversedDataTable = dataView.ToTable();
-
-            return reversedDataTable;
+            return dataTable;
         }
 
         private void btnRefreshMyTickets_Click(object sender, EventArgs e)
@@ -259,17 +352,8 @@ namespace BUD
                     }
                 }
             });
-        }
 
-        private void gridManageTickets_CellDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.RowIndex < gridManageTickets.Rows.Count)
-            {
-                int ticketId = Convert.ToInt32(gridManageTickets.Rows[e.RowIndex].Cells["ticket_id"].Value);
-
-                TicketViewerForm ticketDetailsForm = new TicketViewerForm(this, ticketId, false);
-                ticketDetailsForm.ShowDialog();
-            }
+            LoadAllTickets();
         }
 
         private void btnSetFilters_Click(object sender, EventArgs e)
@@ -277,11 +361,16 @@ namespace BUD
             FilterForm filterForm = new FilterForm();
             filterForm.ShowDialog();
 
+            currentPageNumber = 1;
+            txtMngrPage.Text = currentPageNumber.ToString();
+            btnMngrPreviousPage.Enabled = false;
+
             selectedServiceId = filterForm.SelectedServiceId;
             selectedCategoryId = filterForm.SelectedCategoryId;
             selectedStatusId = filterForm.SelectedStatusId;
             selectedPriorityId = filterForm.SelectedPriorityId;
 
+            currentPageNumber = 1;
             LoadAllTickets();
         }
 
@@ -295,7 +384,86 @@ namespace BUD
             selectedStatusId = filterForm.SelectedStatusId;
             selectedPriorityId = filterForm.SelectedPriorityId;
 
+            currentPageNumber = 1;
             LoadUserTickets();
+        }
+
+        private void btnMngrNextPage_Click_1(object sender, EventArgs e)
+        {
+            currentPageNumber++;
+            txtMngrPage.Text = currentPageNumber.ToString();
+            btnMngrPreviousPage.Enabled = true;
+            LoadAllTickets();
+        }
+
+        private void txtMngrPage_TextChanged_1(object sender, EventArgs e)
+        {
+            if (int.TryParse(txtMngrPage.Text, out int pageNumber))
+            {
+                currentPageNumber = pageNumber > 0 ? pageNumber : 1;
+                btnMngrPreviousPage.Enabled = currentPageNumber > 1;
+                LoadAllTickets();
+            }
+        }
+
+        private void btnMngrPreviousPage_Click_1(object sender, EventArgs e)
+        {
+            if (currentPageNumber > 1)
+            {
+                currentPageNumber--;
+                txtMngrPage.Text = currentPageNumber.ToString();
+                LoadAllTickets();
+            }
+            else
+            {
+                btnMngrPreviousPage.Enabled = false;
+            }
+        }
+
+        private void gridManageTickets_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.RowIndex < gridManageTickets.Rows.Count)
+            {
+                int ticketId = Convert.ToInt32(gridManageTickets.Rows[e.RowIndex].Cells["ticket_id"].Value);
+
+                TicketViewerForm ticketDetailsForm = new TicketViewerForm(this, ticketId, false);
+                ticketDetailsForm.ShowDialog();
+            }
+        }
+
+        private void btnEditProfile_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ProfileForm profileForm = new ProfileForm(authenticatedUser, this);
+            profileForm.ShowDialog();
+        }
+
+        private void RetrieveAndDisplayPicture(int? pictureId)
+        {
+            using (SqlConnection connection = Database.GetDatabase().GetConnection())
+            {
+                using (SqlCommand command = new SqlCommand("GetUserPicture", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserId", authenticatedUser.UserId);
+
+                    connection.Open();
+                    object result = command.ExecuteScalar();
+
+                    if (result != DBNull.Value && result != null)
+                    {
+                        byte[] pictureData = (byte[])result;
+
+                        using (MemoryStream ms = new MemoryStream(pictureData))
+                        {
+                            pbProfilePicture.Image = Image.FromStream(ms);
+                        }
+                    }
+                    else
+                    {
+                        pbProfilePicture.Image = null;
+                    }
+                }
+            }
         }
     }
 }

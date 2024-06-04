@@ -64,6 +64,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomControls\ArticleCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\ArticleCard.Designer.cs">
+      <DependentUpon>ArticleCard.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\Field.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -78,6 +84,12 @@
       <DependentUpon>CustomCard.cs</DependentUpon>
     </Compile>
     <Compile Include="Entities\InputType.cs" />
+    <Compile Include="Forms\ArticleRendererForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ArticleRendererForm.Designer.cs">
+      <DependentUpon>ArticleRendererForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\DashboardForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +119,12 @@
       <DependentUpon>NewTicketForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Entities\Program.cs" />
+    <Compile Include="Forms\ProfileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProfileForm.Designer.cs">
+      <DependentUpon>ProfileForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RatingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,8 +141,14 @@
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Service.cs" />
     <Compile Include="Entities\User.cs" />
+    <EmbeddedResource Include="CustomControls\ArticleCard.resx">
+      <DependentUpon>ArticleCard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\Field.resx">
       <DependentUpon>Field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ArticleRendererForm.resx">
+      <DependentUpon>ArticleRendererForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AuthenticationForm.resx">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
@@ -140,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewTicketForm.resx">
       <DependentUpon>NewTicketForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProfileForm.resx">
+      <DependentUpon>ProfileForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RatingForm.resx">
       <DependentUpon>RatingForm.cs</DependentUpon>

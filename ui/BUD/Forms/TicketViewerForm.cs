@@ -164,6 +164,8 @@ namespace BUD.Forms
 
         private void DrawCommonFields(Boolean readOnly = false)
         {
+            flowLayoutDetails.Controls.Clear();
+
             Field requesterField = new Field(InputType.FREE_TEXT, 0, "Requester")
             {
                 Value = requester,
@@ -292,6 +294,10 @@ namespace BUD.Forms
             }
 
             dashboardFormRef.LoadAllTickets();
+            dashboardFormRef.LoadUserTickets();
+            FetchTicketFields(ticketId);
+            DrawCommonFields(readOnlyref);
+            DrawFields(readOnlyref);
         }
 
         private void DrawMessages()
@@ -459,21 +465,16 @@ namespace BUD.Forms
                     int ticketId = this.ticketId;
 
                     bool result = SendAttachmentMessage(senderId, ticketId, Path.GetFileName(fileName), data);
-
-                    if (result)
-                    {
-                        MessageBox.Show("Attachment sent successfully.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to send attachment.");
-                    }
                 }
             }
+
+            DrawMessages();
         }
 
         private bool SendAttachmentMessage(int senderId, int ticketId, string fileName, byte[] data)
         {
+            Console.WriteLine("Sending attachment message...");
+            Console.WriteLine(fileName);
             try
             {
                 using (SqlConnection conn = new SqlConnection(Database.GetDatabase().GetConnectionString()))

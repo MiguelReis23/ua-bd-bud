@@ -42,8 +42,8 @@ CREATE TABLE BUD.department (
 );
 
 CREATE TABLE BUD.picture (
-    id int PRIMARY KEY,
-    [data] varbinary(max)
+    id INT PRIMARY KEY IDENTITY(1,1),
+    [data] VARBINARY(MAX)
 );
 
 CREATE TABLE BUD.[user] (
