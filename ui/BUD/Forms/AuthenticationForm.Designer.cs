@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AuthenticationForm));
             this.baseLayout = new System.Windows.Forms.TableLayoutPanel();
             this.sctLogin = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnLostPassword = new System.Windows.Forms.LinkLabel();
             this.chckSavelogin = new System.Windows.Forms.CheckBox();
             this.btnAuthenticate = new System.Windows.Forms.Button();
@@ -38,7 +39,6 @@
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.lblPassword = new System.Windows.Forms.Label();
             this.lblUsername = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.baseLayout.SuspendLayout();
             this.sctLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -78,10 +78,20 @@
             this.sctLogin.TabIndex = 0;
             this.sctLogin.TabStop = false;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::BUD.Properties.Resources.bud_extended;
+            this.pictureBox1.Location = new System.Drawing.Point(32, 11);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(340, 75);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
+            // 
             // btnLostPassword
             // 
             this.btnLostPassword.AutoSize = true;
-            this.btnLostPassword.Location = new System.Drawing.Point(28, 178);
+            this.btnLostPassword.Location = new System.Drawing.Point(28, 183);
             this.btnLostPassword.Name = "btnLostPassword";
             this.btnLostPassword.Size = new System.Drawing.Size(104, 13);
             this.btnLostPassword.TabIndex = 5;
@@ -91,7 +101,7 @@
             // chckSavelogin
             // 
             this.chckSavelogin.AutoSize = true;
-            this.chckSavelogin.Location = new System.Drawing.Point(32, 204);
+            this.chckSavelogin.Location = new System.Drawing.Point(32, 209);
             this.chckSavelogin.Name = "chckSavelogin";
             this.chckSavelogin.Size = new System.Drawing.Size(94, 17);
             this.chckSavelogin.TabIndex = 3;
@@ -100,7 +110,7 @@
             // 
             // btnAuthenticate
             // 
-            this.btnAuthenticate.Location = new System.Drawing.Point(30, 229);
+            this.btnAuthenticate.Location = new System.Drawing.Point(30, 234);
             this.btnAuthenticate.Name = "btnAuthenticate";
             this.btnAuthenticate.Size = new System.Drawing.Size(342, 33);
             this.btnAuthenticate.TabIndex = 4;
@@ -110,7 +120,7 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(30, 152);
+            this.txtPassword.Location = new System.Drawing.Point(30, 157);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(342, 20);
@@ -120,7 +130,7 @@
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(30, 102);
+            this.txtUsername.Location = new System.Drawing.Point(30, 107);
             this.txtUsername.MaxLength = 128;
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(342, 20);
@@ -130,7 +140,7 @@
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(28, 134);
+            this.lblPassword.Location = new System.Drawing.Point(28, 139);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(56, 13);
             this.lblPassword.TabIndex = 1;
@@ -139,21 +149,11 @@
             // lblUsername
             // 
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(28, 84);
+            this.lblUsername.Location = new System.Drawing.Point(28, 89);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(58, 13);
             this.lblUsername.TabIndex = 0;
             this.lblUsername.Text = "Username:";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::BUD.Properties.Resources.bud_extended;
-            this.pictureBox1.Location = new System.Drawing.Point(32, 11);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(340, 85);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
             // 
             // AuthenticationForm
             // 

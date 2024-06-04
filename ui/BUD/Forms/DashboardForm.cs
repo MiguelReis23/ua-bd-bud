@@ -206,10 +206,17 @@ namespace BUD
         public void LoadUserTickets()
         {
             DataTable dataTable = GetUserTickets(authenticatedUser.UserId);
-            gridMyTickets.DataSource = dataTable;
+
+            DataView dataView = dataTable.DefaultView;
+            dataView.Sort = "ticket_id DESC";
+            DataTable sortedDataTable = dataView.ToTable();
+
+            gridMyTickets.DataSource = sortedDataTable;
+
+            Console.WriteLine("Loaded user tickets");
         }
 
-        private DataTable GetUserTickets(int? userId)
+        private DataTable GetUserTickets(int? userId = null)
         {
             DataTable dataTable = new DataTable();
 
@@ -249,8 +256,11 @@ namespace BUD
                         command.Parameters.AddWithValue("@priority_id", selectedPriorityId);
                     }
 
-                    command.Parameters.AddWithValue("@page_number", currentPageNumber);
-                    command.Parameters.AddWithValue("@page_size", pageSize);
+                    if (userId == null) { 
+                        Console.WriteLine("Adding pagination parameters");
+                        command.Parameters.AddWithValue("@page_number", currentPageNumber);
+                        command.Parameters.AddWithValue("@page_size", pageSize);
+                    }
 
                     connection.Open();
                     command.ExecuteNonQuery();
