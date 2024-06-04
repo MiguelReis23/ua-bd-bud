@@ -50,6 +50,9 @@
   <PropertyGroup>
     <StartupObject>BUD.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\bud_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -211,6 +214,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\default_profile_picture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bud_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bud_extended.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bud_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

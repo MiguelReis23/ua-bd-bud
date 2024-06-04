@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RatingForm));
             this.rd0 = new System.Windows.Forms.RadioButton();
             this.rd1 = new System.Windows.Forms.RadioButton();
             this.rd2 = new System.Windows.Forms.RadioButton();
@@ -139,6 +140,7 @@
             this.Controls.Add(this.rd1);
             this.Controls.Add(this.rd0);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RatingForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Rate This Ticket";

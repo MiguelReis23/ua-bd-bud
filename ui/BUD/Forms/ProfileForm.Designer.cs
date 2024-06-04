@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfileForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnChangePic = new System.Windows.Forms.LinkLabel();
             this.lblEmail = new System.Windows.Forms.Label();
@@ -177,6 +178,7 @@
             this.ClientSize = new System.Drawing.Size(596, 459);
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ProfileForm";

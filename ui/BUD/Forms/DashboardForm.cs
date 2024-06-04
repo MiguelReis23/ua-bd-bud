@@ -40,7 +40,7 @@ namespace BUD
             btnStatistics.Visible = authenticatedUser.UserIdentifiesAs("Staff");
 
             RefreshProfilePic();
-            
+
 
             txtMngrPage.Text = currentPageNumber.ToString();
         }
@@ -107,28 +107,38 @@ namespace BUD
         {
             sectionsTabs.SelectTab(2);
 
+            DrawArticles();
+        }
+
+        private void DrawArticles(string searchQuery = "")
+        {
+            articlesGrid.Controls.Clear();
+
             using (SqlConnection connection = Database.GetDatabase().GetConnection())
             {
                 using (SqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText = @"
-                SELECT 
-                    a.id, 
-                    a.title, 
-                    a.author, 
-                    a.content, 
-                    a.[date], 
-                    a.service_id,
-                    s.[name] AS service_name
-                FROM 
-                    BUD.article a
-                JOIN 
-                    BUD.service s ON a.service_id = s.id";
+                        SELECT 
+                            a.id, 
+                            a.title, 
+                            a.author, 
+                            a.content, 
+                            a.[date], 
+                            a.service_id,
+                            s.[name] AS service_name
+                        FROM 
+                            BUD.article a
+                        JOIN 
+                            BUD.service s ON a.service_id = s.id
+                        WHERE a.title LIKE @searchQuery OR a.content LIKE @searchQuery";
+
+                    command.Parameters.AddWithValue("@searchQuery", "%" + searchQuery + "%");
 
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        articlesGrid.Controls.Clear(); // Clear previous controls
+                        articlesGrid.Controls.Clear();
 
                         while (reader.Read())
                         {
@@ -150,10 +160,11 @@ namespace BUD
                                 Control control = (Control)s;
                                 ArticleCard articleCard1;
 
-                                if (control is  ArticleCard)
+                                if (control is ArticleCard)
                                 {
                                     articleCard1 = (ArticleCard)control;
-                                } else
+                                }
+                                else
                                 {
                                     articleCard = (ArticleCard)control.Parent;
                                 }
@@ -185,7 +196,8 @@ namespace BUD
             if (gridManageTickets.Rows.Count < pageSize)
             {
                 btnMngrNextPage.Enabled = false;
-            } else
+            }
+            else
             {
                 btnMngrNextPage.Enabled = true;
             }
@@ -464,6 +476,11 @@ namespace BUD
                     }
                 }
             }
+        }
+
+        private void btnArticleSearch_Click(object sender, EventArgs e)
+        {
+            DrawArticles(txtArticleSearch.Text);
         }
     }
 }

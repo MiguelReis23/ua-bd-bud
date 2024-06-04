@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DashboardForm));
             this.baseLayout = new System.Windows.Forms.TableLayoutPanel();
             this.sectionsTabs = new BUD.HeadlessTabControl();
             this.sectionMyTickets = new System.Windows.Forms.TabPage();
@@ -52,7 +53,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.sectionArticles = new System.Windows.Forms.TabPage();
             this.articlesGrid = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
+            this.flowLayoutPanel7 = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnArticleSearch = new System.Windows.Forms.Button();
+            this.txtArticleSearch = new System.Windows.Forms.TextBox();
             this.sectionStatistics = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblTotalTickets = new System.Windows.Forms.Label();
@@ -91,6 +97,9 @@
             this.tableLayoutPanel4.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.sectionArticles.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
+            this.flowLayoutPanel7.SuspendLayout();
             this.sectionStatistics.SuspendLayout();
             this.flowLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -390,7 +399,7 @@
             // sectionArticles
             // 
             this.sectionArticles.Controls.Add(this.articlesGrid);
-            this.sectionArticles.Controls.Add(this.label4);
+            this.sectionArticles.Controls.Add(this.panel2);
             this.sectionArticles.Location = new System.Drawing.Point(4, 22);
             this.sectionArticles.Name = "sectionArticles";
             this.sectionArticles.Padding = new System.Windows.Forms.Padding(3);
@@ -403,21 +412,75 @@
             // 
             this.articlesGrid.AutoScroll = true;
             this.articlesGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.articlesGrid.Location = new System.Drawing.Point(3, 36);
+            this.articlesGrid.Location = new System.Drawing.Point(3, 33);
             this.articlesGrid.Name = "articlesGrid";
-            this.articlesGrid.Size = new System.Drawing.Size(780, 329);
-            this.articlesGrid.TabIndex = 2;
+            this.articlesGrid.Size = new System.Drawing.Size(780, 332);
+            this.articlesGrid.TabIndex = 4;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.tableLayoutPanel6);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(780, 30);
+            this.panel2.TabIndex = 3;
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 2;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel6.Controls.Add(this.label4, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.flowLayoutPanel7, 1, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(780, 30);
+            this.tableLayoutPanel6.TabIndex = 0;
             // 
             // label4
             // 
             this.label4.Dock = System.Windows.Forms.DockStyle.Top;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(3, 3);
+            this.label4.Location = new System.Drawing.Point(3, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(780, 33);
-            this.label4.TabIndex = 1;
+            this.label4.Size = new System.Drawing.Size(474, 30);
+            this.label4.TabIndex = 2;
             this.label4.Text = "Help Articles";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // flowLayoutPanel7
+            // 
+            this.flowLayoutPanel7.Controls.Add(this.btnArticleSearch);
+            this.flowLayoutPanel7.Controls.Add(this.txtArticleSearch);
+            this.flowLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel7.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel7.Location = new System.Drawing.Point(480, 0);
+            this.flowLayoutPanel7.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel7.Name = "flowLayoutPanel7";
+            this.flowLayoutPanel7.Size = new System.Drawing.Size(300, 30);
+            this.flowLayoutPanel7.TabIndex = 3;
+            // 
+            // btnArticleSearch
+            // 
+            this.btnArticleSearch.Location = new System.Drawing.Point(236, 3);
+            this.btnArticleSearch.Name = "btnArticleSearch";
+            this.btnArticleSearch.Size = new System.Drawing.Size(61, 23);
+            this.btnArticleSearch.TabIndex = 1;
+            this.btnArticleSearch.Text = "Seacrh";
+            this.btnArticleSearch.UseVisualStyleBackColor = true;
+            this.btnArticleSearch.Click += new System.EventHandler(this.btnArticleSearch_Click);
+            // 
+            // txtArticleSearch
+            // 
+            this.txtArticleSearch.Location = new System.Drawing.Point(14, 5);
+            this.txtArticleSearch.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.txtArticleSearch.Name = "txtArticleSearch";
+            this.txtArticleSearch.Size = new System.Drawing.Size(216, 20);
+            this.txtArticleSearch.TabIndex = 0;
             // 
             // sectionStatistics
             // 
@@ -731,6 +794,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.baseLayout);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DashboardForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Balcão Único Digital da Universidade de Aveiro - Dashboard";
@@ -750,6 +814,10 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel3.ResumeLayout(false);
             this.sectionArticles.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.flowLayoutPanel7.ResumeLayout(false);
+            this.flowLayoutPanel7.PerformLayout();
             this.sectionStatistics.ResumeLayout(false);
             this.flowLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
@@ -776,7 +844,6 @@
         private System.Windows.Forms.TabPage sectionManageTickets;
         private System.Windows.Forms.TabPage sectionArticles;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnArticles;
         private System.Windows.Forms.Button btnNewTicket;
         private System.Windows.Forms.Button btnManageTickets;
@@ -813,6 +880,12 @@
         private System.Windows.Forms.Button btnMngrNextPage;
         private System.Windows.Forms.TextBox txtMngrPage;
         private System.Windows.Forms.Button btnMngrPreviousPage;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.FlowLayoutPanel articlesGrid;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel7;
+        private System.Windows.Forms.Button btnArticleSearch;
+        private System.Windows.Forms.TextBox txtArticleSearch;
     }
 }
