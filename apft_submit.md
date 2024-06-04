@@ -1,7 +1,7 @@
 # BD: Trabalho Prático APF-T
 
 **Grupo**: P10G7
-- Miguel Vila, MEC: 
+- Miguel Vila, MEC: 107276
 - Miguel REIS, MEC: 108545
 
 # Instructions - TO REMOVE
@@ -31,7 +31,17 @@ Please remove this section before submitting.
 Escreva uma pequena introdução sobre o trabalho.
 Write a simple introduction about your project.
 
+O nosso trabalho é baseado no atual sistema de comunicação da Universidade de Aveiro com os STIC (Serviçoes de Tecnologia Informação e Comunicação)
+Este sistema é utilizado para requisição de serviços, reportar problemas e comunicação entre os utilizadores e os STIC. O sistema permite a criação de tickets, a visualização de detalhes dos tickets, a atualização do estado dos tickets, o acesso aos tickets de um utilizador, a troca de mensagens entre utilizadores e a gestão de todos os tickets. É possível também a observação de estatísticas sobre os tickets e observar o nosso perfil de utilizador. Existe também a possibilidade de adicionar anexos às mensagens e observar os artigos de ajuda.
 ## ​Análise de Requisitos / Requirements
+
+- Ticket creation
+- View ticket details
+- Update ticket status
+- Access user Tickets
+- Messaging
+- Manage all tickets
+
 
 ## DER - Diagrama Entidade Relacionamento/Entity Relationship Diagram
 
@@ -83,6 +93,9 @@ Justifique as opções tomadas.
 Describe the steps used to minimize data duplication / space reduction.
 Justify the choices made.
 
+De forma a reduzir a duplicação de dados e reduzir o espaço ocupado, a normalização foi feita até à 3ª forma normal. A normalização foi feita de forma a garantir que cada tabela tem uma chave primária definida, garantindo que cada registo é único. Usamos chaves estrangeiras para permitir referenciar outras tabelas sem duplicar dados. Separámos dados em tabelas diferentes para que dados repetidos não sejam armazenados em várias tabelas.
+Consideramos que a normalização até à 3ª forma normal é suficiente para garantir a integridade dos dados e prevenir erros de inserção de dados., pois há uma clara separação das entidades e atributos, as dependências são definidas através de chaves estrangeiras e as tabelas não têm dependências transitivas.
+
 ## Índices/Indexes
 
 Descreva os indices criados. Junte uma cópia do SQL de criação do indice.
@@ -118,7 +131,7 @@ Melhora a eficiência das consultas que filtram ou ordenam os tickets pelo statu
 [SQL Views File](sql/06_views.sql "Views")
 
 
-### Segurança/Security
+## Segurança/Security
 
 Como medidas de segurança, garantimos que cada tabela tem uma chave primária definida, garantindo que cada registo é único. Usamos chaves estrangeiras para garantir a integridade referencial entre as tabelas. Temos constraints para garantir que os valores inseridos nas tabelas são válidos e não nulos nos casos aplicáveis. No caso do utilizador, a password é guardada como uma hash e com um salt.
 Cada campo tem um tipo de dados definido, garantindo integridade dos dados e prevenir erros de inserção de dados.
