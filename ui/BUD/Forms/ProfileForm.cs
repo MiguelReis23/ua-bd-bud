@@ -29,6 +29,7 @@ namespace BUD.Forms
             }
 
             AddDepartmentLabels();
+            AddRoleLabels();
 
             Console.WriteLine("User ID: " + user.UserId);
             Console.WriteLine("Full Name: " + user.FullName);
@@ -66,7 +67,6 @@ namespace BUD.Forms
                     }
                     else
                     {
-                        // Optionally, handle the case where there is no picture
                         pbPicture.Image = null;
                     }
                 }
@@ -117,23 +117,107 @@ namespace BUD.Forms
 
         private void AddDepartmentLabels()
         {
+            if (user.DepartmentCodes == null || user.DepartmentCodes.ToArray().Length == 0)
+            {
+                Label label = new Label
+                {
+                    Text = "User is not associated with any department.",
+                    AutoSize = false,
+                    Width = 557,
+                    Height = 95,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Font = new Font("Microsoft Sans Serif", 9.75f)
+                };
+
+                flowLayoutPanel2.Controls.Add(label);
+                return;
+            }
+
             for (int i = 0; i < user.DepartmentCodes.ToArray().Length; i++)
             {
                 string departmentName = user.DepartmentNames[i];
-                string beginDate = user.DepartmentBeginDates[i].ToString("yyyy-MM-dd");
-                //string endDate = user.DepartmentEndDates[i]?.ToString("yyyy-MM-dd") ?? "present";
+                string beginDate = user.DepartmentBeginDates[i].Value.ToString("dd-MM-yyyy");
+                string endDate = null;
 
-                string endDate = "";
+                string labelText = "";
 
-                string labelText = $"User is/was associated with {departmentName} from {beginDate} to {endDate}";
+                if (user.DepartmentEndDates[i].HasValue)
+                {
+                    endDate = user.DepartmentEndDates[i].Value.ToString("dd-MM-yyyy");
+                    labelText = $"User was associated with {departmentName} from {beginDate} to {endDate}.";
+                } else
+                {
+                    labelText = $"User is associated with {departmentName} since {beginDate}.";
+                }
+
                 Label label = new Label
                 {
                     Text = labelText,
-                    AutoSize = true
+                    AutoSize = false,
+                    Width = 557,
+                    Height = 50,
+                    Top = 5,
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    Font = new Font("Microsoft Sans Serif", 9.50f),
+                    BorderStyle = BorderStyle.FixedSingle,
                 };
 
-                flowLayoutPanel1.Controls.Add(label);
+                flowLayoutPanel2.Controls.Add(label);
             }
+        }
+
+        private void AddRoleLabels()
+        {
+            if (user.RoleIds == null || user.RoleIds.Length == 0)
+            {
+                Label label = new Label
+                {
+                    Text = "User is not associated with any role.",
+                    AutoSize = false,
+                    Width = 557,
+                    Height = 95,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Font = new Font("Microsoft Sans Serif", 9.75f)
+                };
+
+                flowLayoutPanel3.Controls.Add(label);
+                return;
+            }
+
+            for (int i = 0; i < user.RoleIds.ToArray().Length; i++)
+            {
+                string roleName = user.RoleNames[i];
+                int? nmec = user.Nmecs[i];
+                string beginDate = user.RoleBeginDates[i].Value.ToString("dd-MM-yyyy");
+                string endDate = null;
+
+                string labelText = "";
+
+                if (user.RoleEndDates[i].HasValue)
+                {
+                    endDate = user.RoleEndDates[i].Value.ToString("dd-MM-yyyy");
+                    labelText = $"User was {roleName} from {beginDate} to {endDate}. (NMEC: {nmec})";
+                }
+                else
+                {
+                    labelText = $"User is {roleName} since {beginDate}. (NMEC: {nmec})";
+                }
+
+                Label label = new Label
+                {
+                    Text = labelText,
+                    AutoSize = false,
+                    Width = 557,
+                    Height = 50,
+                    Top = 5,
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    Font = new Font("Microsoft Sans Serif", 9.50f),
+                    BorderStyle = BorderStyle.FixedSingle,
+                };
+
+                flowLayoutPanel3.Controls.Add(label);
+            }
+
         }
 
         private void btnChangePic_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
@@ -147,7 +231,6 @@ namespace BUD.Forms
                 {
                     pbPicture.Image = new Bitmap(dlg.FileName);
 
-                    // Save the new picture to the database
                     SavePictureToDatabase(dlg.FileName);
                 }
             }

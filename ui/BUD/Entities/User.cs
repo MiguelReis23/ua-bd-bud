@@ -13,15 +13,15 @@ namespace BUD
         private string _full_name;
         private string _email;
         private int? _picture;
-        private int[] _department_codes;
+        private int?[] _department_codes;
         private string[] _department_names;
-        private int[] _role_ids;
+        private int?[] _role_ids;
         private string[] _role_names;
-        private int[] _nmecs;
-        private DateTime[] _role_begin_dates;
-        private DateTime[] _role_end_dates;
-        private DateTime[] _department_begin_dates;
-        private DateTime[] _department_end_dates;
+        private int?[] _nmecs;
+        private DateTime?[] _role_begin_dates;
+        private DateTime?[] _role_end_dates;
+        private DateTime?[] _department_begin_dates;
+        private DateTime?[] _department_end_dates;
 
         public int UserId
         {
@@ -47,7 +47,7 @@ namespace BUD
             set { _picture = value; }
         }
 
-        public int[] DepartmentCodes
+        public int?[] DepartmentCodes
         {
             get { return _department_codes; }
             set { _department_codes = value; }
@@ -59,7 +59,7 @@ namespace BUD
             set { _department_names = value; }
         }
 
-        public int[] RoleIds
+        public int?[] RoleIds
         {
             get { return _role_ids; }
             set { _role_ids = value; }
@@ -71,31 +71,31 @@ namespace BUD
             set { _role_names = value; }
         }
 
-        public int[] Nmecs
+        public int?[] Nmecs
         {
             get { return _nmecs; }
             set { _nmecs = value; }
         }
 
-        public DateTime[] RoleBeginDates
+        public DateTime?[] RoleBeginDates
         {
             get { return _role_begin_dates; }
             set { _role_begin_dates = value; }
         }
 
-        public DateTime[] RoleEndDates
+        public DateTime?[] RoleEndDates
         {
             get { return _role_end_dates; }
             set { _role_end_dates = value; }
         }
 
-        public DateTime[] DepartmentBeginDates
+        public DateTime?[] DepartmentBeginDates
         {
             get { return _department_begin_dates; }
             set { _department_begin_dates = value; }
         }
 
-        public DateTime[] DepartmentEndDates
+        public DateTime?[] DepartmentEndDates
         {
             get { return _department_end_dates; }
             set { _department_end_dates = value; }
@@ -126,7 +126,7 @@ namespace BUD
 
         public User() : base() { }
 
-        public User(int user_id, string full_name, string email, int picture, int[] department_codes, string[] department_names, int[] role_ids, string[] role_names, int[] nmecs, DateTime[] role_begin_dates, DateTime[] role_end_dates, DateTime[] department_begin_dates, DateTime[] department_end_dates)
+        public User(int user_id, string full_name, string email, int picture, int?[] department_codes, string[] department_names, int?[] role_ids, string[] role_names, int?[] nmecs, DateTime?[] role_begin_dates, DateTime?[] role_end_dates, DateTime?[] department_begin_dates, DateTime?[] department_end_dates)
         {
             _user_id = user_id;
             _full_name = full_name;

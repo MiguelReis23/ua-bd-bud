@@ -91,15 +91,15 @@ namespace BUD
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        var departmentCodes = new List<int>();
+                        var departmentCodes = new List<int?>();
                         var departmentNames = new List<string>();
-                        var roleIds = new List<int>();
+                        var roleIds = new List<int?>();
                         var roleNames = new List<string>();
-                        var nmecs = new List<int>();
-                        var roleBeginDates = new List<DateTime>();
-                        var roleEndDates = new List<DateTime>();
-                        var departmentBeginDates = new List<DateTime>();
-                        var departmentEndDates = new List<DateTime>();
+                        var nmecs = new List<int?>();
+                        var roleBeginDates = new List<DateTime?>();
+                        var roleEndDates = new List<DateTime?>();
+                        var departmentBeginDates = new List<DateTime?>();
+                        var departmentEndDates = new List<DateTime?>();
 
                         while (reader.Read())
                         {
@@ -110,23 +110,48 @@ namespace BUD
 
                             if (!reader.IsDBNull(reader.GetOrdinal("department_code")))
                                 departmentCodes.Add(reader.GetInt32(reader.GetOrdinal("department_code")));
+                            else
+                                departmentCodes.Add(null);
+
                             if (!reader.IsDBNull(reader.GetOrdinal("department_name")))
                                 departmentNames.Add(reader.GetString(reader.GetOrdinal("department_name")));
+                            else
+                                departmentNames.Add(null);
+
                             if (!reader.IsDBNull(reader.GetOrdinal("role_id")))
                                 roleIds.Add(reader.GetInt32(reader.GetOrdinal("role_id")));
+                            else
+                                roleIds.Add(null);
+
                             if (!reader.IsDBNull(reader.GetOrdinal("role_name")))
                                 roleNames.Add(reader.GetString(reader.GetOrdinal("role_name")));
+                            else
+                                roleNames.Add(null);
+
                             if (!reader.IsDBNull(reader.GetOrdinal("nmec")))
                                 nmecs.Add(reader.GetInt32(reader.GetOrdinal("nmec")));
+                            else
+                                nmecs.Add(null);
+
                             if (!reader.IsDBNull(reader.GetOrdinal("role_begin_date")))
                                 roleBeginDates.Add(reader.GetDateTime(reader.GetOrdinal("role_begin_date")));
+                            else
+                                roleBeginDates.Add(null);
+
                             if (!reader.IsDBNull(reader.GetOrdinal("role_end_date")))
                                 roleEndDates.Add(reader.GetDateTime(reader.GetOrdinal("role_end_date")));
+                            else
+                                roleEndDates.Add(null);
+
                             if (!reader.IsDBNull(reader.GetOrdinal("department_startdate")))
                                 departmentBeginDates.Add(reader.GetDateTime(reader.GetOrdinal("department_startdate")));
+                            else
+                                departmentBeginDates.Add(null);
+
                             if (!reader.IsDBNull(reader.GetOrdinal("department_enddate")))
                                 departmentEndDates.Add(reader.GetDateTime(reader.GetOrdinal("department_enddate")));
-
+                            else
+                                departmentEndDates.Add(null);
 
                         }
                         authenticatedUser.DepartmentCodes = departmentCodes.ToArray();
