@@ -26,14 +26,14 @@ Por favor remova esta secção antes de submeter.
 
 Please remove this section before submitting.
 
-## Introdução / Introduction
+## Introdução
  
 Escreva uma pequena introdução sobre o trabalho.
 Write a simple introduction about your project.
 
 O nosso trabalho é baseado no atual sistema de comunicação da Universidade de Aveiro com os STIC (Serviçoes de Tecnologia Informação e Comunicação)
 Este sistema é utilizado para requisição de serviços, reportar problemas e comunicação entre os utilizadores e os STIC. O sistema permite a criação de tickets, a visualização de detalhes dos tickets, a atualização do estado dos tickets, o acesso aos tickets de um utilizador, a troca de mensagens entre utilizadores e a gestão de todos os tickets. É possível também a observação de estatísticas sobre os tickets e observar o nosso perfil de utilizador. Existe também a possibilidade de adicionar anexos às mensagens e observar os artigos de ajuda.
-## ​Análise de Requisitos / Requirements
+## ​Análise de Requisitos
 
 - Ticket creation
 - View ticket details
@@ -43,9 +43,9 @@ Este sistema é utilizado para requisição de serviços, reportar problemas e c
 - Manage all tickets
 
 
-## DER - Diagrama Entidade Relacionamento/Entity Relationship Diagram
+## DER - Diagrama Entidade Relacionamento
 
-### Versão final/Final version
+### Versão final
 
 ![DER Diagram!](DER.png "Diagrama DER")
 
@@ -53,9 +53,9 @@ Este sistema é utilizado para requisição de serviços, reportar problemas e c
 
 Em comparação à primeira entrega, adicionámos a entidade **Picture** para podermos guardar o id e a imagem de forma a que quando queremos obter as informações de utilizador não termos de carregar a imagem de cada utilizador. Adicionámos também a entidade **Roles** para podermos ter diferentes tipos de cargos para um mesmo utilizador, registando a data de inicio e fim de cada cargo. Adicionámos também o registo de data de entrada e saida de um departamento para um utilizador. Permitindo a um utilizador ter vários cargos e pertencer a vários departamentos ao longo do tempo. Fizemos a alteração para que a **Priority** fosse uma entidade como o **Status**.
 Adicionámos também a entidade **Field** com um id e nome para guardar os fields preenchidos no ticket.
-## ER - Esquema Relacional/Relational Schema
+## ER - Esquema Relacional
 
-### Versão final/Final Version
+### Versão final
 
 ![ER Diagram!](ER.png "Diagrama ER")
 
@@ -72,7 +72,7 @@ Devido à alteração do DER, o esquema relacional também sofreu alterações. 
 Uma secção por formulário.
 A section for each form.
 
-### Formulario exemplo/Example Form
+### Formulario exemplo
 
 ![Exemplo Screenshot!](screenshots/screenshot_1.jpg "AnImage")
 
@@ -86,7 +86,7 @@ INSERT INTO MY_TABLE ....;
 
 ...
 
-## Normalização/Normalization
+## Normalização
 
 Descreva os passos utilizados para minimizar a duplicação de dados / redução de espaço.
 Justifique as opções tomadas.
@@ -96,7 +96,7 @@ Justify the choices made.
 De forma a reduzir a duplicação de dados e reduzir o espaço ocupado, a normalização foi feita até à 3ª forma normal. A normalização foi feita de forma a garantir que cada tabela tem uma chave primária definida, garantindo que cada registo é único. Usamos chaves estrangeiras para permitir referenciar outras tabelas sem duplicar dados. Separámos dados em tabelas diferentes para que dados repetidos não sejam armazenados em várias tabelas.
 Consideramos que a normalização até à 3ª forma normal é suficiente para garantir a integridade dos dados e prevenir erros de inserção de dados., pois há uma clara separação das entidades e atributos, as dependências são definidas através de chaves estrangeiras e as tabelas não têm dependências transitivas.
 
-## Índices/Indexes
+## Índices
 
 Descreva os indices criados. Junte uma cópia do SQL de criação do indice.
 Describe the indexes created. Attach a copy of the SQL to create the index.
@@ -117,6 +117,10 @@ CREATE INDEX IX_ticket_status_id ON BUD.ticket(status_id);
 ```
 Melhora a eficiência das consultas que filtram ou ordenam os tickets pelo status_id.
 
+### Resultados do teste de índices:
+
+[SQL Result File](IndexesTesting.rpt "IndexTest")
+
 
 ## SQL Programming: Stored Procedures, Triggers, UDF
 
@@ -131,12 +135,12 @@ Melhora a eficiência das consultas que filtram ou ordenam os tickets pelo statu
 [SQL Views File](sql/06_views.sql "Views")
 
 
-## Segurança/Security
+## Segurança
 
 Como medidas de segurança, garantimos que cada tabela tem uma chave primária definida, garantindo que cada registo é único. Usamos chaves estrangeiras para garantir a integridade referencial entre as tabelas. Temos constraints para garantir que os valores inseridos nas tabelas são válidos e não nulos nos casos aplicáveis. No caso do utilizador, a password é guardada como uma hash e com um salt.
 Cada campo tem um tipo de dados definido, garantindo integridade dos dados e prevenir erros de inserção de dados.
 
-### Dados iniciais da dabase de dados/Database init data
+### Dados iniciais da dabase de dados
 
 [DDL File](sql/01_ddl.sql "DDL")
 
@@ -148,6 +152,19 @@ Cada campo tem um tipo de dados definido, garantindo integridade dos dados e pre
 
 [SQL Index Test File](sql/09_test_indexes.sql "IndexTest")
 
+## O que mudou desde a apresentação
 
+Adicionámos:
 
- 
+- Possibilidade de filtrar os tickets pelas diversas categorias, serviços, prioridades e estados;
+- Sistema de paginação na visualização de tickets como "Staff";
+- Possibilidade de eliminar tickets como "Staff" e de os reabrir;
+- Possibilidade de adicionar anexos às mensagens;
+- Visualização de artigos de ajuda;
+- Possibilidade de pesquisar com um termo de pesquisa artigos de ajuda;
+- Uma página de perfil onde é possível visualizar os cargos e departamentos aos quais um utilizador está associado, bem como a data de início e/ou fim dessa associação;
+- Possibilidade de alterar a imagem de perfil de utilizador.
+
+## Vídeo de Apresentação
+
+[![Vídeo de Apresentação](COLOCAR VIDEO)]("Video de Apresentação")
