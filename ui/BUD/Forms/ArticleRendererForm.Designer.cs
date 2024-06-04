@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArticleRendererForm));
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblMetadata = new System.Windows.Forms.Label();
             this.lblContent = new System.Windows.Forms.Label();
@@ -74,6 +75,7 @@
             this.Controls.Add(this.lblContent);
             this.Controls.Add(this.lblMetadata);
             this.Controls.Add(this.lblTitle);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ArticleRendererForm";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
