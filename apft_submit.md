@@ -5,6 +5,12 @@
 - Miguel Vila, MEC: 107276
 - Miguel Reis, MEC: 108545
 
+## Instruções de Execução (Development)
+
+Pode alterar as credenciais de acesso à base de dados na class `Database` no projeto `BUD` que se encontra dentro da pasta `ui` modificando as variáveis `serverAddress`, `databaseName`, `databaseUsername` e `databasePassword`.
+
+[Ficheiro Database](./ui/BUD/Entities/Database.cs "Database.cs")
+
 ## Introdução
 
 O nosso trabalho é baseado num _ticketing system_ da Universidade de Aveiro para comunicação com os STIC (Serviços de Tecnologia Informação e Comunicação). Este sistema é utilizado para requisição de operações sobre os serviços da responsabilidade dos STIC, reportar problemas nesses mesmos serviços e, dessa forma, permitir uma melhor comunicação entre a comunidade académica e os STIC.
