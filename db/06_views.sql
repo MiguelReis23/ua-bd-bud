@@ -1,7 +1,5 @@
 -- File for creating views in the database.
 
-USE BUD;
-GO
 
 IF OBJECT_ID('BUD.UserInfo', 'V') IS NOT NULL DROP VIEW BUD.UserInfo;
 GO

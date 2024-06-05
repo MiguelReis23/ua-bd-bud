@@ -12,14 +12,16 @@ namespace BUD
         private static Database databaseInstance = null;
         private static readonly object lockObject = new object();
 
-        private static string serverAddress = "GAPAPAIO-WIN";
-        private static string databaseName = "BUD";
-        private static readonly string connectionString = "data source=" + serverAddress + ";initial catalog=" + databaseName + ";integrated security=True";
+        // private static string serverAddress = "GAPAPAIO-WIN";
+        // private static string databaseName = "BUD";
+        // private static readonly string connectionString = "data source=" + serverAddress + ";initial catalog=" + databaseName + ";integrated security=True";
 
         // This is for SQL Server Authentication when using a username and password instead of Windows Authentication
-        // private static string databaseUsername = "admin";
-        // private static string databasePassword = "admin";
-        // private static string connectionString = "data source=" + serverAddress + ";initial catalog=" + databaseName + ";uid=" + databaseUsername + ";password=" + databasePassword;
+        private static string serverAddress = "mednat.ieeta.pt\\SQLSERVER,8101";
+        private static string databaseName = "p10g7";
+        private static string databaseUsername = "p10g7";
+        private static string databasePassword = "Cum1-te";
+        private static string connectionString = "data source=" + serverAddress + ";initial catalog=" + databaseName + ";uid=" + databaseUsername + ";password=" + databasePassword;
 
         private Database() { }
 

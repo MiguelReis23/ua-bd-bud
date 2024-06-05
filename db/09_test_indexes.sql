@@ -1,7 +1,5 @@
 -- This file is for testing purposes only. It will measure the time it takes to execute a query with and without indexes.
 
-USE BUD
-GO
 
 IF EXISTS (SELECT name FROM sys.indexes WHERE name = 'IX_ticket_requester_id' AND object_id = OBJECT_ID('BUD.ticket'))
     DROP INDEX IX_ticket_requester_id ON BUD.ticket;

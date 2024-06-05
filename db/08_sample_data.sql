@@ -1,7 +1,5 @@
 -- This file is for inserting sample datas in th
 
-USE BUD
-GO
 
 -- CREATE USERS
 EXECUTE CreateUser 'João Almeida Santos', 'jas@ua.pt', NULL, 'jas123', 4

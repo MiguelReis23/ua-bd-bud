@@ -1,7 +1,5 @@
 -- This file is responsible for creating all indexes needed.
 
-USE BUD
-GO
 
 IF OBJECT_ID('BUD.IX_ticket_requester_id', 'U') IS NOT NULL DROP INDEX BUD.IX_ticket_requester_id;
 IF OBJECT_ID('BUD.IX_ticket_priority_id', 'U') IS NOT NULL DROP INDEX BUD.IX_ticket_priority_id;

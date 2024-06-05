@@ -1,6 +1,5 @@
 -- File for creating User Defined Functions (UDFs) in the database.
-USE BUD
-GO
+
 
 IF OBJECT_ID('BUD.TotalTickets', 'FN') IS NOT NULL DROP FUNCTION BUD.TotalTickets;
 IF OBJECT_ID('BUD.TotalTicketsWithStatus', 'FN') IS NOT NULL DROP FUNCTION BUD.TotalTicketsWithStatus;

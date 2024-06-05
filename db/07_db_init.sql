@@ -2,7 +2,6 @@
 -- Withouth this file, we cannot create users, set roles, etc. because, obviously, we don't have any data to work with.
 
 -- CREATE USER ROLES
-USE BUD
 
 INSERT INTO BUD.roles
     (id, [name])

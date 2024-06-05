@@ -1,7 +1,6 @@
 -- File for creating Triggers in the database.
 -- these are automatic triggers that maintain the integrity of the database.
-USE BUD
-GO
+
 
 IF OBJECT_ID('BUD.TicketReopened', 'TR') IS NOT NULL DROP TRIGGER BUD.TicketReopened;
 IF OBJECT_ID('BUD.DeleteMessagesAndAttachments', 'TR') IS NOT NULL DROP TRIGGER BUD.DeleteMessagesAndAttachments;

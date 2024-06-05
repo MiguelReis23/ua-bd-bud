@@ -1,13 +1,5 @@
 -- This file is responsible for creating all tables needed. Must be the first file to be executed.
 
--- Create database if it doesn't exist
-IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'BUD')
-BEGIN
-	CREATE DATABASE BUD;
-END
-GO
-
-USE BUD
 
 IF NOT EXISTS (SELECT name FROM sys.schemas WHERE name = 'BUD')
 BEGIN
