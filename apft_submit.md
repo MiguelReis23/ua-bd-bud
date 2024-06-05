@@ -11,6 +11,12 @@ Pode alterar as credenciais de acesso à base de dados na class `Database` no pr
 
 [Ficheiro Database](./ui/BUD/Entities/Database.cs "Database.cs")
 
+### Utilizadores de Teste
+
+Email: `jas@ua.pt` Password: `jas123` (Utilizador Normal com role de estudante e professor)
+
+Email: `cgp@ua.pt` Password: `cgp123` (Utilizador com role de Staff)
+
 ## Introdução
 
 O nosso trabalho é baseado num _ticketing system_ da Universidade de Aveiro para comunicação com os STIC (Serviços de Tecnologia Informação e Comunicação). Este sistema é utilizado para requisição de operações sobre os serviços da responsabilidade dos STIC, reportar problemas nesses mesmos serviços e, dessa forma, permitir uma melhor comunicação entre a comunidade académica e os STIC.
